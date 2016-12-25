@@ -2,7 +2,7 @@
 After: 'toolbar/*'
 ---
 SSViewer:
-  theme: addons
+  theme: ssu
 GlobalNavTemplateProvider:
   connection_timeout: 2000
   transfer_timeout: 6000
