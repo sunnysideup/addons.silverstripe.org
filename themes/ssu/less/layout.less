@@ -1,0 +1,57 @@
+/**
+ *
+ */
+
+body {
+  padding-bottom: 20px;
+}
+
+#header {
+  padding: 30px 0 15px 0;
+
+  .navbar-inner {
+    background: none;
+    border: none;
+    .box-shadow(none);
+  }
+
+  .nav {
+    float: right;
+
+    a {
+      color: @blueDark;
+      font: bold 16px "PT Sans", sans-serif;
+      margin: 2px 0 0 10px;
+      padding: 16px 14px;
+      
+      &.link {
+        &:hover, &:focus, &:active {
+          border-bottom: 5px solid @grayLighter;
+        }  
+      }
+
+      &.btn:hover, &.btn:focus {
+        background-position: 0 0;  
+      }
+    }
+
+    .active a {
+      background: none;
+      border-bottom: 5px solid @blue;
+      .box-shadow(none);
+    }
+  }
+}
+
+#layout {
+  .content-narrow {
+    width: 70%; // better readability for free-form text
+  }
+}
+
+#footer {
+  margin-top: 2em;
+  text-align: center;
+  font-style: italic;
+  font-size: 12px;
+}
