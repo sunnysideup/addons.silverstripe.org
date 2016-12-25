@@ -40,12 +40,14 @@ composer install --dev
 
 # elastic search
 # https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-ubuntu-14-04
-
+#  https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-ubuntu-16-04
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
 sudo dpkg -i elasticsearch-1.7.2.deb
 
 # redis
 # https://hostpresto.com/community/tutorials/how-to-install-and-configure-redis-on-ubuntu-14-04/
 # https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis
+# https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-redis-on-ubuntu-16-04
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install build-essential
@@ -87,6 +89,8 @@ sake dev/tasks/CacheHelpfulRobotDataTask
 
 ########## END CRON ###########
 # set up cronjob with the steps above
+
+# install GOD? http://godrb.com/
 
 ```
 

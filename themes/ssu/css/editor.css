@@ -1,0 +1,14 @@
+/**
+ * This support file is used to style the WYSIWYG editor in the CMS
+ */
+
+@import "typography.css";
+
+body.mceContentBody {
+	min-height: 200px;
+	width: 770px;
+}
+
+body.mceContentBody a.broken {
+	border: 1px red solid;
+}

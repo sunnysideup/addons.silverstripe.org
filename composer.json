@@ -2,8 +2,8 @@
   "name": "ssmods.com",
   "description": "Sunny Side Up Flavour of the SilverStripe extensions listing site",
   "require": {
-    "composer/installers": "*",
-    "composer/composer": "*",
+    "composer/installers":              "*",
+    "composer/composer":                "*",
     "dflydev/markdown": "1.0.*@stable",
     "ezyang/htmlpurifier": "4.5.*@stable",
     "guzzle/guzzle": "3.2.0",
@@ -17,8 +17,29 @@
     "symfony/process": "^2.8",
     "symfony/finder": "^2.8",
     "symfony/console": "^2.8",
-    "symfony/yaml": "^2.8"
+    "symfony/yaml": "^2.8",
+    "sunnysideup/themes_ssu_flava_main":    "dev-master",
+    "gdmedia/ss-auto-git-ignore": "*",
+    "silverstripe/tagfield": "^1.3"
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+      "post-install-cmd": [
+          "sed -i '/CLEANING_MODE_ALL/d' ./framework/model/Aggregate.php",
+          "cp ./themes/main/css/* ./themes/ssu/css/ -r",
+          "cp ./themes/main/images/* ./themes/ssu/images/ -r",
+          "cp ./themes/main/javascript/* ./themes/ssu/javascript/ -r",
+          "cp themes/main/templates/Includes/*.ss themes/ssu/templates/Includes/ -r"
+      ],
+      "post-update-cmd": [
+          "GDM\\SSAutoGitIgnore\\UpdateScript::Go",
+          "sed -i '/CLEANING_MODE_ALL/d' ./framework/model/Aggregate.php",
+          "cp ./themes/main/css/* ./themes/ssu/css/ -r",
+          "cp ./themes/main/images/* ./themes/ssu/images/ -r",
+          "cp ./themes/main/javascript/* ./themes/ssu/javascript/ -r",
+          "cp ./themes/main/templates/Includes/*.ss ./themes/ssu/templates/Includes/ -r"
+      ]
+  }
+
 }
