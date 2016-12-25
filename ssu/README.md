@@ -89,3 +89,22 @@ sake dev/tasks/CacheHelpfulRobotDataTask
 # set up cronjob with the steps above
 
 ```
+
+THINGS TO ADD
+=============
+
+1. change search form to have the following fields:
+
+ * current search
+ * + must have all of these tags
+ * + may have any of these tags
+ * + may not have any of these tags
+ * + Silverstripe minimum version number
+
+2. new css
+
+3. remove all non-essentials
+
+4. ability to save searches
+
+5. ability to put together a collection and share it (and create a list of favourites)
