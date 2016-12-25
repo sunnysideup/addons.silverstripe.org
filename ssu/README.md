@@ -1,8 +1,36 @@
+Install DEV copy
+==================
+
+
+```sh
+
 # fork project
 # https://help.github.com/articles/fork-a-repo/
 
 # clone
-git clone git@github.com:silverstripe/addons.silverstripe.org.git
+git clone git@github.com:sunnysideup/addons.silverstripe.org.git
+
+
+# get changes from original
+git remote -v
+git remote add upstream git@github.com:silverstripe/addons.silverstripe.org.git
+git remote -v
+git fetch upstream
+git checkout master
+git merge upstream/master
+
+```
+
+Install on Ubuntu
+==================
+
+```sh
+
+# fork project
+# https://help.github.com/articles/fork-a-repo/
+
+# clone
+git clone git@github.com:sunnysideup/addons.silverstripe.org.git
 
 # cd
 cd addons.silverstripe.org
@@ -58,13 +86,6 @@ sake dev/tasks/CacheHelpfulRobotDataTask
 
 
 ########## END CRON ###########
-
 # set up cronjob with the steps above
 
-# get changes from original
-git remote -v
-git remote add upstream git@github.com:silverstripe/addons.silverstripe.org.git
-git remote -v
-git fetch upstream
-git checkout master
-git merge upstream/master
+```
