@@ -4,86 +4,86 @@
  */
 class SiteController extends Controller {
 
-	public function init() {
-		RSSFeed::linkToFeed("add-ons/rss", "New modules on addons.silverstripe.org");
+    public function init() {
+        RSSFeed::linkToFeed("add-ons/rss", "New modules on addons.silverstripe.org");
 
 		Requirements::javascript("//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
 		Requirements::javascript("themes/".SSViewer::current_theme()."/bootstrap/js/bootstrap.min.js");
 		Requirements::javascript("themes/".SSViewer::current_theme()."/javascript/addons.js");
 		Requirements::javascript("//www.google.com/jsapi");
-		Requirements::javascript("themes/".SSViewer::current_theme()."/javascript/chart.js");
-		parent::init();
-	}
 
-	public function Menu() {
-		$menu = new ArrayList();
+        parent::init();
+    }
 
-		$menuEntries = array(
-			//array('controller' => 'HomeController'),
-			array('controller' => 'AddonsController'),
-			array(
-				'link' => Controller::join_links(
-					singleton('AddonsController')->Link(),
-					'?type=theme&view=expanded'
-				),
-				'title' => 'Themes',
-			),
-			array('controller' => 'VendorsController'),
-			array('controller' => 'AuthorsController'),
-			array('controller' => 'TagsController'),
-			array('controller' => 'SubmitAddonController'),
-		);
+    public function Menu() {
+        $menu = new ArrayList();
 
-		foreach ($menuEntries as $menuEntry) {
-			if(isset($menuEntry['controller'])) {
-				$inst = singleton($menuEntry['controller']);
-				$active = false;
+        $menuEntries = array(
+            //array('controller' => 'HomeController'),
+            array('controller' => 'AddonsController'),
+            array(
+                'link' => Controller::join_links(
+                    singleton('AddonsController')->Link(),
+                    '?type=theme&view=expanded'
+                ),
+                'title' => 'Themes',
+            ),
+            array('controller' => 'VendorsController'),
+            array('controller' => 'AuthorsController'),
+            array('controller' => 'TagsController'),
+            array('controller' => 'SubmitAddonController'),
+        );
 
-				foreach (self::$controller_stack as $candidate) {
-					$active = (
-						$candidate instanceof $menuEntry['controller']
-						&& $this->request->getVar('type') != 'theme'
-					);
-				}
+        foreach ($menuEntries as $menuEntry) {
+            if(isset($menuEntry['controller'])) {
+                $inst = singleton($menuEntry['controller']);
+                $active = false;
 
-				$menu->push(new ArrayData(array(
-					'Title' => $inst->Title(),
-					'Link' => $inst->Link(),
-					'Active' => $active,
-					'MenuItemType' => $inst->MenuItemType()
-				)));	
-			} else {
-				$active = ($this->request->getVar('type') == 'theme');
-				$menu->push(new ArrayData(array(
-					'Title' => $menuEntry['title'],
-					'Link' => $menuEntry['link'],
-					'Active' => $active,
-					'MenuItemType' => 'link',
-				)));
-			}
-			
-		}
+                foreach (self::$controller_stack as $candidate) {
+                    $active = (
+                        $candidate instanceof $menuEntry['controller']
+                        && $this->request->getVar('type') != 'theme'
+                    );
+                }
 
-		return $menu;
-	}
+                $menu->push(new ArrayData(array(
+                    'Title' => $inst->Title(),
+                    'Link' => $inst->Link(),
+                    'Active' => $active,
+                    'MenuItemType' => $inst->MenuItemType()
+                )));
+            } else {
+                $active = ($this->request->getVar('type') == 'theme');
+                $menu->push(new ArrayData(array(
+                    'Title' => $menuEntry['title'],
+                    'Link' => $menuEntry['link'],
+                    'Active' => $active,
+                    'MenuItemType' => 'link',
+                )));
+            }
 
-	/**
-	 * @return String 'link' or 'button'
-	 */
-	public function MenuItemType() {
-		return 'link';
-	}
+        }
 
-	public function GATrackingCode() {
-		return defined('GA_TRACKING_CODE') ? GA_TRACKING_CODE : null;
-	}
+        return $menu;
+    }
 
-	public function LinkWithSearch($extraParamStr = '') {
-		$params = array_diff_key($this->request->getVars(), array('url' => null));
-		parse_str($extraParamStr, $extraParams);
-		$params = array_merge($params, (array)$extraParams);
+    /**
+     * @return String 'link' or 'button'
+     */
+    public function MenuItemType() {
+        return 'link';
+    }
 
-		return Controller::join_links($this->Link(), '?' . http_build_query($params));
-	}
+    public function GATrackingCode() {
+        return defined('GA_TRACKING_CODE') ? GA_TRACKING_CODE : null;
+    }
+
+    public function LinkWithSearch($extraParamStr = '') {
+        $params = array_diff_key($this->request->getVars(), array('url' => null));
+        parse_str($extraParamStr, $extraParams);
+        $params = array_merge($params, (array)$extraParams);
+
+        return Controller::join_links($this->Link(), '?' . http_build_query($params));
+    }
 
 }
