@@ -5,7 +5,3 @@ Director:
   rules:
     "": HomeController
     "add-ons": AddonsController
-    "vendors": VendorsController
-    "authors": AuthorsController
-    "tags": TagsController
-    "submit": SubmitAddonController
