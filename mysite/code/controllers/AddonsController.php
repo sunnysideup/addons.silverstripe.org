@@ -154,8 +154,8 @@ class AddonsController extends SiteController {
             case 'downloads': $list = $list->sort('Downloads', 'DESC'); break;
         }
 
-        // $list = new PaginatedList($list, $this->request);
-        // $list->setPageLength(16);
+        $list = new PaginatedList($list, $this->request);
+        $list->setPageLength(16);
 
         return $list;
     }

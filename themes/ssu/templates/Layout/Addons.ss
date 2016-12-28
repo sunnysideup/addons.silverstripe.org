@@ -8,6 +8,8 @@
                 <th>Tags</th>
                 <th>Description</th>
                 <th>Requirements</th>
+                <th>Downloads</th>
+                <th>Number of Versions</th>
             </tr>
         </thead>
         <tfoot></tfoot>
@@ -22,7 +24,7 @@
                     <% end_if %>
 
                     <a href="$Repository">$PackageName</a>
-
+                    <br />$Vendor.Name
                     <% if Screenshots %>
                     <div class="placeholder img">
                         <% loop Screenshots %>
@@ -47,6 +49,12 @@
                             <% include AddonVersionDetails %>
                         <% end_if %>
                     <% end_loop %>
+                </td>
+                <td class="dl-row">
+                    $Downloads
+                </td>
+                <td class="nv-row">
+                    $SortedVersions.Count
                 </td>
 
             </tr>
