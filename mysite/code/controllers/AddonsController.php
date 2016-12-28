@@ -154,8 +154,8 @@ class AddonsController extends SiteController {
             case 'downloads': $list = $list->sort('Downloads', 'DESC'); break;
         }
 
-        $list = new PaginatedList($list, $this->request);
-        $list->setPageLength(16);
+        // $list = new PaginatedList($list, $this->request);
+        // $list->setPageLength(16);
 
         return $list;
     }
@@ -185,15 +185,6 @@ class AddonsController extends SiteController {
                 OptionSetField::create('compatibility', 'Minimum Silverstripe Version')
                     ->setSource(SilverStripeVersion::get()->map('Name', 'Name'))
                     ->setValue($this->request->getVar('compatibility')),
-                TagField::create('musthave', 'Must have ...')
-                    ->setSource(AddonKeyword::get()->sort('Name'))
-                    ->setValue($this->request->getVar('musthave')),
-                TagField::create('mayhave', 'May have ...')
-                    ->setSource(AddonKeyword::get()->sort('Name'))
-                    ->setValue($this->request->getVar('mayhave')),
-                TagField::create('mustnothave', 'Must not have ...')
-                    ->setSource(AddonKeyword::get()->sort('Name'))
-                    ->setValue($this->request->getVar('mustnothave'))
             )),
             new FieldList()
         );

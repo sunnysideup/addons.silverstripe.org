@@ -19,8 +19,7 @@
     "symfony/console": "^2.8",
     "symfony/yaml": "^2.8",
     "sunnysideup/themes_ssu_flava_main":    "dev-master",
-    "gdmedia/ss-auto-git-ignore": "*",
-    "silverstripe/tagfield": "^1.3"
+    "gdmedia/ss-auto-git-ignore": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

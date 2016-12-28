@@ -7,6 +7,8 @@ class HomeController extends SiteController {
     private static $popular_blacklist = array(
         'silverstripe/framework',
         'silverstripe/cms',
+        'silverstripe/reports',
+        'silverstripe/siteconfig',
         'silverstripe/sqlite3',
         'silverstripe/postgresql',
         'silverstripe-themes/simple'

@@ -20,6 +20,5 @@ dump.rdb
 /framework
 /multivaluefield
 /silverstripe-resque
-/tagfield
 /themes/main
 # END of GitIgnoreEditor

@@ -1,23 +1,8 @@
-<div class="row-fluid install-box">
-    <strong class="install-box-label">Install</strong>
-    <a href="http://doc.silverstripe.org/framework/en/topics/modules#installation">
-        <i class="icon-question-sign"></i>
-    </a>
-    <pre>composer require $Name $DisplayRequireVersion</pre>
-
-</div>
-
 <div class="row-fluid">
     <div class="span4">
-        <h5>Requires</h5>
+        <h5>$DisplayVersion Requires</h5>
         <% include AddonVersionDetailsLinks Items=$Requires %>
     </div>
-    <% if RequiresDev %>
-    <div class="span4">
-        <h5>Requires (Development)</h5>
-        <% include AddonVersionDetailsLinks Items=$RequiresDev %>
-    </div>
-    <% end_if %>
     <% if Suggests %>
     <div class="span4">
         <h5>Suggests</h5>

@@ -1,80 +1,28 @@
-<div class="page-header">
-    <h1>Modules and Themes <a class="pull-right" href="$Link('rss')"><img src="themes/addons/images/feed-icon-28x28.png" width="20" alt="RSS Feed" /></a></h1>
-</div>
-
-<div class="add-ons">
-<% with $AddonsSearchForm %>
-    <form $FormAttributes>
-        <% with $FieldMap %>
-            <div class="addons-search-row">
-                <h4>Keyword(s)
-                <% with $search %>
-                $Field
-                <% end_with %>
-                <button type="submit" class="btn">
-                    <i class="icon-search"></i> Search Add-ons
-                </button>
-            </div>
 
 
-            <div class="row">
-                <div class="span4">
-                    <h4>Type</h4>
-                    <% with $type %>
-                        <label for="$ID">$Title</label> $Field
-                    <% end_with %>
-                </div>
-                <div class="span4">
-                    <h4>Requirements</h4>
-                    <% with $compatibility %>
-                        <label for="$ID">$Title</label> $Field
-                    <% end_with %>
-                </div>
-            </div>
-
-            <div class="addons-search-row">
-                <h4>Tag selection:</h4>
-                <% with $musthave %>
-                <label for="$ID">$Title</label> $Field
-                <% end_with %>
-                <% with $mayhave %>
-                <label for="$ID">$Title</label> $Field
-                <% end_with %>
-                <% with $mustnothave %>
-                <label for="$ID">$Title</label> $Field
-                <% end_with %>
-            </div>
-            <div class="addons-search-row">
-                <h4>sort</h4>
-                <div class="span4">
-                    <% with $sort %>
-                        <label for="$ID">$Title</label> $Field
-                    <% end_with %>
-                </div>
-            </div>
-
-        <% end_with %>
-    </form>
-<% end_with %>
-<hr>
-<div class="addons-list-type">
-    <a href="$LinkWithSearch('view=expanded')"<% if ListView = 'expanded' %> class="current"<% end_if %>><i class="icon-th-large"></i></a>
-    <a href="$LinkWithSearch('view=list')"<% if ListView = 'list' %> class="current"<% end_if %>><i class="icon-th-list"></i></a>
-</div>
 <% if $Addons %>
-    <% if ListView = 'expanded' %>
-    <div class="row">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Tags</th>
+                <th>Description</th>
+                <th>Requirements</th>
+            </tr>
+        </thead>
+        <tfoot></tfoot>
+        <tbody>
         <% loop $Addons %>
-            <div class="addons-box span6">
-                <h3>
+            <tr class="tfsRow">
+                <td class="t-row">
                     <% if $Type == "module" %>
                         <i class="icon-th-large"></i>
                     <% else_if $Type == "theme" %>
                         <i class="icon-picture"></i>
                     <% end_if %>
-                    <a href="$Link">$Name</a>
-                </h3>
-                <div class="addons-box-holder">
+
+                    <a href="$Repository">$PackageName</a>
+
                     <% if Screenshots %>
                     <div class="placeholder img">
                         <% loop Screenshots %>
@@ -83,45 +31,28 @@
                         <% end_if %>
                         <% end_loop %>
                     </div>
-                    <% else %>
-                    <div class="placeholder"><!-- --></div>
                     <% end_if %>
-                    <% if MasterVersion %>
-                    <% loop MasterVersion %>
-                    <span class="version">Version $DisplayVersion</span>
+                </td>
+                <td class="k-row">
+                    <% loop $Keywords %>
+                        $Name<% if $Last %>.<% else %>,<% end_if %>
                     <% end_loop %>
-                    <% end_if %>
-                    <span class="meta"><% include AddonDownloadStats %></span>
-                    <span class="description">$Description.LimitCharacters(100)</span>
-                </div>
-            </div>
-            <% if $MultipleOf(2) %></div><div class="row"><% end_if %>
-        <% end_loop %>
-    </div>
-    <% else %>
-    <table class="table table-hover table-striped table-boxed table-addons">
-        <tbody>
-            <% loop $Addons %>
-            <tr>
-                <td>
-                    <% if $Type == "module" %>
-                        <i class="icon-th-large"></i>
-                    <% else_if $Type == "theme" %>
-                        <i class="icon-picture"></i>
-                    <% end_if %>
-                    <a href="$Link">$Name</a>
-                    <% include ModuleRatingVisual SmallCircle=true %>
                 </td>
-                <td>$Description.LimitCharacters(60)</td>
-                <td>
-                    <% include AddonDownloadStats %>
+                <td class="d-row">
+                    $Description.LimitCharacters(255)
                 </td>
+                <td  class="r-row">
+                    <% loop $SortedVersions %>
+                        <% if $First %>
+                            <% include AddonVersionDetails %>
+                        <% end_if %>
+                    <% end_loop %>
+                </td>
+
             </tr>
-            <% end_loop %>
+        <% end_loop %>
         </tbody>
     </table>
-    <% end_if %>
-    <% include Pagination Items=$Addons %>
 <% else %>
     <p>There are no add-ons to display.</p>
 <% end_if %>
