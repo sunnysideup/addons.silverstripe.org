@@ -33,6 +33,7 @@ class AddonsController extends SiteController {
     private $elastica;
 
     public function index() {
+        TableFilterSortAPI::include_requirements();
         return $this->renderWith(array('Addons', 'Page'));
     }
 

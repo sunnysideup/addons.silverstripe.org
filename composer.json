@@ -19,6 +19,7 @@
     "symfony/console": "^2.8",
     "symfony/yaml": "^2.8",
     "sunnysideup/themes_ssu_flava_main":    "dev-master",
+    "sunnysideup/table_filter_sort":        "dev-master",
     "gdmedia/ss-auto-git-ignore": "*"
   },
   "minimum-stability": "dev",

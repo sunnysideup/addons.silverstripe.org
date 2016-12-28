@@ -1,15 +1,35 @@
 
-
+<div class="tableFilterSortHolder">
 <% if $Addons %>
     <table>
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Tags</th>
-                <th>Description</th>
-                <th>Requirements</th>
-                <th>Downloads</th>
-                <th>Number of Versions</th>
+                <th scope="col">
+                    <a href="#"
+                        class="sortable"
+                        data-filter="Title"
+                        data-sort-direction="asc"
+                        data-sort-type="text"
+                    >Title</a>
+                    and Author(s)</th>
+                <th scope="col">Tags and Description</th>
+                <th scope="col">Requirements</th>
+                <th scope="col">
+                    <a href="#"
+                        class="sortable"
+                        data-filter="Downloads"
+                        data-sort-direction="asc"
+                        data-sort-type="number"
+                    >Size</a>
+                </th>
+                <th scope="col">
+                    <a href="#"
+                        class="sortable"
+                        data-filter="Versions"
+                        data-sort-direction="asc"
+                        data-sort-type="number"
+                    >Versions</a>
+                </th>
             </tr>
         </thead>
         <tfoot></tfoot>
@@ -22,25 +42,25 @@
                     <% else_if $Type == "theme" %>
                         <i class="icon-picture"></i>
                     <% end_if %>
-
-                    <a href="$Repository">$PackageName</a>
-                    <br />$Vendor.Name
-                    <% if Screenshots %>
-                    <div class="placeholder img">
-                        <% loop Screenshots %>
-                        <% if First %>
-                        <img src="$SetRatioSize(150,150).Link" />
+                    <a href="$Repository"><span data-filter="Title">$PackageName</span></a>
+                    <a href="#" class="more" data-rel="tandd_$ID">+</a>
+                    <div style="display: none;" id="tandd_$ID">
+                        <br /><span data-filter="Vendor">$Vendor.Name</span>
+                        <% if Screenshots %>
+                        <div class="placeholder img">
+                            <% loop Screenshots %>
+                            <% if First %>
+                            <img src="$SetRatioSize(150,150).Link" />
+                            <% end_if %>
+                            <% end_loop %>
+                        </div>
                         <% end_if %>
-                        <% end_loop %>
                     </div>
-                    <% end_if %>
                 </td>
                 <td class="k-row">
                     <% loop $Keywords %>
-                        $Name<% if $Last %>.<% else %>,<% end_if %>
+                        <span data-filter="Tag">$Name</span><% if $Last %>.<% else %>,<% end_if %>
                     <% end_loop %>
-                </td>
-                <td class="d-row">
                     $Description.LimitCharacters(255)
                 </td>
                 <td  class="r-row">
