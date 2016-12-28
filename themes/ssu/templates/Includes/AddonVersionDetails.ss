@@ -1,6 +1,6 @@
 <div class="row-fluid">
     <div class="span4">
-        <h5>$DisplayVersion Requires</h5>
+        <h5>Requires</h5>
         <% include AddonVersionDetailsLinks Items=$Requires %>
     </div>
     <% if Suggests %>

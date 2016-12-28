@@ -7,7 +7,8 @@ class SiteController extends Controller {
     public function init() {
         RSSFeed::linkToFeed("add-ons/rss", "New modules on addons.silverstripe.org");
 
-        Requirements::javascript("//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
+        Requirements::block(THIRDPARTY_DIR . '/jquery/jquery.js');
+        Requirements::javascript('https://code.jquery.com/jquery-git.min.js');
         Requirements::javascript("themes/".SSViewer::current_theme()."/javascript/menus.js");
 
         Requirements::javascript("themes/".SSViewer::current_theme()."/javascript/addons.js");
@@ -16,7 +17,7 @@ class SiteController extends Controller {
         Requirements::themedCSS('reset');
         Requirements::themedCSS('typography');
         Requirements::themedCSS('form');
-        Requirements::themedCSS('layout');        
+        Requirements::themedCSS('layout');
 
         parent::init();
     }
