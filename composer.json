@@ -20,7 +20,8 @@
     "symfony/yaml": "^2.8",
     "sunnysideup/themes_ssu_flava_main":    "dev-master",
     "sunnysideup/table_filter_sort":        "dev-master",
-    "gdmedia/ss-auto-git-ignore": "*"
+    "gdmedia/ss-auto-git-ignore": "*",
+    "koala-framework/composer-extra-assets": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -40,6 +41,12 @@
           "cp ./themes/main/javascript/* ./themes/ssu/javascript/ -r",
           "cp ./themes/main/templates/Includes/*.ss ./themes/ssu/templates/Includes/ -r"
       ]
+  },
+  "extra": {
+      "installer-name": "tagfield_awesomplete",
+      "require-bower": {
+          "taggle": "1.11.1"
+      }
   }
 
 }

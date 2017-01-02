@@ -3,7 +3,6 @@
 <div class="tableFilterSortHolder">
     <div class="tableFilterSortFilterFormHolder"
         data-title="My Filter Title"
-        data-title-clear-button="Clear"
         data-title-close-and-apply="Apply"
     ></div>
     <p class="tableFilterSortMoreEntries">
@@ -23,38 +22,52 @@
     <table class="tableFilterSortTable">
         <thead>
             <tr>
+                <th scope="col">&nbsp;</th>
                 <th scope="col">
                     <a href="#"
                         class="sortable"
-                        data-filter="Title"
+                        data-sort-field="Title"
                         data-sort-direction="asc"
-                        data-sort-type="text"
+                        data-sort-type="string"
                     >Title</a>
-                    and Author(s)</th>
+                    and Author(s)
+                </th>
                 <th scope="col">Tags and Description</th>
                 <th scope="col">Requirements</th>
                 <th scope="col">
                     <a href="#"
                         class="sortable"
-                        data-filter="Downloads"
+                        data-sort-field="Downloads"
                         data-sort-direction="asc"
-                        data-sort-type="number"
+                        data-sort-type="string"
                     >Downloads</a>
                 </th>
                 <th scope="col">
                     <a href="#"
                         class="sortable"
-                        data-filter="Versions"
+                        data-sort-field="RD"
+                        data-sort-direction="asc"
+                        data-sort-type="number"
+                    >Release Date</a>
+                </th>
+                <th scope="col">
+                    <a href="#"
+                        class="sortable"
+                        data-sort-field="Versions"
                         data-sort-direction="asc"
                         data-sort-type="number"
                     >Versions</a>
                 </th>
+                <th scope="col">&nbsp;</th>
             </tr>
         </thead>
         <tbody>
         <% loop $Addons %>
             <tr class="tfsRow">
-                <td class="t-row">
+                <td>
+                    ＋
+                </td>
+                <th class="t-row" scope="row">
                     <% if $Type == "module" %>
                         <i class="icon-th-large"></i>
                     <% else_if $Type == "theme" %>
@@ -74,7 +87,7 @@
                         </div>
                         <% end_if %>
                     </div>
-                </td>
+                </th>
                 <td class="k-row">
                     <% loop $Keywords %>
                         <span data-filter="Tag">$Name</span><% if $Last %>.<% else %>,<% end_if %>
@@ -97,10 +110,16 @@
                 <td class="dl-row">
                     <span data-filter="Downloads">$Downloads</span>
                 </td>
+                <td class="rd-row">
+                    $Released.Format(d M Y)
+                    <span data-filter="RD">$Released.Format(U)</span>
+                </td>
                 <td class="nv-row">
                     <span data-filter="Versions">$SortedVersions.Count</span>
                 </td>
-
+                <td>
+                    ♥
+                </td>
             </tr>
         <% end_loop %>
         </tbody>
@@ -125,7 +144,7 @@
         </span>
     </p>
 
-    
+
 </div>
 <% else %>
     <p>There are no add-ons to display.</p>

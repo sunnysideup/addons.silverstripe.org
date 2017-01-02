@@ -1,0 +1,6 @@
+{
+    "bower-dependencies": {
+        "taggle": "https://github.com/okcoker/taggle.js.git#1.11.1"
+    },
+    "npm-dependencies": []
+}
