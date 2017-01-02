@@ -7,14 +7,14 @@
     ></div>
     <p class="tableFilterSortMoreEntries">
         <span class="line">
-            Filter:
-            <strong class="match-row-number">0</strong> /
-            <strong class="total-row-number">0</strong>.
+            <strong>Filter:</strong>
+            <span class="match-row-number">0</span> /
+            <span class="total-row-number">0</span>.
         </span>
     </p>
     <p class="tableFilterSortMoreEntries">
         <span class="line">
-            Select Page: <strong class="pagination"></strong>
+            <strong>Select Page: </strong><span class="pagination"></span>
         </span>
     </p>
     <div class="tableFilterSortCommonContentHolder" data-title="Common Info"></div>
@@ -22,7 +22,7 @@
     <table class="tableFilterSortTable">
         <thead>
             <tr>
-                <th scope="col">&nbsp;</th>
+                <th scope="col" class="action">&nbsp;</th>
                 <th scope="col">
                     <a href="#"
                         class="sortable"
@@ -30,9 +30,9 @@
                         data-sort-direction="asc"
                         data-sort-type="string"
                     >Title</a>
-                    and Author(s)
+                    &amp; Author(s)
                 </th>
-                <th scope="col">Tags and Description</th>
+                <th scope="col">Tags &amp; Description</th>
                 <th scope="col">Requirements</th>
                 <th scope="col">
                     <a href="#"
@@ -56,16 +56,16 @@
                         data-sort-field="Versions"
                         data-sort-direction="asc"
                         data-sort-type="number"
-                    >Versions</a>
+                    >Number of Versions</a>
                 </th>
-                <th scope="col">&nbsp;</th>
+                <th scope="col" class="action">&nbsp;</th>
             </tr>
         </thead>
         <tbody>
         <% loop $Addons %>
             <tr class="tfsRow">
-                <td>
-                    ＋
+                <td class="action">
+                    <a href="#" class="more">＋</a>
                 </td>
                 <th class="t-row" scope="row">
                     <% if $Type == "module" %>
@@ -74,8 +74,7 @@
                         <i class="icon-picture"></i>
                     <% end_if %>
                     <a href="$Repository"><span data-filter="Title">$PackageName</span></a>
-                    <a href="#" class="more" data-rel="auth_$ID">+</a>
-                    <div style="display: none;" id="auth_$ID">
+                    <div style="display: none;" class="hidden">
                         <br /><span data-filter="Vendor">$Vendor.Name</span>
                         <% if Screenshots %>
                         <div class="placeholder img">
@@ -92,16 +91,15 @@
                     <% loop $Keywords %>
                         <span data-filter="Tag">$Name</span><% if $Last %>.<% else %>,<% end_if %>
                     <% end_loop %>
-                    <a href="#" class="more" data-rel="desc_$ID">+</a>
-                    <div style="display: none;" id="desc_$ID">
+                    <div style="display: none;" class="hidden">
                         $Description.LimitCharacters(255)
                     </div>
                 </td>
                 <td  class="r-row">
                     <% loop $SortedVersions %>
                         <% if $First %>
-                            <a href="#" class="more" data-rel="req_$ID">$DisplayVersion</a>
-                            <div style="display: none;" id="req_$ID">
+                            $DisplayVersion
+                            <div style="display: none;" class="hidden">
                             <% include AddonVersionDetails %>
                         </div>
                         <% end_if %>
@@ -112,7 +110,7 @@
                 </td>
                 <td class="rd-row">
                     $Released.Format(d M Y)
-                    <span data-filter="RD">$Released.Format(U)</span>
+                    <span data-filter="RD" style="display: none">$Released.Format(U)</span>
                 </td>
                 <td class="nv-row">
                     <span data-filter="Versions">$SortedVersions.Count</span>
@@ -130,17 +128,18 @@
             there are more entries, but they can not be shown here as this will overload your browser.
         </span>
         <span class="line">
-            Filter:
-            <strong class="match-row-number">0</strong> /
-            <strong class="total-row-number">0</strong>.
+            <strong>Filtered:</strong>
+            <span class="match-row-number">0</span> /
+            <span class="total-row-number">0</span>.
         </span>
         <span class="line">
-            Display: <strong class="total-showing-row-number">0</strong>
-            (<strong class="min-row-number">0</strong>
-            - <strong class="max-row-number">0</strong>).
+            <strong>Currently Displaying:</strong>
+            <span class="total-showing-row-number">0</span>
+            (<span class="min-row-number">0</span>
+            - <span class="max-row-number">0</span>).
         </span>
         <span class="line">
-            Select Page: <strong class="pagination"></strong>
+            <strong>Select Page:</strong> <span class="pagination"></span>
         </span>
     </p>
 
