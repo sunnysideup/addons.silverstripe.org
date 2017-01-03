@@ -70,14 +70,15 @@ class AddonUpdater {
         foreach (SilverStripeVersion::get() as $version) {
             $this->silverstripes[$version->ID] = $version->getConstraint();
         }
-
         // This call to packagist can be expensive. Requests are served from a cache if usePackagistCache() returns true
         $cache = SS_Cache::factory('addons');
         if($this->usePackagistCache() && $packages = $cache->load('packagist')) {
             $packages = unserialize($packages);
         } else {
-            $packages = $this->packagist->getPackages();
-            $cache->save(serialize($packages), 'packagist');
+            $packages = $this->packagist->getPackages($limitAddons);
+            if(!$limitAddons) {
+                $cache->save(serialize($packages), 'packagist');
+            }
         }
         $this->elastica->startBulkIndex();
 
