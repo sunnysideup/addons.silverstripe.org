@@ -166,7 +166,7 @@ class AddonUpdater {
         $addon->write();
     }
 
-    private function updateVersion(Addon $addon, AddonVersion $package) {
+    private function updateVersion(Addon $addon, $package) {
         $version = null;
 
         if ($addon->isInDB()) {
