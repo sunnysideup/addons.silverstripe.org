@@ -41,24 +41,30 @@ class PackagistService {
      * @param string (optional) $limitAddons
      * @return Packagist\Api\Package[]
      */
-    public function getPackages($limitAddons = '') {
+    public function getPackages($limitAddons = null) {
         $packages = array();
         $loader = new ArrayLoader();
-
-        $addonTypes = array(
-            'silverstripe-module',
-            'silverstripe-theme'
-        );
-        foreach ($addonTypes as $type) {
-            if($limitAddons) {
-                $repositoriesNames = $this->client->all(array('vendor' => $limitAddons, 'type' => $type));
-            }
-            else {
-                $repositoriesNames = $this->client->all(array('type' => $type));
-            }
-            foreach ($repositoriesNames as $name) {
-                $packages[] = $this->client->get($name);
+        if(is_array($limitAddons)) {
+            foreach($limitAddons as $limitAddon) {
+                $packages[] = $this->client->get($limitAddon);
                 echo $name . PHP_EOL; //output to give feedback when running
+            }
+        } else {
+            $addonTypes = array(
+                'silverstripe-module',
+                'silverstripe-theme'
+            );
+            foreach ($addonTypes as $type) {
+                if($limitAddons) {
+                    $repositoriesNames = $this->client->all(array('vendor' => $limitAddons));
+                }
+                else {
+                    $repositoriesNames = $this->client->all(array('type' => $type));
+                }
+                foreach ($repositoriesNames as $name) {
+                    $packages[] = $this->client->get($name);
+                    echo $name . PHP_EOL; //output to give feedback when running
+                }
             }
         }
         return $packages;

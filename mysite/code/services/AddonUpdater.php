@@ -70,6 +70,7 @@ class AddonUpdater {
         foreach (SilverStripeVersion::get() as $version) {
             $this->silverstripes[$version->ID] = $version->getConstraint();
         }
+
         // This call to packagist can be expensive. Requests are served from a cache if usePackagistCache() returns true
         $cache = SS_Cache::factory('addons');
         if($this->usePackagistCache() && $packages = $cache->load('packagist')) {
@@ -167,22 +168,22 @@ class AddonUpdater {
         $addon->write();
     }
 
-    private function updateVersion(Addon $addon, $package) {
+    private function updateVersion(Addon $addon, Packagist\Api\Result\Package\Version $versionFromPackagist) {
         $version = null;
 
         if ($addon->isInDB()) {
-            $version = $addon->Versions()->filter('Version', $package->getVersionNormalized())->first();
+            $version = $addon->Versions()->filter('Version', $versionFromPackagist->getVersionNormalized())->first();
         }
 
         if (!$version) {
             $version = new AddonVersion();
         }
 
-        $version->Name = $package->getName();
-        $version->Type = str_replace('silverstripe-', '', $package->getType());
-        $version->Description = $package->getDescription();
-        $version->Released = strtotime($package->getTime());
-        $keywords = $package->getKeywords();
+        $version->Name = $versionFromPackagist->getName();
+        $version->Type = str_replace('silverstripe-', '', $versionFromPackagist->getType());
+        $version->Description = $versionFromPackagist->getDescription();
+        $version->Released = strtotime($versionFromPackagist->getTime());
+        $keywords = $versionFromPackagist->getKeywords();
 
         if ($keywords) {
             foreach ($keywords as $keyword) {
@@ -193,37 +194,37 @@ class AddonUpdater {
             }
         }
 
-        $version->Version = $package->getVersionNormalized();
-        $version->PrettyVersion = $package->getVersion();
+        $version->Version = $versionFromPackagist->getVersionNormalized();
+        $version->PrettyVersion = $versionFromPackagist->getVersion();
 
-        $stability = VersionParser::parseStability($package->getVersion());
+        $stability = VersionParser::parseStability($versionFromPackagist->getVersion());
         $isDev = $stability === 'dev';
         $version->Development = $isDev;
 
-        $version->SourceType = $package->getSource()->getType();
-        $version->SourceUrl = $package->getSource()->getUrl();
-        $version->SourceReference = $package->getSource()->getReference();
+        $version->SourceType = $versionFromPackagist->getSource()->getType();
+        $version->SourceUrl = $versionFromPackagist->getSource()->getUrl();
+        $version->SourceReference = $versionFromPackagist->getSource()->getReference();
 
-        if($package->getDist()) {
-            $version->DistType = $package->getDist()->getType();
-            $version->DistUrl = $package->getDist()->getUrl();
-            $version->DistReference = $package->getDist()->getReference();
-            $version->DistChecksum = $package->getDist()->getShasum();
+        if($versionFromPackagist->getDist()) {
+            $version->DistType = $versionFromPackagist->getDist()->getType();
+            $version->DistUrl = $versionFromPackagist->getDist()->getUrl();
+            $version->DistReference = $versionFromPackagist->getDist()->getReference();
+            $version->DistChecksum = $versionFromPackagist->getDist()->getShasum();
         }
 
-        $version->Extra = $package->getExtra();
-        $version->Homepage = $package->getHomepage();
-        $version->License = $package->getLicense();
+        $version->Extra = $versionFromPackagist->getExtra();
+        $version->Homepage = $versionFromPackagist->getHomepage();
+        $version->License = $versionFromPackagist->getLicense();
         // $version->Support = $package->getSupport();
 
         $addon->Versions()->add($version);
 
-        $this->updateLinks($version, $package);
-        $this->updateCompatibility($addon, $version, $package);
-        $this->updateAuthors($version, $package);
+        $this->updateLinks($version, $versionFromPackagist);
+        $this->updateCompatibility($addon, $version, $versionFromPackagist);
+        $this->updateAuthors($version, $versionFromPackagist);
     }
 
-    private function updateLinks(AddonVersion $version, CompletePackage $package) {
+    private function updateLinks(AddonVersion $version, Packagist\Api\Result\Package\Version $versionFromPackagist) {
         $getLink = function ($name, $type) use ($version) {
             $link = null;
 
@@ -249,36 +250,37 @@ class AddonUpdater {
         );
 
         foreach ($types as $type => $method) {
-            if ($linked = $package->$method()) foreach ($linked as $link => $constraint) {
-                $name = $link;
-                $addon = Addon::get()->filter('Name', $name)->first();
+            if ($linked = $versionFromPackagist->$method())
+                foreach ($linked as $link => $constraint) {
+                    $name = $link;
+                    $addon = Addon::get()->filter('Name', $name)->first();
 
-                $local = $getLink($name, $type);
-                $local->Constraint = $constraint;
+                    $local = $getLink($name, $type);
+                    $local->Constraint = $constraint;
 
-                if ($addon) {
-                    $local->TargetID = $addon->ID;
-                }
+                    if ($addon) {
+                        $local->TargetID = $addon->ID;
+                    }
 
-                $version->Links()->add($local);
+                    $version->Links()->add($local);
             }
         }
 
         //to-do api have no method to get this.
-        /*$suggested = $package->getSuggests();
+        /*$suggested = $versionFromPackagist->getSuggests();
 
-        if ($suggested) foreach ($suggested as $package => $description) {
-            $link = $getLink($package, 'suggest');
+        if ($suggested) foreach ($suggested as $versionFromPackagist => $description) {
+            $link = $getLink($versionFromPackagist, 'suggest');
             $link->Description = $description;
 
             $version->Links()->add($link);
         }*/
     }
 
-    private function updateCompatibility(Addon $addon, AddonVersion $version, CompletePackage $package) {
+    private function updateCompatibility(Addon $addon, AddonVersion $version, Packagist\Api\Result\Package\Version $versionFromPackagist) {
         $require = null;
 
-        if($package->getRequire()) foreach ($package->getRequire() as $name => $link) {
+        if($versionFromPackagist->getRequire()) foreach ($versionFromPackagist->getRequire() as $name => $link) {
             if((string)$link == 'self.version') continue;
 
             if ($name == 'silverstripe/framework') {
@@ -312,8 +314,8 @@ class AddonUpdater {
         }
     }
 
-    private function updateAuthors(AddonVersion $version, CompletePackage $package) {
-        if ($package->getAuthors()) foreach ($package->getAuthors() as $details) {
+    private function updateAuthors(AddonVersion $version, Packagist\Api\Result\Package\Version $versionFromPackagist) {
+        if ($versionFromPackagist->getAuthors()) foreach ($versionFromPackagist->getAuthors() as $details) {
             $author = null;
 
             if (!$details->getName() && !$details->getEmail()) {
@@ -334,7 +336,7 @@ class AddonUpdater {
             if (!$author && $details->getName()) {
                 $author = AddonAuthor::get()
                     ->filter('Name', $details->getName())
-                    ->filter('Versions.Addon.Name', $package->getName())
+                    ->filter('Versions.Addon.Name', $versionFromPackagist->getName())
                     ->first();
             }
 
