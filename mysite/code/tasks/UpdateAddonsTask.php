@@ -4,21 +4,21 @@
  */
 class UpdateAddonsTask extends BuildTask {
 
-	protected $title = 'Update Add-ons';
+    protected $title = 'Update Add-ons';
 
-	protected $description = 'Updates add-ons from Packagist';
+    protected $description = 'Updates add-ons from Packagist';
 
-	private $updater;
+    private $updater;
 
-	public function __construct(AddonUpdater $updater) {
-		$this->updater = $updater;
-	}
+    public function __construct(AddonUpdater $updater) {
+        $this->updater = $updater;
+    }
 
-	public function run($request) {
-		$this->updater->update(
-			(bool)$request->getVar('clear'),
-			$request->getVar('addons') ? explode(',', $request->getVar('addons')) : null
-		);
-	}
+    public function run($request) {
+        $this->updater->update(
+            (bool)$request->getVar('clear'),
+            $request->getVar('addons') ? explode(',', $request->getVar('vendor')) : null
+        );
+    }
 
 }
