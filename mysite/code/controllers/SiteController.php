@@ -14,7 +14,7 @@ class SiteController extends Controller {
         Requirements::javascript("themes/".SSViewer::current_theme()."/javascript/addons.js");
         Requirements::javascript("//www.google.com/jsapi");
 
-
+        Requirements::themedCSS('layout');
 
         parent::init();
     }

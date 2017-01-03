@@ -156,7 +156,7 @@ class AddonsController extends SiteController {
         }
 
         $list = new PaginatedList($list, $this->request);
-        $list->setPageLength(300);
+        $list->setPageLength(20);
 
         return $list;
     }

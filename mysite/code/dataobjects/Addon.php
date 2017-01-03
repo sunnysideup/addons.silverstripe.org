@@ -171,4 +171,21 @@ class Addon extends DataObject {
 
         return new ArrayData($data["inspections"][0]);
     }
+
+    function FilteredKeywords() {
+        $list = $this->Keywords()->exclude(
+            array(
+                'Name' => array(
+                    'Silverstripe',
+                    'CMS',
+                    'cms',
+                    'silverstripe',
+                    'silver stripe',
+                    'silvertripe CMS'
+                )
+            )
+        );
+        return $list;
+    }
+
 }

@@ -20,15 +20,17 @@
     <% end_if %>
 <% end_if %>
 </head>
-<body id="Body$ClassName" class="mobileBrowsing">
+<body>
 <div id="Wrapper">
     <div id="Container">
         <% include Navigation %>
          <div id="Layout" class="typography">
-            <a href="#" class="menuButton">menu</a>
-            <% include Breadcrumbs %>
             <div id="LayoutHolder">$Layout</div>
             <footer>
+                <h3>Credits</h3>
+                <p>
+                    This site is based on the <a href="http://addons.silverstripe.org">the original Silverstripe addons site</a>.
+                </p>
                 <span class="backToTop"><a href="#Wrapper">back to top</a></span>
                 <div id="CopyrightMessage">$SiteConfig.CopyrightNotice</div>
             </footer>

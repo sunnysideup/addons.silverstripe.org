@@ -27,19 +27,11 @@
   "prefer-stable": true,
   "scripts": {
       "post-install-cmd": [
-          "sed -i '/CLEANING_MODE_ALL/d' ./framework/model/Aggregate.php",
-          "cp ./themes/main/css/* ./themes/ssu/css/ -r",
-          "cp ./themes/main/images/* ./themes/ssu/images/ -r",
-          "cp ./themes/main/javascript/* ./themes/ssu/javascript/ -r",
-          "cp themes/main/templates/Includes/*.ss themes/ssu/templates/Includes/ -r"
+          "sed -i '/CLEANING_MODE_ALL/d' ./framework/model/Aggregate.php"
       ],
       "post-update-cmd": [
           "GDM\\SSAutoGitIgnore\\UpdateScript::Go",
-          "sed -i '/CLEANING_MODE_ALL/d' ./framework/model/Aggregate.php",
-          "cp ./themes/main/css/* ./themes/ssu/css/ -r",
-          "cp ./themes/main/images/* ./themes/ssu/images/ -r",
-          "cp ./themes/main/javascript/* ./themes/ssu/javascript/ -r",
-          "cp ./themes/main/templates/Includes/*.ss ./themes/ssu/templates/Includes/ -r"
+          "sed -i '/CLEANING_MODE_ALL/d' ./framework/model/Aggregate.php"
       ]
   },
   "extra": {
