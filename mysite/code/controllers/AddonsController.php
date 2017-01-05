@@ -33,6 +33,7 @@ class AddonsController extends SiteController {
     private $elastica;
 
     public function index() {
+        increase_time_limit_to(600);
         TableFilterSortAPI::include_requirements();
         return $this->renderWith(array('Addons', 'Page'));
     }
@@ -156,7 +157,7 @@ class AddonsController extends SiteController {
         }
 
         $list = new PaginatedList($list, $this->request);
-        $list->setPageLength(20);
+        $list->setPageLength(3000);
 
         return $list;
     }

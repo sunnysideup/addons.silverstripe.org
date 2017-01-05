@@ -4,28 +4,41 @@
  */
 class AddonLink extends DataObject {
 
-	public static $db = array(
-		'Name' => 'Varchar(100)',
-		'Type' => 'Enum(array("require", "require-dev", "suggest", "provide", "conflict", "replace"))',
-		'Constraint' => 'Varchar(100)',
-		'Description' => 'Varchar(255)'
-	);
+    public static $db = array(
+        'Name' => 'Varchar(100)',
+        'Type' => 'Enum(array("require", "require-dev", "suggest", "provide", "conflict", "replace"))',
+        'Constraint' => 'Varchar(100)',
+        'Description' => 'Varchar(255)'
+    );
 
-	public static $has_one = array(
-		'Source' => 'AddonVersion',
-		'Target' => 'Addon'
-	);
+    public static $has_one = array(
+        'Source' => 'AddonVersion',
+        'Target' => 'Addon'
+    );
 
-	public function Link() {
-		if ($this->TargetID) {
-			return $this->Target()->Link();
-		}
+    public function Link() {
+        // if ($this->TargetID) {
+        // 	return $this->Target()->Link();
+        // }
 
-		if ($this->Name == 'php' || strpos($this->Name, 'ext-') === 0) {
-			return '';
-		}
+        if ($this->Name == 'php' || strpos($this->Name, 'ext-') === 0) {
+            return '';
+        }
 
-		return "https://packagist.org/packages/$this->Name";
-	}
+        return "https://packagist.org/packages/$this->Name";
+    }
+
+    function ConstraintSimple()
+    {
+        $constraint = $this->Constraint;
+        if($constraint === '*') {
+            return '*';
+        }
+        $constraint = str_replace(array('>', '=', '~', '<', '*', '^', '@', 'dev', '-', 'v'), '', $constraint);
+        $constraint = explode(".", $constraint);
+        if(is_array($constraint) && count($constraint)) {
+            return trim($constraint[0]);
+        }
+    }
 
 }
