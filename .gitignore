@@ -24,5 +24,4 @@ dump.rdb
 /silverstripe-resque
 /siteconfig
 /table_filter_sort
-/themes/main
 # END of GitIgnoreEditor

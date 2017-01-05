@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2084be03c9176d8e3b9c7d2afd19fedb",
-    "content-hash": "b57573e44ae8534b9bd90030acffec11",
+    "hash": "4919276cc918f18c4bb7973a49d728cf",
+    "content-hash": "70130096b83d676f9c52f7e9ac4f4682",
     "packages": [
         {
             "name": "chrisboulton/php-resque",
@@ -1597,62 +1597,6 @@
             "time": "2017-01-05 07:00:55"
         },
         {
-            "name": "sunnysideup/themes_ssu_flava_main",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sunnysideup/silverstripe-themes_ssu_flava_main.git",
-                "reference": "6880472748f71a39e01d1a139d8dc72d1662c454"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sunnysideup/silverstripe-themes_ssu_flava_main/zipball/6880472748f71a39e01d1a139d8dc72d1662c454",
-                "reference": "6880472748f71a39e01d1a139d8dc72d1662c454",
-                "shasum": ""
-            },
-            "require": {
-                "silverstripe/cms": "~3.1",
-                "silverstripe/framework": "~3.1"
-            },
-            "suggest": {
-                "sunnysideup/mysite_ssu_flava_main_cms": "*",
-                "sunnysideup/mysite_ssu_flava_main_ecommerce": "*",
-                "sunnysideup/mysite_ssu_flava_main_ecommerce_product_variation": "*",
-                "sunnysideup/mysite_ssu_flava_main_webportfolio": "*",
-                "sunnysideup/mysite_ssu_flava_simple": "*",
-                "sunnysideup/mysite_ssu_flava_simple_ecommerce": "*"
-            },
-            "type": "silverstripe-theme",
-            "extra": {
-                "installer-name": "main"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Sunny Side Up (BSD-3-Clause and CUSTOM)"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolaas Francken",
-                    "email": "modules@sunnysideup.co.nz",
-                    "role": "lead developer"
-                }
-            ],
-            "description": "Sunny Side Up Theme",
-            "keywords": [
-                "Silverstripe-CMS",
-                "Sunny Side Up",
-                "basic",
-                "boilerplate",
-                "cms",
-                "install",
-                "silverstripe",
-                "template",
-                "theme",
-                "themes"
-            ],
-            "time": "2017-01-03 01:33:33"
-        },
-        {
             "name": "symfony/console",
             "version": "v2.8.15",
             "source": {
@@ -2095,7 +2039,6 @@
         "silverstripe/framework": 0,
         "knplabs/packagist-api": 0,
         "silverstripe-australia/elastica": 20,
-        "sunnysideup/themes_ssu_flava_main": 20,
         "sunnysideup/table_filter_sort": 20,
         "koala-framework/composer-extra-assets": 20
     },
