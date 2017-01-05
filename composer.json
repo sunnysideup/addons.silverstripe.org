@@ -36,7 +36,7 @@
           "sed -i '/CLEANING_MODE_ALL/d' ./framework/model/Aggregate.php",
           "rm cms -rf",
           "rm siteconfig -rf",
-          "rm reports -rf" 
+          "rm reports -rf"
       ]
   },
   "extra": {

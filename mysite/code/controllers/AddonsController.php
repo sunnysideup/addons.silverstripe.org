@@ -35,7 +35,10 @@ class AddonsController extends SiteController {
     public function index() {
         increase_time_limit_to(600);
         TableFilterSortAPI::include_requirements();
-        return $this->renderWith(array('Addons', 'Page'));
+        $html = $this->renderWith(array('Addons', 'Page'));
+        $html = preg_replace("/\s+/", ' ', trim($html));
+        $html = str_replace(array('<!-- -->', '//<![CDATA[', '//]]>'), '', $html);
+        return $html;
     }
 
     public function setElasticaService(ElasticaService $elastica) {
@@ -157,7 +160,7 @@ class AddonsController extends SiteController {
         }
 
         $list = new PaginatedList($list, $this->request);
-        $list->setPageLength(3000);
+        $list->setPageLength(3);
 
         return $list;
     }

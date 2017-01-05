@@ -75,7 +75,6 @@
                         <ul>
                             <li>Type: <span data-filter="Type" class="dl">$Type</span>
                             <li>Team: <span data-filter="Team" class="dl">$Vendor.Name</span></li>
-                            </li>
                         <% if Screenshots %>
                             <li class="placeholder img">
                                 <% loop Screenshots %>
@@ -96,12 +95,11 @@
                 <td class="k-row">
                     $Description.LimitCharacters(450)
                     <% if $FilteredKeywords %>
-                    <div style="display: none;" class="hidden">
-                    <ul>
+                    <ul style="display: none;" class="hidden">
                     <% loop $FilteredKeywords %>
                         <li><span data-filter="Tag" class="dl">$Name</span></li>
                     <% end_loop %>
-                    </div>
+                    </ul>
                     <% end_if %>
                 </td>
                 <td class="rd-row">
