@@ -56,6 +56,7 @@ th[scope='row'] {
 th[scope='row'] span[data-filter='Title'] {
   font-weight: bold;
   border-bottom: 0px;
+  cursor: pointer;
 }
 th[scope='row'] span[data-filter='Title']:before {
     width: 16px;

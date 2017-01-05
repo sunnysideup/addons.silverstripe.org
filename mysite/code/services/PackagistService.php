@@ -47,7 +47,7 @@ class PackagistService {
         if(is_array($limitAddons)) {
             foreach($limitAddons as $limitAddon) {
                 $packages[] = $this->client->get($limitAddon);
-                echo $name . PHP_EOL; //output to give feedback when running
+                echo $limitAddon . PHP_EOL; //output to give feedback when running
             }
         } else {
             $addonTypes = array(

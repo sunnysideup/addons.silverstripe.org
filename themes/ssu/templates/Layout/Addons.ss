@@ -17,7 +17,7 @@
             <strong>Select Page: </strong><span class="pagination"></span>
         </span>
     </p>
-    <p class="tableFilterSortMoreEntries">
+    <p class="tableFilterSortMoreEntriesAlwaysShow">
         <span class="line">
             <strong>Filter:</strong>
             <span class="match-row-number">0</span> /
@@ -45,6 +45,7 @@
                         data-sort-field="RD"
                         data-sort-direction="desc"
                         data-sort-type="number"
+                        data-sort-default="true"
                     >Release Date</a>
                 </th>
                 <th scope="col" class="number">
@@ -72,8 +73,8 @@
                     <span data-filter="Title" class="ignore more">$PackageName</span>
                     <div style="display: none;" class="hidden">
                         <ul>
-                            <li>Type: <span data-filter="Type">$Type</span>
-                            <li>Team: <span data-filter="Team">$Vendor.Name</span></li>
+                            <li>Type: <span data-filter="Type" class="dl">$Type</span>
+                            <li>Team: <span data-filter="Team" class="dl">$Vendor.Name</span></li>
                             </li>
                         <% if Screenshots %>
                             <li class="placeholder img">
@@ -87,7 +88,7 @@
                         </ul>
                     </div>
                     <p>
-                        <a href="$FavouriteLink" class="externalLink favourite" target="_blank" title="Add to Favourites">♥</a>
+                        <!-- <a href="$FavouriteLink" class="externalLink favourite" target="_blank" title="Add to Favourites">♥</a> -->
                         <a href="$Repository" class="externalLink github" target="_blank" title="View Repository">go to github</a>
                         <a href="$PackagistUrl" class="externalLink packagist" target="_blank" title="View on Packagist">go to packagist</a>
                     </p>
@@ -98,7 +99,7 @@
                     <div style="display: none;" class="hidden">
                     <ul>
                     <% loop $FilteredKeywords %>
-                        <li><span data-filter="Tag">$Name</span></li>
+                        <li><span data-filter="Tag" class="dl">$Name</span></li>
                     <% end_loop %>
                     </div>
                     <% end_if %>
