@@ -37,7 +37,11 @@ class AddonLink extends DataObject {
         $constraint = str_replace(array('>', '=', '~', '<', '*', '^', '@', 'dev', '-', 'v'), '', $constraint);
         $constraint = explode(".", $constraint);
         if(is_array($constraint) && count($constraint)) {
-            return trim($constraint[0]);
+            $v = trim($constraint[0]);
+            if(in_array($v, array(2,3,4,5,6,7)) {
+                return $v;
+            }
+            return 'n/a';
         }
     }
 
