@@ -21,7 +21,7 @@
         <span class="line">
             <strong>Filter:</strong>
             <span class="match-row-number">0</span> /
-            <span class="total-row-number">0</span>.
+            <span class="total-row-number">0</span>
         </span>
     </p>
 
@@ -36,7 +36,13 @@
                         data-sort-field="Title"
                         data-sort-direction="asc"
                         data-sort-type="string"
-                    >Title</a> + Team
+                    >Title</a> +
+                    <a href="#"
+                        class="sortable"
+                        data-sort-field="Team"
+                        data-sort-direction="asc"
+                        data-sort-type="string"
+                    >Team</a>
                 </th>
                 <th scope="col">Description + Tags</th>
                 <th scope="col" class="number">
@@ -46,6 +52,7 @@
                         data-sort-direction="desc"
                         data-sort-type="number"
                         data-sort-default="true"
+                        data-sort-only="true"
                     >Release Date</a>
                 </th>
                 <th scope="col" class="number">
@@ -54,6 +61,7 @@
                         data-sort-field="Downloads"
                         data-sort-direction="desc"
                         data-sort-type="number"
+                        data-sort-only="true"
                     >Downloads</a>
                 </th>
                 <th scope="col" class="number">
