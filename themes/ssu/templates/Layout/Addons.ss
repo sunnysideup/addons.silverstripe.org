@@ -1,8 +1,8 @@
 
 <header>
-    <h1>The World's Best Silverstripe Themes and Modules</h1>
+    <h1 id="header">The World's Best Silverstripe Themes and Modules</h1>
     <p>
-        Brought to you by <a href="http://www.sunnysideup.co.nz/">Sunny Side Up</a>.
+        Provided by <a href="http://www.sunnysideup.co.nz/">Sunny Side Up</a>.
         Please hire us for your next Silverstripe Project.
     </p>
  </header>
@@ -70,6 +70,7 @@
                         data-sort-field="Versions"
                         data-sort-direction="desc"
                         data-sort-type="number"
+                        data-sort-only="true"
                     >Versions</a> + Requirements
                 </th>
             </tr>
@@ -95,7 +96,7 @@
                         </ul>
                     </div>
                     <p>
-                        <!-- <a href="$FavouriteLink" class="externalLink favourite" target="_blank" title="Add to Favourites">♥</a> -->
+                        <a href="$FavouriteLink" class="externalLink addFav" target="_blank" title="Add to Favourites">♥</a> 
                         <a href="$Repository" class="externalLink github" target="_blank" title="View Repository">go to github</a>
                         <a href="$PackagistUrl" class="externalLink packagist" target="_blank" title="View on Packagist">go to packagist</a>
                     </p>

@@ -19,8 +19,7 @@
     "symfony/console": "^2.8",
     "symfony/yaml": "^2.8",
     "sunnysideup/table_filter_sort":        "dev-master",
-    "gdmedia/ss-auto-git-ignore": "*",
-    "koala-framework/composer-extra-assets": "dev-master"
+    "gdmedia/ss-auto-git-ignore": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -33,17 +32,8 @@
       ],
       "post-update-cmd": [
           "GDM\\SSAutoGitIgnore\\UpdateScript::Go",
-          "sed -i '/CLEANING_MODE_ALL/d' ./framework/model/Aggregate.php",
-          "rm cms -rf",
-          "rm siteconfig -rf",
-          "rm reports -rf"
+          "sed -i '/CLEANING_MODE_ALL/d' ./framework/model/Aggregate.php"
       ]
-  },
-  "extra": {
-      "installer-name": "tagfield_awesomplete",
-      "require-bower": {
-          "taggle": "1.11.1"
-      }
   }
 
 }

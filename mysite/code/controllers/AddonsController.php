@@ -69,7 +69,7 @@ class AddonsController extends SiteController {
     }
 
     public function Title() {
-        return 'Add-ons';
+        return 'The World\'s best Silverstripe Modules and Themes';
     }
 
     public function Link($slug = null) {
@@ -160,7 +160,11 @@ class AddonsController extends SiteController {
         }
 
         $list = new PaginatedList($list, $this->request);
-        $list->setPageLength(3000);
+        $limit = 99999;
+        if(Director::isDev()){
+            $limit = 52;
+        }
+        $list->setPageLength($limit);
 
         return $list;
     }
