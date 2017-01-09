@@ -77,9 +77,10 @@
         </thead>
         <tbody>
         <% loop $Addons %>
-            <tr class="tfsRow">
+            <tr class="tfsRow" id="tfs$ID">
                 <th class="t-row" scope="row">
-                    <span data-filter="Title" class="ignore more">$PackageName</span>
+                    <span data-filter="Title" class="ignore more">$PackageName</span> /
+                    <span data-filter="Team" class="dl">$Vendor.Name</span>
                     <div style="display: none;" class="hidden">
                         <ul>
                             <li>Type: <span data-filter="Type" class="dl">$Type</span>
@@ -96,7 +97,7 @@
                         </ul>
                     </div>
                     <p>
-                        <a href="$FavouriteLink" class="externalLink addFav" target="_blank" title="Add to Favourites">♥</a> 
+                        <a href="$FavouriteLink" class="externalLink addFav" target="_blank" title="Add to Favourites">♥</a>
                         <a href="$Repository" class="externalLink github" target="_blank" title="View Repository">go to github</a>
                         <a href="$PackagistUrl" class="externalLink packagist" target="_blank" title="View on Packagist">go to packagist</a>
                     </p>
