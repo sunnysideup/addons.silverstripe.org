@@ -1,12 +1,19 @@
-<% if Requires %>
-<% include AddonVersionDetailsLinks Items=$Requires %>
+<% if FrameworkRequires %>
+    <% with FrameworkRequires %>
+        <span data-filter="Framework Version" class="dl">$ConstraintSimple</span>
+    <% end_with %>
 <% end_if %>
 
 <div style="display: none;" class="hidden">
+<% if Requires %>
+<h5>Requires</h5>
+<% include AddonVersionDetailsLinks Items=$Requires %>
+<% end_if %>
 <% if Suggests %>
 <h5>Suggests</h5>
 <% include AddonVersionDetailsLinks Items=$Suggests %>
 <% end_if %>
+
 <% if Provides %>
 <h5>Provides</h5>
 <% include AddonVersionDetailsLinks Items=$Provides %>

@@ -7,11 +7,7 @@
                     <% if $Description %>
                         $Description
                     <% else %>
-                        <% if $Name = 'silverstripe/framework' || $Name = 'silverstripe/cms' %>
-                        <span data-filter="Silverstripe Version">$ConstraintSimple</span> ($Constraint)
-                        <% else %>
-                            $Constraint
-                        <% end_if %>
+                        $Constraint
                     <% end_if %>
                 <% else %>
                     <span data-filter="Requires">$Name</span>: <% if $Description %>$Description<% else %>$Constraint<% end_if %>
