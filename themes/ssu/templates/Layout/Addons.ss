@@ -53,7 +53,22 @@
                         data-sort-type="number"
                         data-sort-default="true"
                         data-sort-only="true"
-                    >Release Date</a>
+                    >Released</a> /
+                    <a href="#"
+                        class="sortable"
+                        data-sort-field="LU"
+                        data-sort-direction="desc"
+                        data-sort-type="number"
+                        data-sort-default="true"
+                        data-sort-only="true"
+                    >Last Updated</a> /
+                    <a href="#"
+                        class="sortable"
+                        data-sort-field="Versions"
+                        data-sort-direction="desc"
+                        data-sort-type="number"
+                        data-sort-only="true"
+                    ># Versions</a>
                 </th>
                 <th scope="col" class="number">
                     <a href="#"
@@ -62,29 +77,28 @@
                         data-sort-direction="desc"
                         data-sort-type="number"
                         data-sort-only="true"
-                    >Downloads</a>
-                </th>
-                <th scope="col" class="number">
-                    <a href="#"
-                        class="sortable"
-                        data-sort-field="Versions"
-                        data-sort-direction="desc"
-                        data-sort-type="number"
-                        data-sort-only="true"
-                    >Versions</a> + Requirements
+                    >Downloads</a> +
+                    Requirements
                 </th>
             </tr>
         </thead>
         <tbody>
         <% loop $Addons %>
             <tr class="tfsRow" id="tfs$ID">
-                <th class="t-row" scope="row">
+                <th scope="row">
                     <span data-filter="Title" class="ignore more">$PackageName</span> /
                     <span data-filter="Team" class="dl">$Vendor.Name</span>
                     <div style="display: none;" class="hidden">
                         <ul>
                             <li>Type: <span data-filter="Type" class="dl">$Type</span>
-                            <li>Team: <span data-filter="Team" class="dl">$Vendor.Name</span></li>
+                            <li>Team: <span data-filter="Team" class="dl">$Vendor.Name</span><% if $Authors %> -
+                                <ul>
+                                    <% loop $Authors %>
+                                        <li><span data-filter="Author">$Name</span><% if $Last %><% else %>,<% end_if %></li>
+                                    <% end_loop %>
+                                </ul>
+                                <% end_if %>
+                            </li>
                         <% if Screenshots %>
                             <li class="placeholder img">
                                 <% loop Screenshots %>
@@ -102,7 +116,7 @@
                         <a href="$PackagistUrl" class="externalLink packagist" target="_blank" title="View on Packagist">go to packagist</a>
                     </p>
                 </th>
-                <td class="k-row">
+                <td>
                     $Description.LimitCharacters(450)
                     <% if $FilteredKeywords %>
                     <ul style="display: none;" class="hidden">
@@ -112,23 +126,15 @@
                     </ul>
                     <% end_if %>
                 </td>
-                <td class="rd-row">
-                    $Released.Format(d M Y)
+                <td class="right">
+                    $Released.Ago / $LastTaggedVersion.Released.Ago / <span data-filter="Versions">$Versions.Count</span>
                     <span data-filter="RD" style="display: none">$Released.Format(U)</span>
+                    <span data-filter="LU" style="display: none">$LastTaggedVersion.Released.Format(U)</span>
                 </td>
-                <td class="dl-row">
+                <td class="right">
                     <span data-filter="Downloads">$Downloads</span>
-                </td>
-                <td class="nv-row">
-                    <span data-filter="Versions">$SortedVersions.Count</span>
-                    <div style="display: none;" class="hidden">
-                    <% loop $SortedVersions %>
-                        <% if $First %>
-                            <% include AddonVersionDetails %>
-                            <p>Requirements based on <strong>$DisplayVersion</strong></p>
-                        <% end_if %>
-                    <% end_loop %>
-                    </div>
+
+                    <% loop $LastTaggedVersion %><% include AddonVersionDetails %><% end_loop %>
                 </td>
             </tr>
         <% end_loop %>

@@ -45,6 +45,19 @@ class Addon extends DataObject {
         'SilverStripe\\Elastica\\Searchable'
     );
 
+    function LastTaggedVersion()
+    {
+        $keys = $this->Versions()->exclude(array('Version' => array('dev-master', 'trunk')))->column('ID');
+        $values = $this->Versions()->exclude(array('Version' => array('dev-master', 'trunk')))->column('Version');
+        $versions = array_combine($keys, $values);
+        uasort($versions, function($a, $b) {
+            return version_compare($b, $a);
+        });
+        reset($versions);
+        $id = key($versions);
+        return AddonVersion::get()->byID($id);
+    }
+
     /**
      * Gets the addon's versions sorted from newest to oldest.
      *

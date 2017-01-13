@@ -19,6 +19,4 @@
             </li>
         <% end_loop %>
     </ul>
-<% else %>
-    <p class="muted">None</p>
 <% end_if %>

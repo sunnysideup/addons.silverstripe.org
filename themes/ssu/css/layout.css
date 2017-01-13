@@ -17,7 +17,7 @@ body {
     background-image: url("/themes/main/images/logo.gif");*/
 
 
-body header h1 {font-size: 4vw!important; color: #febf04; margin-bottom: 0; padding-bottom: 0;}
+body header h1 {font-size: 9vw!important; color: #febf04; margin-bottom: 0; padding-bottom: 0;}
 body header p {color: #aaa; padding-bottom: 5em; padding-top: 0; margin-top: 0;}
 body header p a{color: #aaa!important;}
 header h1, header p {text-align: center;}
@@ -30,7 +30,6 @@ a:link, a:visited {
   color: crimson;
 }
 
-th span[data-filter], td span[data-filter]  {text-decoration: none!important; border-bottom: 1px dotted #fff;}
 td span.dl {border-bottom: 1px dotted #000;}
 
 
@@ -82,7 +81,7 @@ td h5 {
   padding-top: 1em;
 }
 /*th.number, td.dl-row, td.rd-row, td.nv-row {max-width: 7em!important; min-width: 7em!important; width: 7em!important;}*/
-td.dl-row, td.rd-row, td.nv-row {text-align: right;}
+td.right {text-align: right;}
 
 th .externalLink{
   text-decoration: none!important;
@@ -110,3 +109,29 @@ th .externalLink:hover {
 tr.fav th .addFav {
     opacity: 1;
 }
+
+@media screen and (max-width: 750px) {
+    td.right,
+    th.number
+    {
+        display: none!important;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    td,
+    th
+    {
+        display: none!important;
+    }
+    th:first-child {
+        display: table-cell!important;
+    }
+    th[scope='row']:first-child {
+        background-color: #555;
+    }
+}
+
+th ul ul,
+th ul ul li {display: inline;}
+th ul ul li {font-style: italic;}
