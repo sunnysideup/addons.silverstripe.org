@@ -71,7 +71,7 @@ th[scope='row'] span[data-filter='Title']:before {
 tr.opened th[scope='row'] span[data-filter='Title']:before {
     content: '« ';
 }
-th ul li {
+th ul li, td.left ul li {
   padding-top: 1em;
   line-height: 1.7;
 }

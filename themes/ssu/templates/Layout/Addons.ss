@@ -118,7 +118,7 @@
                         <a href="$PackagistUrl" class="externalLink packagist" target="_blank">packagist</a>
                     </p>
                 </th>
-                <td>
+                <td class="left">
                     $Description.LimitCharacters(450)
                     <% if $FilteredKeywords %>
                     <ul style="display: none;" class="hidden">
