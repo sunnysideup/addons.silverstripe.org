@@ -82,7 +82,7 @@ td h5 {
   padding-top: 1em;
 }
 /*th.number, td.dl-row, td.rd-row, td.nv-row {max-width: 7em!important; min-width: 7em!important; width: 7em!important;}*/
-td.right {text-align: right;}
+tbody td.right {text-align: right;}
 
 th .externalLink{
   text-decoration: none!important;
