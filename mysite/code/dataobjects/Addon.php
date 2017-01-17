@@ -50,8 +50,17 @@ class Addon extends DataObject {
     function LastTaggedVersion()
     {
         if(! $this->_lastTaggedVersion) {
-            $keys = $this->Versions()->exclude(array('Version' => array('dev-master', 'trunk')))->column('ID');
-            $values = $this->Versions()->exclude(array('Version' => array('dev-master', 'trunk')))->column('Version');
+            $excludeArray = array(
+                'Version' => array('dev-master', 'trunk'),
+                'PrettyVersion' => array('dev-master', 'trunk')
+            );
+            $keys = $this->Versions()->exclude($excludeArray)->column('ID');
+            if(count($keys)) {
+                $values = $this->Versions()->exclude($excludeArray)->column('PrettyVersion');
+            } else {
+                $keys = $this->Versions()->column('ID');
+                $values = $this->Versions()->column('PrettyVersion');
+            }
             $versions = array_combine($keys, $values);
             uasort($versions, function($a, $b) {
                 return version_compare($b, $a);

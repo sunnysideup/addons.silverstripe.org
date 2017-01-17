@@ -46,6 +46,7 @@
                 </th>
                 <th scope="col">Description + Tags</th>
                 <th scope="col" class="number">
+                    Edited:
                     <a href="#"
                         class="sortable"
                         data-sort-field="RD"
@@ -53,28 +54,7 @@
                         data-sort-type="number"
                         data-sort-default="true"
                         data-sort-only="true"
-                    >Created</a>
-                </th>
-                <th scope="col" class="number">
-                    DL
-                    <a href="#"
-                        class="sortable"
-                        data-sort-field="MD"
-                        data-sort-direction="desc"
-                        data-sort-type="number"
-                        data-sort-default="true"
-                        data-sort-only="true"
-                    >last month</a> |
-                    <a href="#"
-                        class="sortable"
-                        data-sort-field="DL"
-                        data-sort-direction="desc"
-                        data-sort-type="number"
-                        data-sort-default="true"
-                        data-sort-only="true"
-                    >all time</a>
-                </th>
-                <th scope="col" class="number">
+                    >First</a> |
                     <a href="#"
                         class="sortable"
                         data-sort-field="LU"
@@ -82,7 +62,26 @@
                         data-sort-type="number"
                         data-sort-default="true"
                         data-sort-only="true"
-                    >Last Change</a>
+                    >Last</a>
+                </th>
+                <th scope="col" class="number">
+                    Downloads:
+                    <a href="#"
+                        class="sortable"
+                        data-sort-field="MD"
+                        data-sort-direction="desc"
+                        data-sort-type="number"
+                        data-sort-default="true"
+                        data-sort-only="true"
+                    >30 days</a> |
+                    <a href="#"
+                        class="sortable"
+                        data-sort-field="DL"
+                        data-sort-direction="desc"
+                        data-sort-type="number"
+                        data-sort-default="true"
+                        data-sort-only="true"
+                    >all days</a>
                 </th>
                 <th scope="col" class="number">
                     <a href="#"
@@ -90,7 +89,7 @@
                         data-sort-field="Framework Version"
                         data-sort-direction="desc"
                         data-sort-type="string"
-                    >Up to SS</a>
+                    >Framework Support ≤</a>
                 </th>
             </tr>
         </thead>
@@ -129,21 +128,16 @@
                     <% end_if %>
                 </td>
                 <td class="right">
-                    $Released.Ago<br />
-                    <div style="display: none">
-                        <span data-filter="RD">$Released.Format(U)</span>
-                        <span data-filter="LU">$LastTaggedVersion.Released.Format(U)</span>
-                    </div>
+                    $Released.Ago | $LastTaggedVersion.Released.Ago
+                    <span data-filter="RD" class="hide">$Released.Format(U)</span>
+                    <span data-filter="LU" class="hide">$LastTaggedVersion.Released.Format(U)</span>
                 </td>
                 <td class="right">
                     <span data-filter="MD">$DownloadsMonthly.Formatted</span> |
                     <span data-filter="DL">$Downloads.Formatted</span>
                 </td>
                 <td class="right">
-                    $LastTaggedVersion.Released.Ago
-                </td>
-                <td class="right">
-                    <% loop $LastTaggedVersion %><% include AddonVersionDetails %><% end_loop %>
+                    <% include AddonVersionDetails %>
                 </td>
             </tr>
         <% end_loop %>

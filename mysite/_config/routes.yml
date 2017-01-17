@@ -3,5 +3,4 @@ After: framework
 ---
 Director:
   rules:
-    "": HomeController
-    "add-ons": AddonsController
+    "": AddonsController

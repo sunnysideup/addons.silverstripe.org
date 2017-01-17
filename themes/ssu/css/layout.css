@@ -138,3 +138,5 @@ tr.fav th .addFav {
 th ul ul,
 th ul ul li {display: inline;}
 th ul ul li {font-style: italic;}
+
+.hide {display: none!important;}

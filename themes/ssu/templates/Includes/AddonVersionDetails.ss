@@ -1,3 +1,5 @@
+<% if $LastTaggedVersion %>
+<% with $LastTaggedVersion %>
 <% if FrameworkRequires %>
     <% with FrameworkRequires %>
         <span data-filter="Framework Version" class="dl">$ConstraintSimple</span>
@@ -5,6 +7,8 @@
 <% end_if %>
 
 <div style="display: none;" class="hidden">
+<h5>Latest Release</h5>
+$PrettyVersion
 <% if Requires %>
 <h5>Requires</h5>
 <% include AddonVersionDetailsLinks Items=$Requires %>
@@ -29,6 +33,9 @@
 <% include AddonVersionDetailsLinks Items=$Replaces %>
 <% end_if %>
 
-<h5>Versions:</h5>
+<% end_with %>
+<% end_if %>
+
+<h5>Total Releases:</h5>
 $Versions.Count
 </div>
