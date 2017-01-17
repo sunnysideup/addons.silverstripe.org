@@ -71,7 +71,7 @@ th[scope='row'] span[data-filter='Title']:before {
 tr.opened th[scope='row'] span[data-filter='Title']:before {
     content: '« ';
 }
-th ul li {
+th ul li, td.left ul li {
   padding-top: 1em;
   line-height: 1.7;
 }
@@ -81,8 +81,10 @@ td h5 {
   margin: 0;
   padding-top: 1em;
 }
+
+
 /*th.number, td.dl-row, td.rd-row, td.nv-row {max-width: 7em!important; min-width: 7em!important; width: 7em!important;}*/
-td.right {text-align: right;}
+tbody td.right {text-align: right;}
 
 th .externalLink{
   text-decoration: none!important;

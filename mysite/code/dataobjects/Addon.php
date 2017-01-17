@@ -45,17 +45,32 @@ class Addon extends DataObject {
         'SilverStripe\\Elastica\\Searchable'
     );
 
+    private $_lastTaggedVersion = null;
+
     function LastTaggedVersion()
     {
-        $keys = $this->Versions()->exclude(array('Version' => array('dev-master', 'trunk')))->column('ID');
-        $values = $this->Versions()->exclude(array('Version' => array('dev-master', 'trunk')))->column('Version');
-        $versions = array_combine($keys, $values);
-        uasort($versions, function($a, $b) {
-            return version_compare($b, $a);
-        });
-        reset($versions);
-        $id = key($versions);
-        return AddonVersion::get()->byID($id);
+        if(! $this->_lastTaggedVersion) {
+            $keys = $this->Versions()->exclude(array('Version' => array('dev-master', 'trunk')))->column('ID');
+            $values = $this->Versions()->exclude(array('Version' => array('dev-master', 'trunk')))->column('Version');
+            $versions = array_combine($keys, $values);
+            uasort($versions, function($a, $b) {
+                return version_compare($b, $a);
+            });
+            reset($versions);
+            $id = key($versions);
+            $this->_lastTaggedVersion = AddonVersion::get()->byID($id);
+        }
+        return $this->_lastTaggedVersion;
+    }
+
+    function DownloadsMonthlyIfEditedThisMonth()
+    {
+        $lastTaggedVersion = $this->LastTaggedVersion();
+        $ageInSeconds = time() - strtotime($lastTaggedVersion->Released);
+        if($ageInSeconds < (86400 * 30)) {
+            return $this->DownloadsMonthly;
+        }
+        return 0;
     }
 
     /**

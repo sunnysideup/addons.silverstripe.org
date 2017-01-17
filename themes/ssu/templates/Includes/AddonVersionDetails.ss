@@ -28,4 +28,7 @@
 <h5>Replaces</h5>
 <% include AddonVersionDetailsLinks Items=$Replaces %>
 <% end_if %>
+
+<h5>Versions:</h5>
+$Versions.Count
 </div>

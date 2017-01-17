@@ -53,7 +53,28 @@
                         data-sort-type="number"
                         data-sort-default="true"
                         data-sort-only="true"
-                    >Created</a> +
+                    >Created</a>
+                </th>
+                <th scope="col" class="number">
+                    DL
+                    <a href="#"
+                        class="sortable"
+                        data-sort-field="MD"
+                        data-sort-direction="desc"
+                        data-sort-type="number"
+                        data-sort-default="true"
+                        data-sort-only="true"
+                    >last month</a> |
+                    <a href="#"
+                        class="sortable"
+                        data-sort-field="DL"
+                        data-sort-direction="desc"
+                        data-sort-type="number"
+                        data-sort-default="true"
+                        data-sort-only="true"
+                    >all time</a>
+                </th>
+                <th scope="col" class="number">
                     <a href="#"
                         class="sortable"
                         data-sort-field="LU"
@@ -61,22 +82,15 @@
                         data-sort-type="number"
                         data-sort-default="true"
                         data-sort-only="true"
-                    >Last Updated</a>
+                    >Last Change</a>
                 </th>
                 <th scope="col" class="number">
-                    <a href="#"
-                        class="sortable"
-                        data-sort-field="Downloads"
-                        data-sort-direction="desc"
-                        data-sort-type="number"
-                        data-sort-only="true"
-                    >Downloads</a> +
                     <a href="#"
                         class="sortable"
                         data-sort-field="Framework Version"
                         data-sort-direction="desc"
                         data-sort-type="string"
-                    >Requirements</a>
+                    >Up to SS</a>
                 </th>
             </tr>
         </thead>
@@ -96,24 +110,15 @@
                                 </ul>
                                 <% end_if %>
                             </li>
-                        <% if Screenshots %>
-                            <li class="placeholder img">
-                                <% loop Screenshots %>
-                                <% if First %>
-                                <img src="$SetRatioSize(150,150).Link" />
-                                <% end_if %>
-                                <% end_loop %>
-                            </li>
-                        <% end_if %>
                         </ul>
                     </div>
                     <p>
                         <a href="$FavouriteLink" class="externalLink addFav" target="_blank" title="Add to Favourites">♥</a>
-                        <a href="$Repository" class="externalLink github" target="_blank" title="View Repository">go to github</a>
-                        <a href="$PackagistUrl" class="externalLink packagist" target="_blank" title="View on Packagist">go to packagist</a>
+                        <a href="$Repository" class="externalLink github" target="_blank">github</a>
+                        <a href="$PackagistUrl" class="externalLink packagist" target="_blank">packagist</a>
                     </p>
                 </th>
-                <td>
+                <td class="left">
                     $Description.LimitCharacters(450)
                     <% if $FilteredKeywords %>
                     <ul style="display: none;" class="hidden">
@@ -125,16 +130,19 @@
                 </td>
                 <td class="right">
                     $Released.Ago<br />
-                    $LastTaggedVersion.Released.Ago
-                    <div style="display: none;" class="hidden">
-                        Versions: $Versions.Count
+                    <div style="display: none">
+                        <span data-filter="RD">$Released.Format(U)</span>
+                        <span data-filter="LU">$LastTaggedVersion.Released.Format(U)</span>
                     </div>
-                    <span data-filter="RD" style="display: none">$Released.Format(U)</span>
-                    <span data-filter="LU" style="display: none">$LastTaggedVersion.Released.Format(U)</span>
                 </td>
                 <td class="right">
-                    <span data-filter="Downloads">$Downloads</span><br />
-
+                    <span data-filter="MD">$DownloadsMonthly.Formatted</span> |
+                    <span data-filter="DL">$Downloads.Formatted</span>
+                </td>
+                <td class="right">
+                    $LastTaggedVersion.Released.Ago
+                </td>
+                <td class="right">
                     <% loop $LastTaggedVersion %><% include AddonVersionDetails %><% end_loop %>
                 </td>
             </tr>
