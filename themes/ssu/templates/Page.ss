@@ -21,14 +21,19 @@
     <div id="LayoutHolder">$Layout</div>
 
     <footer>
-        <h3>Credits</h3>
+        <h3>Credits and Important Notes</h3>
         <p>
             This site is based on the <a href="http://addons.silverstripe.org">the original Silverstripe addons site</a>.
+            It does not replace it, but it provides a simpler theme.
+            Searches here are less inclusive and less reliable than the original site, but they also more finegrained.
         </p>
         <span class="backToTop"><a href="#Wrapper">back to top</a></span>
-        <div id="CopyrightMessage">$SiteConfig.CopyrightNotice</div>
+        Last Updated: $Date('Y m d h:n e')
     </footer>
 </div>
 <!-- include Analytics -->
+<script>
+
+</script>
 </body>
 </html>

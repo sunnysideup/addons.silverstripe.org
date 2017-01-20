@@ -7,7 +7,7 @@
     </p>
  </header>
 <% if $Addons %>
-<div class="tableFilterSortHolder loading">
+<div class="tableFilterSortHolder">
     <div class="tableFilterSortFilterFormHolder"
         data-title="Filter Modules and Themes"
         data-title-close-and-apply="Apply Filter"
