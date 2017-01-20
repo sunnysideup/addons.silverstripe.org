@@ -11,8 +11,8 @@
     <div class="tableFilterSortFilterFormHolder"
         data-title="Filter Modules and Themes"
         data-title-close-and-apply="Apply Filter"
-        data-filters-parent-page-id="filters"
-        data-favourites-parent-page-id="favourites"        
+        data-filters-parent-page-id="Filters"
+        data-favourites-parent-page-id="Favourites"
     ></div>
     <p class="tableFilterSortMoreEntries paginationTop">
         <span class="line">
@@ -27,7 +27,7 @@
         </span>
     </p>
 
-    <section class="favouritestocomposer"><a href="#" class="button" data-rel="/favouritestocomposer">download favourites (❤) as composer.json file</a></section>
+    <section class="favouritestocomposer"><a href="#" class="button" data-rel="/favouritestocomposer">Download favourites (❤) as composer.json file</a></section>
 
     <div class="tableFilterSortCommonContentHolder" data-title="Common Info"></div>
 
