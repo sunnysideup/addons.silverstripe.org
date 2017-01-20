@@ -24,14 +24,18 @@ class FavouritesToComposer extends Controller {
         $ids = explode(',', $ids);
         array_walk($ids, 'intval');
 
-        $objects = Addon::get()->filter(array('ID' => $ids))->Sort(array('Name' => 'ASC'));
+        // $objects = Addon::get()->filter(array('ID' => $ids))->Sort(array('Name' => 'ASC'));
+        $rows = DB::query('
+            SELECT "Name" FROM Addon WHERE "Addon"."ID" IN ('.implode(',', $ids).');
+        ');
         $al = ArrayList::create();
-        foreach($objects as $object) {
+        foreach($row as $row) {
+            $name = $row['Name'];
             $al->push(
                 ArrayData::create(
                     array(
-                        'Name' => $object->Name,
-                        'Spacing' => str_repeat(' ', (60 - strlen($object->Name)))
+                        'Name' => $name,
+                        'Spacing' => str_repeat(' ', (60 - strlen($name)))
                     )
                 )
             );
