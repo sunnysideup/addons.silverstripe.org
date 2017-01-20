@@ -29,7 +29,7 @@ class FavouritesToComposer extends Controller {
             SELECT "Name" FROM Addon WHERE "Addon"."ID" IN ('.implode(',', $ids).');
         ');
         $al = ArrayList::create();
-        foreach($row as $row) {
+        foreach($rows as $row) {
             $name = $row['Name'];
             $al->push(
                 ArrayData::create(
