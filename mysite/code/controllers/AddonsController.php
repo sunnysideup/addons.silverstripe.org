@@ -219,4 +219,9 @@ class AddonsController extends SiteController {
         return $rss->outputToBrowser();
     }
 
+    function LocalNow($format = '')
+    {
+        return date(DATE_RFC2822);
+    }
+
 }

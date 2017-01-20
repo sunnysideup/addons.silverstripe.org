@@ -1,6 +1,6 @@
 
 <header>
-    <h1 id="header">The World's Best Silverstripe Themes and Modules</h1>
+    <h1 id="header">The World's Best Silverstripe Themes and Modules <sup>BETA</sup></h1>
     <p>
         Provided by <a href="http://www.sunnysideup.co.nz/">Sunny Side Up</a>.
         Please hire us for your next Silverstripe Project.
@@ -11,6 +11,8 @@
     <div class="tableFilterSortFilterFormHolder"
         data-title="Filter Modules and Themes"
         data-title-close-and-apply="Apply Filter"
+        data-filters-parent-page-id="filters"
+        data-favourites-parent-page-id="favourites"        
     ></div>
     <p class="tableFilterSortMoreEntries paginationTop">
         <span class="line">
@@ -24,6 +26,8 @@
             <span class="total-row-number">0</span>
         </span>
     </p>
+
+    <section class="favouritestocomposer"><a href="#" class="button" data-rel="/favouritestocomposer">download favourites (❤) as composer.json file</a></section>
 
     <div class="tableFilterSortCommonContentHolder" data-title="Common Info"></div>
 
@@ -73,7 +77,7 @@
                         data-sort-type="number"
                         data-sort-default="true"
                         data-sort-only="true"
-                    >30 days</a> |
+                    >30 Days</a> |
                     <a href="#"
                         class="sortable"
                         data-sort-field="DL"
@@ -81,7 +85,7 @@
                         data-sort-type="number"
                         data-sort-default="true"
                         data-sort-only="true"
-                    >all days</a>
+                    >Ever</a>
                 </th>
                 <th scope="col" class="number">
                     <a href="#"
