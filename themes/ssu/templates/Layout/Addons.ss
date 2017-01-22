@@ -38,7 +38,7 @@
                     <a href="#"
                         class="sortable"
                         data-sort-field="RD"
-                        data-sort-direction="desc"
+                        data-sort-direction="asc"
                         data-sort-type="number"
                         data-sort-default="true"
                         data-sort-only="true"
