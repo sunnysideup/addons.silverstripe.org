@@ -120,7 +120,6 @@ th .github {
     background: no-repeat url('/themes/ssu/images/github.png');
 }
 th .packagist {
-  text-indent: -999px;
     background: no-repeat url('/themes/ssu/images/packagist.png');
 }
 th .externalLink:hover {
@@ -157,9 +156,9 @@ th ul ul li {display: inline;}
 th ul ul li {font-style: italic;}
 
 .hide {display: none!important;}
+li.download {display: block!important; float: left!important; padding-left: 0!important;}
 .favouritestocomposer {
     text-align: center;
-    padding: 10px 0;
 }
 #tfs-modal-pop-up h1 {
     background-color: #febf04;

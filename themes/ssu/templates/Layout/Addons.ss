@@ -7,31 +7,15 @@
     </p>
  </header>
 <% if $Addons %>
-<div class="tableFilterSortHolder">
-    <div class="tableFilterSortFilterFormHolder"
-        data-title="Filter Modules and Themes"
-        data-title-close-and-apply="Apply Filter"
-        data-filters-parent-page-id="Filters"
-        data-favourites-parent-page-id="Favourites"
-    ></div>
-    <p class="tableFilterSortMoreEntries paginationTop">
-        <span class="line">
-            <strong>Select Page: </strong><span class="pagination"></span>
-        </span>
-    </p>
-    <p class="tableFilterSortMoreEntriesAlwaysShow">
-        <span class="line">
-            <strong>Filter:</strong>
-            <span class="match-row-number">0</span> /
-            <span class="total-row-number">0</span>
-        </span>
-    </p>
+<main
+    class="tfs-holder"
+    data-filters-parent-page-id="Filters"
+    data-favourites-parent-page-id="Favourites"
+>
 
-    <section class="favouritestocomposer"><a href="#" class="button" data-rel="/favouritestocomposer">Download favourites (❤) as composer.json file</a></section>
+    <% include TableFilterSortHeader %>
 
-    <div class="tableFilterSortCommonContentHolder" data-title="Common Info"></div>
-
-    <table class="tableFilterSortTable">
+    <table class="tfs-table">
         <thead>
             <tr>
                 <th scope="col">
@@ -99,7 +83,7 @@
         </thead>
         <tbody>
         <% loop $Addons %>
-            <tr class="tfsRow" id="tfs$ID">
+            <tr class="tfstr" id="tfs$ID">
                 <th scope="row">
                     <span data-filter="Title" class="ignore more">$PackageName</span>
                     <div style="display: none;" class="hidden">
@@ -147,25 +131,11 @@
         <% end_loop %>
         </tbody>
     </table>
-    <p class="tableFilterSortMoreEntries">
-        <span class="line">
-            <strong>Filtered:</strong>
-            <span class="match-row-number">0</span> /
-            <span class="total-row-number">0</span>
-        </span>
-        <span class="line">
-            <strong>Currently Displaying:</strong>
-            <span class="total-showing-row-number">0</span>
-            (<span class="min-row-number">0</span>
-            - <span class="max-row-number">0</span>)
-        </span>
-        <span class="line">
-            <strong>Select Page:</strong> <span class="pagination"></span>
-        </span>
-    </p>
+
+    <% include TableFilterSortFooter %>
 
 
-</div>
+</main>
 <% else %>
     <p>There are no add-ons to display.</p>
 <% end_if %>
