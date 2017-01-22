@@ -160,6 +160,12 @@ li.download {display: block!important; float: left!important; padding-left: 0!im
 .favouritestocomposer {
     text-align: center;
 }
+th span.dl-on {
+    font-weight: bold!important;
+    color: #fff!important;
+    border-bottom: 1px solid #fff!important;
+}
+
 #tfs-modal-pop-up h1 {
     background-color: #febf04;
 }
