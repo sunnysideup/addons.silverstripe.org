@@ -6,7 +6,7 @@
     <% end_with %>
 <% end_if %>
 
-<div style="display: none;" class="hidden">
+<div class="hidden">
 <h5>Latest Release</h5>
 $PrettyVersion
 <% if Requires %>
@@ -36,6 +36,6 @@ $PrettyVersion
 <% end_with %>
 <% end_if %>
 
-<h5>Total Releases:</h5>
+<h5># Tags:</h5>
 $Versions.Count
 </div>

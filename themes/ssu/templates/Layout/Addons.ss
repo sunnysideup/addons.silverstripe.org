@@ -86,23 +86,22 @@
             <tr class="tfstr" id="tfs$ID">
                 <th scope="row">
                     <span data-filter="Title" class="ignore more">$PackageName</span>
-                    <div style="display: none;" class="hidden">
+                    <div class="hidden">
                         <ul>
-                            <li>Type: <span data-filter="Type" class="dl">$Type</span>
+                            <li>Type: <span data-filter="Type" class="dl">$Type</span></li>
                             <li>Team: <span data-filter="Team" class="dl">$Vendor.Name</span><% if $Authors %> -
                                 <ul>
                                     <% loop $Authors %>
                                         <li><span data-filter="Author" class="dl">$Name</span><% if $Last %><% else %>,<% end_if %></li>
                                     <% end_loop %>
                                 </ul>
-                                <% end_if %>
-                            </li>
+                            <% end_if %></li>
                         </ul>
                     </div>
                     <p>
-                        <a href="$FavouriteLink" class="externalLink addFav" target="_blank" title="Add to Favourites">♥</a>
-                        <a href="$Repository" class="externalLink github" target="_blank">github</a>
-                        <a href="$PackagistUrl" class="externalLink packagist" target="_blank">packagist</a>
+                        <a href="#" class="addFav">♥</a>
+                        <a href="$Repository" class="ext github" target="_blank">github</a>
+                        <a href="$PackagistUrl" class="ext packagist" target="_blank">packagist</a>
                     </p>
                 </th>
                 <td class="left">

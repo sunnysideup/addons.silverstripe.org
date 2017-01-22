@@ -38,9 +38,6 @@
 
         <h3>Last Updated</h3>
         <p>$LocalNow</p>
-
-        <h3>Last Word</h3>
-        <p style="color: green;">Vote Green ;-)</p>
     </footer>
 </div>
 <!-- include Analytics -->
