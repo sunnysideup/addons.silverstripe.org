@@ -30,7 +30,10 @@
         </p>
 
         <h3>Feedback</h3>
-        <p>Comments and questions can be directed to ssmods [at] <a href="http://www.sunnysideup.co.nz/">sunny side up</a>.</p>
+        <p>
+            Comments and questions can be directed to ssmods [at] <a href="http://www.sunnysideup.co.nz/">sunny side up</a>.
+            If you need help building Silverstripe websites then read our <a href="http://sunnysideup.co.nz/info-for-digital-agencies">info for digital agencies</a>.
+        </p>
 
         <h3>Last Updated</h3>
         <p>$LocalNow</p>

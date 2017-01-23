@@ -8,7 +8,7 @@
  </header>
 <% if $Addons %>
 <main
-    class="tfs-holder"
+    class="tfs-holder loading"
     data-filters-parent-page-id="Filters"
     data-favourites-parent-page-id="Favourites"
 >
