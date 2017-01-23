@@ -47,6 +47,16 @@ a:link, a:visited {
   color: crimson;
 }
 
+table thead th:first-child {
+    width: 250px;
+}
+table thead th:nth-child(2) {
+    width: 300px;
+}
+table thead th.number {
+    width: 20%;
+}
+
 td span.dl {border-bottom: 1px dotted #000;}
 
 

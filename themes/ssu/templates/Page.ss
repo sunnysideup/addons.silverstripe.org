@@ -48,7 +48,6 @@
 
 </script>
 <script>
-var TableFilterSortTableList = ['.tfs-holder'];
 jQuery(document).ready(
     function() {
         jQuery('.tfs-current-favourites ul').prepend('<li class="download favouritestocomposer"><a href="#" class="button" data-rel="/favouritestocomposer">Download Favourites (❤) as composer.json</a></li>');
