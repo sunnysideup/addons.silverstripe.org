@@ -48,13 +48,13 @@ a:link, a:visited {
 }
 
 table thead th:first-child {
-    width: 250px;
+    width: 25%;
 }
 table thead th:nth-child(2) {
-    width: 300px;
+    width: 36%;
 }
 table thead th.number {
-    width: 20%;
+    width: 13%;
 }
 
 td span.dl {border-bottom: 1px dotted #000;}
