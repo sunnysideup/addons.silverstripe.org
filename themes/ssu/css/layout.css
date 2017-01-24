@@ -179,3 +179,9 @@ th span.dl-on {
 #tfs-modal-pop-up h1 {
     background-color: #febf04;
 }
+
+div[data-to-filter="Framework Version"] ul {
+    -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+}
