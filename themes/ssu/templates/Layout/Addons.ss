@@ -101,7 +101,6 @@
                     <p>
                         <a href="#" class="addFav">♥</a>
                         <a href="$Repository" class="ext github" target="_blank">github</a>
-                        <a href="$PackagistUrl" class="ext packagist" target="_blank">packagist</a>
                     </p>
                 </th>
                 <td class="left">
