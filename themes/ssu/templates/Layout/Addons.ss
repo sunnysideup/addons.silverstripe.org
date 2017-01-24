@@ -24,13 +24,7 @@
                         data-sort-field="Title"
                         data-sort-direction="asc"
                         data-sort-type="string"
-                    >Title</a> +
-                    <a href="#"
-                        class="sortable"
-                        data-sort-field="Team"
-                        data-sort-direction="asc"
-                        data-sort-type="string"
-                    >Team</a>
+                    >Title</a> 
                 </th>
                 <th scope="col">Description + Tags</th>
                 <th scope="col" class="number">
