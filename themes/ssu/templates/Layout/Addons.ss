@@ -3,7 +3,7 @@
     <h1 id="header">The World's Best Silverstripe Themes and Modules <sup>BETA</sup></h1>
     <p>
         Provided by <a href="http://www.sunnysideup.co.nz/">Sunny Side Up</a>.
-        Please hire us for your next Silverstripe Project.
+        Silverstripe specialists since 2007.
     </p>
  </header>
 <% if $Addons %>
@@ -24,7 +24,7 @@
                         data-sort-field="Title"
                         data-sort-direction="asc"
                         data-sort-type="string"
-                    >Title</a> 
+                    >Title</a>
                 </th>
                 <th scope="col">Description + Tags</th>
                 <th scope="col" class="number">
@@ -36,7 +36,7 @@
                         data-sort-type="number"
                         data-sort-default="true"
                         data-sort-only="true"
-                    >First</a> |
+                    >first</a> |
                     <a href="#"
                         class="sortable"
                         data-sort-field="LU"
@@ -44,7 +44,7 @@
                         data-sort-type="number"
                         data-sort-default="true"
                         data-sort-only="true"
-                    >Last</a>
+                    >last</a>
                 </th>
                 <th scope="col" class="number">
                     Downloads:
@@ -55,7 +55,7 @@
                         data-sort-type="number"
                         data-sort-default="true"
                         data-sort-only="true"
-                    >30 Days</a> |
+                    >30d</a> |
                     <a href="#"
                         class="sortable"
                         data-sort-field="DL"
@@ -63,7 +63,7 @@
                         data-sort-type="number"
                         data-sort-default="true"
                         data-sort-only="true"
-                    >Ever</a>
+                    >ever</a>
                 </th>
                 <th scope="col" class="number">
                     <a href="#"

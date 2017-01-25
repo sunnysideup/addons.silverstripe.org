@@ -26,22 +26,26 @@ footer {
   background-color: #febf04;
   text-align: left;
   padding: 20px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  padding-bottom: 300px;
 }
 footer h3 {
     padding-bottom: 0;
     margin-bottom: 0;
     padding-top: 20px;
     margin-top: 0;
-    color: #2980b9!important;
+
 }
 footer h3,
 footer p{
     max-width:450px;
     margin: 0 auto 10px auto;
-    color: #fff;
+    color: #444!important;
     line-height: 1.7;
 }
-footer a {border-bottom: 1px solid #2980b9; text-decoration: none; color: #fff!important;}
+footer a {border-bottom: 1px solid #444; text-decoration: none; color: #444!important;}
 
 a:link, a:visited {
   color: crimson;
@@ -55,6 +59,10 @@ table thead th:nth-child(2) {
 }
 table thead th.number {
     width: 13%;
+}
+
+table tbody th {
+    background-color: #777;
 }
 
 td span.dl {border-bottom: 1px dotted #000;}
