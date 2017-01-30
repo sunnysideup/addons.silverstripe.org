@@ -1,6 +1,7 @@
+
 <% if $FrameworkSupport %>
 <% loop $FrameworkSupport %>
-<span data-filter="Supports" class="dl">$Supports</span>.0<% if $Last %><% else %>, <% end_if %>
+<span data-filter="Supports" class="dl">$Supports</span>.x<% if $Last %><% else %>, <% end_if %>
 <% end_loop %>
 <% end_if %>
 

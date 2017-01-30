@@ -97,11 +97,11 @@ jQuery(document).ready(
                         ['Latest Unstable Version', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/v/unstable.svg', 'https://packagist.org/packages/#VENDOR#/#PACKAGE#'],
                         ['codecov', 'https://codecov.io/gh/#VENDOR#/#PACKAGE-LONG#/branch/master/graph/badge.svg', 'https://codecov.io/gh/#VENDOR#/#PACKAGE-LONG#'],
                         ['Total Downloads', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/downloads.svg', 'https://packagist.org/packages/#VENDOR#/#PACKAGE#'],
-                        ['License', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/license.svg', 'https://github.com/#VENDOR#/#PACKAGE-LONG##license'],
+                        ['License', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/license.svg', 'https://github.com/#VENDOR#/#PACKAGE-LONG#license'],
                         ['Dependency Status', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#/badge.svg', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#'],
                         ['Reference Status', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#/reference_badge.svg?style=flat', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#/references'],
                         ['helpfulrobot', 'https://helpfulrobot.io/#VENDOR#/#PACKAGE#/badge', 'https://helpfulrobot.io/#VENDOR#/#PACKAGE#/badge'],
-                        ['Addons Site', 'https://www.silverstripe.org/themes/ssv3/img/global-logo-open-source.svg', 'https://addons.silverstripe.org/add-ons/#VENDOR#/PACKAGE]']
+                        ['Addons Site', 'https://www.silverstripe.org/themes/ssv3/img/global-logo-open-source.svg', 'https://addons.silverstripe.org/add-ons/#VENDOR#/#PACKAGE#']
                     ];
                     var html = '<ul class="hidden opened badges">';
                     console.debug(tr);
