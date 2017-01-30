@@ -53,6 +53,7 @@
 <script>
 jQuery(document).ready(
     function() {
+
         jQuery('.tfs-current-favourites ul').prepend('<li class="download favouritestocomposer"><a href="#" class="button" data-rel="/favouritestocomposer">Download Favourites (❤) as composer.json</a></li>');
 
         jQuery('.favouritestocomposer').on(
@@ -78,6 +79,69 @@ jQuery(document).ready(
                 return false;
             }
         );
+
+        //links
+        jQuery('.tfs-holder').on(
+            'click',
+            '.more',
+            function(e) {
+                e.preventDefault();
+                var tr = jQuery(this).closest('tr');
+                if( tr.hasClass('more-added')) {
+                    //do nothing
+                } else {
+                    var linksAndImages = [
+                        ['Build Status', 'https://api.travis-ci.org/#VENDOR#/#PACKAGE-LONG#.svg?branch=master', 'https://travis-ci.org/#VENDOR#/#PACKAGE-LONG#'],
+                        ['Scrutinzer', 'https://scrutinizer-ci.com/g/#VENDOR#/#PACKAGE-LONG#/badges/quality-score.png?b=master', 'https://scrutinizer-ci.com/g/sunnysideup/#VENDOR#-ecommerce/?branch=master'],
+                        ['Latest Stable Version', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/version.svg', 'http://www.#VENDOR#.org/stable-download/'],
+                        ['Latest Unstable Version', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/v/unstable.svg', 'https://packagist.org/packages/#VENDOR#/#PACKAGE#'],
+                        ['codecov', 'https://codecov.io/gh/#VENDOR#/#PACKAGE-LONG#/branch/master/graph/badge.svg', 'https://codecov.io/gh/#VENDOR#/#PACKAGE-LONG#'],
+                        ['Total Downloads', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/downloads.svg', 'https://packagist.org/packages/#VENDOR#/#PACKAGE#'],
+                        ['License', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/license.svg', 'https://github.com/#VENDOR#/#PACKAGE-LONG##license'],
+                        ['Dependency Status', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#/badge.svg', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#'],
+                        ['Reference Status', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#/reference_badge.svg?style=flat', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#/references'],
+                        ['helpfulrobot', 'https://helpfulrobot.io/#VENDOR#/#PACKAGE#/badge', 'https://helpfulrobot.io/#VENDOR#/#PACKAGE#/badge'],
+                        ['Addons Site', 'https://www.silverstripe.org/themes/ssv3/img/global-logo-open-source.svg', 'https://addons.silverstripe.org/add-ons/#VENDOR#/PACKAGE]']
+                    ];
+                    var html = '<ul class="hidden opened badges">';
+                    console.debug(tr);
+                    console.debug(tr.find('span[data-filter="Title"]'));
+                    var packageName = tr.find('span[data-filter="Title"]').text().trim();
+                    if(packageName.indexOf('silverstripe-') === -1) {
+                        var packageNameLong = 'silverstripe-' + packageName;
+                    } else {
+                        packageNameLong = packageName;
+                    }
+                    var vendorName = tr.find('span[data-filter="Team"]').text().trim();
+                    var id = tr.attr('id').replace(/tfs/, '');
+                    html += '<li><a href="/favouritestocomposer?ids='+id+'">composer require <strong>'+vendorName+'/'+packageName+'</strong></a><li>';
+                    for(var i = 0; i < linksAndImages.length; i++) {
+                        if(linksAndImages[i].length === 3) {
+                            console.debug(linksAndImages[i]);
+                            var title = linksAndImages[i][0];
+                            var src = linksAndImages[i][1];
+                            src = src.replace(/#PACKAGE-LONG#/, packageNameLong);
+                            src = src.replace(/#VENDOR#/, vendorName);
+                            src = src.replace(/#PACKAGE#/, packageName);
+                            var href = linksAndImages[i][2];
+                            href = href.replace(/#PACKAGE-LONG#/, packageNameLong);
+                            href = href.replace(/#VENDOR#/, vendorName);
+                            href = href.replace(/#PACKAGE#/, packageName);
+                            html += "<li>";
+                            html += '<a href="'+href+'" target="_blank">';
+                            html += '<img src="'+src+'" alt="'+title+'" />';
+                            html += "</a></li>";
+                        }
+                    }
+                    html += '</ul>';
+                    tr.find('th').append(html);
+                    tr.addClass('more-added');
+                    return false;
+                }
+            }
+
+        )
+
     }
 );
 

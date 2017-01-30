@@ -1,14 +1,13 @@
-<% if $LastTaggedVersion %>
-<% with $LastTaggedVersion %>
-<% if FrameworkRequires %>
-    <% with FrameworkRequires %>
-        <span data-filter="Framework Version" class="dl">$ConstraintSimple</span>
-    <% end_with %>
+<% if $FrameworkSupport %>
+<% loop $FrameworkSupport %>
+        <span data-filter="Supports" class="dl">$Supports</span>
+<% end_loop %>
 <% end_if %>
 
 <div class="hidden">
-<h5>Latest Release</h5>
-$PrettyVersion
+<% if $LastTaggedVersion %>
+<% with $LastTaggedVersion %>
+
 <% if Requires %>
 <h5>Requires</h5>
 <% include AddonVersionDetailsLinks Items=$Requires %>

@@ -36,8 +36,8 @@ class AddonsController extends SiteController {
         increase_time_limit_to(600);
         TableFilterSortAPI::include_requirements();
         $html = $this->renderWith(array('Addons', 'Page'));
-        $html = preg_replace("/\s+/", ' ', trim($html));
-        $html = str_replace(array('<!-- -->', '//<![CDATA[', '//]]>'), '', $html);
+        //$html = preg_replace("/\s+/", ' ', trim($html));
+        //$html = str_replace(array('<!-- -->', '//<![CDATA[', '//]]>'), '', $html);
         return $html;
     }
 

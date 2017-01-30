@@ -188,8 +188,14 @@ th span.dl-on {
     background-color: #febf04;
 }
 
-div[data-to-filter="Framework Version"] ul {
+div[data-to-filter="Supports"] ul {
     -webkit-column-count: 3; /* Chrome, Safari, Opera */
     -moz-column-count: 3; /* Firefox */
     column-count: 3;
 }
+
+
+.badges {clear: left;}
+tbody th .badges li{display: block;}
+tbody th .badges li img {height: 20px;}
+tbody th .badges li a {text-decoration: none; border-bottom: none}

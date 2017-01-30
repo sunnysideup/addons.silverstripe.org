@@ -39,8 +39,8 @@ class AddonLink extends DataObject {
         if(is_array($constraint) && count($constraint)) {
             $v = trim($constraint[0]);
             if(in_array($v, array(2,3,4,5,6,7))) {
-                $secondary = isset($constraint[1]) && strlen($constraint[1]) == 1 ? trim($constraint[1]) : '0';
-                return $v . '.' . $secondary;
+                //$secondary = isset($constraint[1]) && strlen($constraint[1]) == 1 ? trim($constraint[1]) : '0';
+                return $v; // . '.' . $secondary;
             }
             return 'n/a';
         }

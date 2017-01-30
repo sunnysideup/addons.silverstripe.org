@@ -23,6 +23,7 @@ class Addon extends DataObject {
         'BuildQueued' => 'Boolean',
         'HelpfulRobotData' => 'Text',
         'HelpfulRobotScore' => 'Int',
+        'FrameworkSupportList' => 'Varchar(50)',
     );
 
     public static $has_one = array(
@@ -96,6 +97,17 @@ class Addon extends DataObject {
 
         return new ArrayList($versions);
     }
+
+    public function FrameworkSupport()
+    {
+        $array = $this->explode(',',$this->FrameworkSupportList);
+        $al = ArrayList::create();
+        foreach($array as $constraint) {
+            $al->push(ArrayData(array('Supports' => $constraint)));
+        }
+        return $al;
+    }
+
 
     public function MasterVersion() {
         return $this->Versions()->filter('PrettyVersion', array('dev-master', 'trunk'))->First();

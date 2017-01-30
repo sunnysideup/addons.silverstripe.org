@@ -68,7 +68,7 @@
                 <th scope="col" class="number">
                     <a href="#"
                         class="sortable"
-                        data-sort-field="Framework Version"
+                        data-sort-field="Supports"
                         data-sort-direction="desc"
                         data-sort-type="string"
                     >Framework Support ≤</a>

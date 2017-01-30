@@ -82,6 +82,7 @@ class AddonVersion extends DataObject {
             ->first();
     }
 
+
     public function getNonFrameworkRequires() {
         return $this->Links()
             ->filter(array('Type' => 'require'))

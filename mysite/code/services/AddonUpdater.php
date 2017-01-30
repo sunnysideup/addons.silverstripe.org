@@ -119,7 +119,11 @@ class AddonUpdater {
         return Director::isDev();
     }
 
+    private $frameworkSupportArray = array();
+
     private function updateAddon(Addon $addon, Package $package, array $versions) {
+        unset($this->frameworkSupportArray);
+        $this->frameworkSupportArray = array();
         if (!$addon->VendorID) {
             $vendor = AddonVendor::get()->filter('Name', $addon->VendorName())->first();
 
@@ -140,29 +144,12 @@ class AddonUpdater {
         $addon->DownloadsMonthly = $package->getDownloads()->getMonthly();
         $addon->Favers = $package->getFavers();
 
+        $frameworkSupportArray = array();
         foreach ($versions as $version) {
             $this->updateVersion($addon, $version);
         }
 
-        // If there is no build, then queue one up if the add-on requires
-        // one.
-        if (!$addon->BuildQueued) {
-            if (!$addon->BuiltAt) {
-                $this->resque->queue('first_build', 'BuildAddonJob', array('id' => $addon->ID));
-                $addon->BuildQueued = true;
-            } else {
-                $built = (int) $addon->obj('BuiltAt')->format('U');
-
-                foreach ($versions as $version) {
-                    if (strtotime($version->getTime()) > $built) {
-                        $this->resque->queue('update', 'BuildAddonJob', array('id' => $addon->ID));
-                        $addon->BuildQueued = true;
-
-                        break;
-                    }
-                }
-            }
-        }
+        $addon->FrameworkSupportList = implode(',', $this->frameworkSupportArray);
 
         $addon->LastUpdated = time();
         $addon->write();
@@ -222,6 +209,15 @@ class AddonUpdater {
         $this->updateLinks($version, $versionFromPackagist);
         $this->updateCompatibility($addon, $version, $versionFromPackagist);
         $this->updateAuthors($version, $versionFromPackagist);
+        $framework = $version->getFrameworkRequires();
+        if($framework) {
+            $constraint = trim($framework->ConstraintSimple());
+            if(intval($constraint)) {
+                $this->frameworkSupportArray[$constraint] = $constraint;
+            } else {
+                $this->frameworkSupportArray['unknown'] = 'unknown';
+            }
+        }
     }
 
     private function updateLinks(AddonVersion $version, Packagist\Api\Result\Package\Version $versionFromPackagist) {
