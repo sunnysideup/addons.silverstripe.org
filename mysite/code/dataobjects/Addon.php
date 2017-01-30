@@ -100,10 +100,19 @@ class Addon extends DataObject {
 
     public function FrameworkSupport()
     {
-        $array = $this->explode(',',$this->FrameworkSupportList);
+        $array = explode(',',$this->FrameworkSupportList);
         $al = ArrayList::create();
-        foreach($array as $constraint) {
-            $al->push(ArrayData(array('Supports' => $constraint)));
+        $hasConstraints = false;
+        if(count($array)) {
+            foreach($array as $constraint) {
+                if(intval($constraint) > 0) {
+                    $hasConstraints = true;
+                    $al->push(ArrayData::create(array('Supports' => $constraint)));
+                }
+            }
+        }
+        if($hasConstraints === false) {
+            return $al->push(ArrayData::create(array('Supports' => 'tba')));
         }
         return $al;
     }

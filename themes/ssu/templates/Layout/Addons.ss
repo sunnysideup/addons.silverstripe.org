@@ -71,7 +71,7 @@
                         data-sort-field="Supports"
                         data-sort-direction="desc"
                         data-sort-type="string"
-                    >Framework Support ≤</a>
+                    >Supports ~</a>
                 </th>
             </tr>
         </thead>
