@@ -198,4 +198,4 @@ div[data-to-filter="Supports"] ul {
 .badges {clear: left;}
 tbody th .badges li{display: block;}
 tbody th .badges li img {height: 20px;}
-tbody th .badges li a {text-decoration: none; border-bottom: none}
+tbody th .badges li a {text-decoration: none; border-bottom: none; font-weight: bold;}

@@ -90,13 +90,12 @@ class AddonUpdater {
             if($limitAddons && !in_array($name, $limitAddons)) continue;
 
             $addon = Addon::get()->filter('Name', $name)->first();
-
             if (!$addon) {
                 $addon = new Addon();
                 $addon->Name = $name;
                 $addon->write();
             }
-
+            DB::alteration_message("... PACKAGE: ".$addon->Name);
             usort($versions, function ($a, $b) {
                 return version_compare($a->getVersionNormalized(), $b->getVersionNormalized());
             });
@@ -132,7 +131,6 @@ class AddonUpdater {
                 $vendor->Name = $addon->VendorName();
                 $vendor->write();
             }
-
             $addon->VendorID = $vendor->ID;
         }
 
@@ -218,6 +216,7 @@ class AddonUpdater {
                 $this->frameworkSupportArray['unknown'] = 'unknown';
             }
         }
+        DB::alteration_message("... ... VERSION: ".$version->PrettyVersion);
     }
 
     private function updateLinks(AddonVersion $version, Packagist\Api\Result\Package\Version $versionFromPackagist) {

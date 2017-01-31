@@ -19,7 +19,8 @@
     "symfony/console": "^2.8",
     "symfony/yaml": "^2.8",
     "sunnysideup/table_filter_sort":        "dev-master",
-    "gdmedia/ss-auto-git-ignore": "*"
+    "gdmedia/ss-auto-git-ignore": "*",
+    "plasticstudio/sitemap": "^1.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

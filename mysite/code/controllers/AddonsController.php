@@ -36,8 +36,8 @@ class AddonsController extends SiteController {
         increase_time_limit_to(600);
         TableFilterSortAPI::include_requirements();
         $html = $this->renderWith(array('Addons', 'Page'));
-        //$html = preg_replace("/\s+/", ' ', trim($html));
-        //$html = str_replace(array('<!-- -->', '//<![CDATA[', '//]]>'), '', $html);
+        $html = preg_replace("/\s+/", ' ', trim($html));
+        $html = str_replace(array('<!-- -->', '//<![CDATA[', '//]]>'), '', $html);
         return $html;
     }
 
@@ -158,12 +158,12 @@ class AddonsController extends SiteController {
             case 'newest': $list = $list->sort('Released', 'DESC'); break;
             case 'downloads': $list = $list->sort('Downloads', 'DESC'); break;
         }
-
-        $list = new PaginatedList($list, $this->request);
         $limit = 99999;
         if(Director::isDev()){
             $limit = 52;
+            $list = $list->sort('RAND()');
         }
+        $list = new PaginatedList($list, $this->request);
         $list->setPageLength($limit);
 
         return $list;
