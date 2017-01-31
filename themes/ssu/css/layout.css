@@ -199,3 +199,14 @@ div[data-to-filter="Supports"] ul {
 tbody th .badges li{display: block;}
 tbody th .badges li img {height: 20px;}
 tbody th .badges li a {text-decoration: none; border-bottom: none; font-weight: bold;}
+span[data-filter="Supports"] {
+    background-color: #aaa;
+    border-radius: 20px;
+    display: block;
+    padding: 9px;
+    float: right;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    border-bottom: none;
+}
+div.hidden {clear: right;}

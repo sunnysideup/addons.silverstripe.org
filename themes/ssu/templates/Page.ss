@@ -117,7 +117,6 @@ jQuery(document).ready(
                     var id = tr.attr('id').replace(/tfs/, '');
                     var html = '<ul class="hidden opened badges">';
                        html += '<li class="text">composer require <a href="/favouritestocomposer?ids='+id+'"><strong>'+vendorName+'/'+packageName+'</strong></a></li>';
-                       html += '<li class="text">For more information visit: <a href="https://addons.silverstripe.org/add-ons/'+vendorName+'/'+packageName+'">addons.silverstripe.org</a></li>';
                     for(var i = 0; i < linksAndImages.length; i++) {
                         if(linksAndImages[i].length === 3) {
                             var title = linksAndImages[i][0];
@@ -135,6 +134,7 @@ jQuery(document).ready(
                             html += "</a></li>";
                         }
                     }
+                    html += '<li class="text">for more information visit: <a href="https://addons.silverstripe.org/add-ons/'+vendorName+'/'+packageName+'">addons.silverstripe.org</a></li>';
                     html += '</ul>';
                     tr.find('th').append(html);
                     tr.addClass('more-added');

@@ -66,12 +66,7 @@
                     >ever</a>
                 </th>
                 <th scope="col" class="number">
-                    <a href="#"
-                        class="sortable"
-                        data-sort-field="Supports"
-                        data-sort-direction="desc"
-                        data-sort-type="string"
-                    >Supports ~</a>
+                    Works with
                 </th>
             </tr>
         </thead>
