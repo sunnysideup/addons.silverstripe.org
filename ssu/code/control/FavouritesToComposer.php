@@ -26,11 +26,22 @@ class FavouritesToComposer extends Controller {
 
         // $objects = Addon::get()->filter(array('ID' => $ids))->Sort(array('Name' => 'ASC'));
         $rows = DB::query('
-            SELECT "Name" FROM Addon WHERE "Addon"."ID" IN ('.implode(',', $ids).');
+            SELECT "Addon"."ID", "Name" FROM Addon WHERE "Addon"."ID" IN ('.implode(',', $ids).');
         ');
+        $myObj = FavouritesToComposerRecord::create();
+        $myObj->Title = implode(',', $ids);
+        $myObj->write();
+
         $al = ArrayList::create();
         foreach($rows as $row) {
             $name = $row['Name'];
+            $myObj->Favourites()->add(
+                $row["ID"],
+                array(
+                   'Name' => $name
+                )
+            );
+            $myObj->Favourites()->add($row["ID"]);
             $al->push(
                 ArrayData::create(
                     array(
@@ -40,6 +51,7 @@ class FavouritesToComposer extends Controller {
                 )
             );
         }
+
         return $al;
     }
 

@@ -58,7 +58,7 @@
 jQuery(document).ready(
     function() {
 
-        jQuery('.tfs-current-favourites ul').prepend('<li class="download favouritestocomposer"><a href="#" class="button" data-rel="/favouritestocomposer">Download Favourites (❤) as composer.json</a></li>');
+        jQuery('.tfs-current-favourites ul').prepend('<li class="download favouritestocomposer"><a href="#" class="button" data-rel="/favouritestocomposer">Download ❤ ❤ ❤ as composer.json</a></li>');
 
         jQuery('.favouritestocomposer').on(
             'click',
@@ -84,7 +84,7 @@ jQuery(document).ready(
             }
         );
 
-        jQuery('.tfs-holder').on(
+        jQuery('.tbody th').on(
             'click',
             '.more',
             function(e) {
@@ -95,7 +95,6 @@ jQuery(document).ready(
                         'error',
                         'img',
                         function() {
-                            alert('eerr');
                             jQuery(this).hide();
                         }
                     );
