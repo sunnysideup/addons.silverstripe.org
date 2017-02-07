@@ -65,7 +65,7 @@
                         data-sort-only="true"
                     >ever</a>
                 </th>
-                <th scope="col" class="number">
+                <th scope="col" class="works-with">
                     Works with
                 </th>
             </tr>

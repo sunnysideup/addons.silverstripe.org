@@ -5,9 +5,13 @@ body, html {
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: sans-serif;
   height: 100%;
   margin: 0;
+}
+
+#Wrapper {
+    overflow: hidden;
 }
 
     /*background-position: 0 0; background-repeat: no-repeat; background-color: #fff;
@@ -43,7 +47,7 @@ footer p{
     max-width:450px;
     margin: 0 auto 10px auto;
     color: #444!important;
-    line-height: 1.7;
+    line-height: 1.5;
 }
 footer a {border-bottom: 1px solid #444; text-decoration: none; color: #444!important;}
 
@@ -51,14 +55,15 @@ a:link, a:visited {
   color: crimson;
 }
 
-table thead th:first-child {
-    width: 25%;
-}
+table thead th:first-child,
 table thead th:nth-child(2) {
-    width: 36%;
+    width: 24%;
 }
 table thead th.number {
-    width: 13%;
+    width: 16%;
+}
+table thead th:last-child {
+    width: 20%;
 }
 
 table tbody th {
@@ -69,9 +74,12 @@ td span.dl {border-bottom: 1px dotted #000;}
 
 
 th a:link, th a:visited {
-  color: #fff;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #222;
   text-decoration: none;
+}
+
+thead th a:link, thead th a:visited {
+    color: #fff;
 }
 
 a.button {
@@ -98,6 +106,7 @@ th[scope='row'] span[data-filter='Title'] {
   font-weight: bold;
   border-bottom: 0px;
   cursor: pointer;
+  color: #fff;
 }
 th[scope='row'] span[data-filter='Title']:before {
     width: 16px;
@@ -106,10 +115,11 @@ th[scope='row'] span[data-filter='Title']:before {
 tr.opened th[scope='row'] span[data-filter='Title']:before {
     content: '« ';
 }
-th ul li, td.left ul li {
+th ul li, td.left ul li, td:last-child ul li {
   padding-top: 1em;
-  line-height: 1.7;
+  line-height: 1;
 }
+
 
 td h5 {
   padding: 0;
@@ -147,28 +157,6 @@ tr.fav th .addFav {
     opacity: 1;
 }
 
-@media screen and (max-width: 750px) {
-    td.right,
-    th.number
-    {
-        display: none!important;
-    }
-}
-
-@media screen and (max-width: 450px) {
-    td,
-    th
-    {
-        display: none!important;
-    }
-    th:first-child {
-        display: table-cell!important;
-    }
-    th[scope='row']:first-child {
-        background-color: #555;
-    }
-}
-
 th ul ul,
 th ul ul li {display: inline;}
 th ul ul li {font-style: italic;}
@@ -198,7 +186,7 @@ div[data-to-filter="Supports"] ul {
 .badges {clear: left;}
 tbody th .badges li{display: block;}
 tbody th .badges li img {height: 20px;}
-tbody th .badges li a {text-decoration: none; border-bottom: none; font-weight: bold;}
+tbody th .badges li a {text-decoration: none; border-bottom: none; font-weight: bold; color: #ccc;}
 span[data-filter="Supports"] {
     background-color: #aaa;
     border-radius: 20px;
@@ -210,3 +198,30 @@ span[data-filter="Supports"] {
     border-bottom: none;
 }
 div.hidden {clear: right;}
+
+
+
+@media screen and (max-width: 750px) {
+    td.right,
+    th.number,
+    th:last-child
+    {
+        display: none!important;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .tfs-more-entries-always-show {display: none;}
+    td,
+    th,
+    .fixed-header table thead th
+    {
+        display: none!important;
+    }
+    th:first-child {
+        display: table-cell!important;
+    }
+    th[scope='row']:first-child {
+        background-color: #555;
+    }
+}

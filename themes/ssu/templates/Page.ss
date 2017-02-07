@@ -32,6 +32,10 @@
         <h3>Feedback</h3>
         <p>
             Comments and questions can be directed to ssmods [at] <a href="http://www.sunnysideup.co.nz/">sunny side up</a>.
+        </p>
+
+        <h3>Need help building Silverstripe Sites?</h3>
+        <p>
             If you need help building Silverstripe websites then read our <a href="http://sunnysideup.co.nz/info-for-digital-agencies">info for digital agencies</a>.
         </p>
 
@@ -134,7 +138,7 @@ jQuery(document).ready(
                             html += "</a></li>";
                         }
                     }
-                    html += '<li class="text">for more information visit: <a href="https://addons.silverstripe.org/add-ons/'+vendorName+'/'+packageName+'">addons.silverstripe.org</a></li>';
+                    html += '<li class="text"><a href="https://addons.silverstripe.org/add-ons/'+vendorName+'/'+packageName+'" target="_addons">&raquo; addons.silverstripe.org</a></li>';
                     html += '</ul>';
                     tr.find('th').append(html);
                     tr.addClass('more-added');
