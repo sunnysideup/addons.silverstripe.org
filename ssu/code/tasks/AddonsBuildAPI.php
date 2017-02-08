@@ -23,6 +23,10 @@ class AddonsBuildAPI extends BuildTask
         if(!file_exists($apiDir)) {
             mkdir($apiDir);
         }
+        $phpDocConfiFile = $baseDir.'/ssu/_config_templates/phpdox.xml';
+        if(! file_exists($phpDocConfiFile)) {
+            DB::alteration_message('ERROR, could not find: '.$phpDocConfiFile, 'created');
+        }
         for($i = 0; $i < $this->numberOfSteps; $i++) {
             $start = $i * $this->reposPerStep;
             $addons = Addon::get()->limit($this->reposPerStep, $start);
@@ -38,13 +42,17 @@ class AddonsBuildAPI extends BuildTask
                 chdir($tempDir);
                 // Git init
                 $gitInit = shell_exec('git init');
-                echo $gitInit;
+                DB::alteration_message('.... '.$gitInit);
                 // Git clone
                 $gitClone = shell_exec('git clone '. $version->SourceUrl);
-                echo $gitClone;
+                DB::alteration_message('.... '.$gitClone);
                 // Git pull
                 $gitPull = shell_exec('git pull');
-                echo $gitPull;
+                DB::alteration_message('.... '.$gitPull);
+
+                $phpDox = shell_exec('phpdox -f '.$phpDocConfiFile);
+                DB::alteration_message('.... '.$phpDox);
+
                 chdir($baseDir);
                 //clone
                 //run api tool
