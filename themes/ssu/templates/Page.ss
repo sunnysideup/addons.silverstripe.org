@@ -84,7 +84,7 @@ jQuery(document).ready(
             }
         );
 
-        jQuery('.tbody th').on(
+        jQuery('.tfs-holder').on(
             'click',
             '.more',
             function(e) {
@@ -137,7 +137,7 @@ jQuery(document).ready(
                             html += "</a></li>";
                         }
                     }
-                    html += '<li class="text"><a href="https://addons.silverstripe.org/add-ons/'+vendorName+'/'+packageName+'" target="_addons">&raquo; addons.silverstripe.org</a></li>';
+                    html += '<li class="text"><a href="https://addons.silverstripe.org/add-ons/'+vendorName+'/'+packageName+'" target="_addons">\&raquo; addons.silverstripe.org</a></li>';
                     html += '</ul>';
                     tr.find('th').append(html);
                     tr.addClass('more-added');
