@@ -35,7 +35,7 @@
          -->
 
         <!--  Additional configuration for the collecting process (parsing of php code, generation of xml data) -->
-        <collector publiconly="true" backend="parser" encoding="utf-8">
+        <collector publiconly="false" backend="parser" encoding="auto">
             <!--  @publiconly - Flag to disable/enable processing of non public methods and members -->
             <!--  @backend    - The collector backend to use, currently only shipping with 'parser' -->
             <!--  @encoding   - Charset encoding of source files (overwrite default 'auto' if detection fails) -->
@@ -49,7 +49,7 @@
                 <!--  @resolve - Flag to enable/disable resolving of inheritance -->
 
                 <!--  You can define multiple (external) dependencies to be included -->
-                <dependency  path="${basedir}/../../framework">
+                <!-- <dependency  path="${basedir}/../../framework" /> -->
                 <!--    @path  - path to a directory containing an index.xml for a dependency project -->
             </inheritance>
 
