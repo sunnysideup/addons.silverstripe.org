@@ -17,10 +17,12 @@
     <div id="LayoutHolder">$Layout</div>
 
     <footer>
+
         <h3>Credits</h3>
         <p>
             This site is based on the <a href="http://addons.silverstripe.org">the original Silverstripe addons site</a>.
-            It does not replace it, but it provides simply a different way to find <a href="http://www.silverstripe.org">Silverstripe Modules</a> and Themes.
+            It aims to provide an alternative way to find <a href="http://www.silverstripe.org">Silverstripe</a> Modulesand Themes.
+            A big thank you to Ralph and Aaron for their feedback.
         </p>
 
         <h3>Disclaimer</h3>
@@ -34,9 +36,10 @@
             Comments and questions can be directed to ssmods [at] <a href="http://www.sunnysideup.co.nz/">sunny side up</a>.
         </p>
 
-        <h3>Need help building Silverstripe Sites?</h3>
+        <h3>Need help building Silverstripe applications?</h3>
         <p>
-            If you need help building Silverstripe websites then read our <a href="http://sunnysideup.co.nz/info-for-digital-agencies">info for digital agencies</a>.
+            If you need help building Silverstripe websites then we would love to help you.
+            For more information, please visit our <a href="http://sunnysideup.co.nz/info-for-digital-agencies">information for digital agencies</a>.
         </p>
 
         <h3>Last Updated</h3>
