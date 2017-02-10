@@ -10,6 +10,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     $MetaTags(false)
     <% end_if %>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-25091781-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
 </head>
 <body>
 <div id="Wrapper">
@@ -21,7 +31,7 @@
         <h3>Credits</h3>
         <p>
             This site is based on the <a href="http://addons.silverstripe.org">the original Silverstripe addons site</a>.
-            It aims to provide an alternative way to find <a href="http://www.silverstripe.org">Silverstripe</a> Modulesand Themes.
+            It aims to provide an alternative way to find <a href="http://www.silverstripe.org">Silverstripe</a> Modules and Themes.
             A big thank you to Ralph and Aaron for their feedback.
         </p>
 
@@ -33,12 +43,12 @@
 
         <h3>Feedback</h3>
         <p>
-            Comments and questions can be directed to ssmods [at] <a href="http://www.sunnysideup.co.nz/">sunny side up</a>.
+            We love your feedback.  <span class="email-us"></span>
         </p>
 
         <h3>Need help building Silverstripe applications?</h3>
         <p>
-            If you need help building Silverstripe websites then we would love to help you.
+            We can make your Silverstripe projects shine.
             For more information, please visit our <a href="http://sunnysideup.co.nz/info-for-digital-agencies">information for digital agencies</a>.
         </p>
 
@@ -46,17 +56,7 @@
         <p>$LocalNow</p>
     </footer>
 </div>
-<!-- include Analytics -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-25091781-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
 <script>
 jQuery(document).ready(
     function() {
@@ -149,6 +149,20 @@ jQuery(document).ready(
             }
 
         );
+        var coded = "AA3EWA@AKqqvAdWmK5.FE.qO";
+        var key = "y6Ms9uqhBOJXmGRZ2F10SgdPvIYAVKpa7LoN3rUT4ktlnjWzfbexHD5cC8EwiQ";
+        var shift = coded.length;
+        var link = "";
+        for (i = 0; i < coded.length; i++) {
+            if (key.indexOf(coded.charAt(i))==-1) {
+                ltr = coded.charAt(i);
+                link += (ltr);
+            } else {
+                ltr = (key.indexOf(coded.charAt(i))-shift+key.length) % key.length;
+                link += (key.charAt(ltr));
+            }
+        }
+        jQuery('.email-us').html("<a href='mailto:"+link+"'>Please e-mail us.</a>");
 
     }
 );
