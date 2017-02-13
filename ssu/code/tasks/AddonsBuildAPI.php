@@ -7,22 +7,42 @@ class AddonsBuildAPI extends BuildTask
 
     protected $description = 'Create API documentation for all packages';
 
-    protected $numberOfSteps = 1;
+    protected $numberOfSteps = 10;
 
     protected $reposPerStep = 1;
 
+    protected $tmpDirName = 'temp_git_build';
+
+    protected $destinationDir = 'api';
+
+    public function __construct() {
+        header("Content-type: text/plain");
+        header('Cache-Control: no-cache'); // recommended to prevent caching of event data.
+        parent::__construct();
+    }
+
     public function run($request) {
+
+        ini_set('output_buffering', 'off');
+        // Turn off PHP output compression
+        ini_set('zlib.output_compression', false);
+
+        //Flush (send) the output buffer and turn off output buffering
+        //ob_end_flush();
+        while (@ob_end_flush());
+
+        // Implicitly flush the buffer(s)
+        ini_set('implicit_flush', true);
+        ob_implicit_flush(true);
+
+        //prevent apache from buffering it for deflate/gzip
+
+
+
         $baseDir = Director::baseFolder();
         //make temp dir
-        $tempDir = $baseDir.'/temp_git_build/';
-        if(file_exists($tempDir)) {
-            $this->removeAllFilesAndFolders($tempDir);
-        }
-        //check destination dir
-        $apiDir = $baseDir.'/api/';
-        if(!file_exists($apiDir)) {
-            mkdir($apiDir);
-        }
+        $tempDir = $baseDir.'/'.$this->tmpDirName.'/';
+
         $phpDocConfiFile = $baseDir.'/ssu/_config_templates/phpdox.xml';
         if(! file_exists($phpDocConfiFile)) {
             DB::alteration_message('ERROR, could not find: '.$phpDocConfiFile, 'created');
@@ -31,6 +51,14 @@ class AddonsBuildAPI extends BuildTask
             $start = $i * $this->reposPerStep;
             $addons = Addon::get()->limit($this->reposPerStep, $start);
             foreach($addons as $addon) {
+
+                if(file_exists($tempDir)) {
+                    $this->removeAllFilesAndFolders($tempDir);
+                } else {
+                    mkdir($tempDir);
+                }
+                $this->chmod($tempDir);
+
                 DB::alteration_message($addon->Name);
                 $version = $addon->MasterVersion();
                 if(!$version) {
@@ -39,6 +67,7 @@ class AddonsBuildAPI extends BuildTask
                 //build git clone statement
                 $cloneStatement = 'git clone '.$version->SourceUrl.' '.$tempDir;
                 DB::alteration_message('.... '.$cloneStatement, 'created');
+
                 chdir($tempDir);
                 // Git init
                 $gitInit = shell_exec('git init');
@@ -54,11 +83,35 @@ class AddonsBuildAPI extends BuildTask
                 DB::alteration_message('.... '.$phpDox);
 
                 chdir($baseDir);
-                //clone
-                //run api tool
-                //delete code
+
                 //move api tool data to api/
-                //add link to api/index.html
+                $destinationFinalDirs = explode('/', $addon->Name);
+                $folder0 = $baseDir . '/'.$this->destinationDir.'/';
+                $folder1 = $folder0.$destinationFinalDirs[0];
+                $folder2 = $folder1.'/'.$destinationFinalDirs[1];
+                for($i = 0; $i < 3; $i++ ) {
+                    $varName = 'folder'.$i;
+                    if($i < 2) {
+                        if(!file_exists($varName)) {
+                            mkdir($varName);
+                        }
+                    } else {
+                        if(file_exists($varName)) {
+                            unlink($varName);
+                        }
+                        mkdir($varName);
+                    }
+                    $this->chmod($varName);
+                }
+                $fromFolder = $tempDir.'docs/html';
+                $toFolder = $folder2;
+                $this->moveAll($fromFolder, $toFolder);
+                $this->removeAllFilesAndFolders($tempDir);
+                DB::alteration_message("--------------------------------------------");
+                DB::alteration_message("--------------------------------------------");
+                ob_flush();
+                flush();
+
             }
         }
     }
@@ -72,4 +125,29 @@ class AddonsBuildAPI extends BuildTask
         }
         return true;
     }
+
+    function moveAll($src, $dst) {
+        $dir = opendir($src);
+        @mkdir($dst);
+        while(false !== ( $file = readdir($dir)) ) {
+            if (( $file != '.' ) && ( $file != '..' )) {
+                rename(
+                    $src . '/' . $file,
+                    $dst . '/' . $file
+                );
+            }
+        }
+        closedir($dir);
+    }
+
+    function chmod($pathname)
+    {
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($pathname));
+
+        foreach($iterator as $item) {
+            chmod($item, 0777);
+        }
+
+    }
+
 }
