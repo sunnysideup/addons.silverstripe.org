@@ -7,7 +7,7 @@ class AddonsBuildAPI extends BuildTask
 
     protected $description = 'Create API documentation for all packages';
 
-    protected $numberOfSteps = 10;
+    protected $numberOfSteps = 1;
 
     protected $reposPerStep = 1;
 
@@ -15,14 +15,8 @@ class AddonsBuildAPI extends BuildTask
 
     protected $destinationDir = 'api';
 
-    public function __construct() {
-        header("Content-type: text/plain");
-        header('Cache-Control: no-cache'); // recommended to prevent caching of event data.
-        parent::__construct();
-    }
-
-    public function run($request) {
-
+    public function run($request)
+    {
         ini_set('output_buffering', 'off');
         // Turn off PHP output compression
         ini_set('zlib.output_compression', false);
@@ -43,16 +37,15 @@ class AddonsBuildAPI extends BuildTask
         //make temp dir
         $tempDir = $baseDir.'/'.$this->tmpDirName.'/';
 
-        $phpDocConfiFile = $baseDir.'/ssu/_config_templates/phpdox.xml';
-        if(! file_exists($phpDocConfiFile)) {
-            DB::alteration_message('ERROR, could not find: '.$phpDocConfiFile, 'created');
+        $phpDocConfigFile = $baseDir.'/ssu/_config_templates/phpdox.xml';
+        if (! file_exists($phpDocConfigFile)) {
+            DB::alteration_message('ERROR, could not find: '.$phpDocConfigFile, 'created');
         }
-        for($i = 0; $i < $this->numberOfSteps; $i++) {
+        for ($i = 0; $i < $this->numberOfSteps; $i++) {
             $start = $i * $this->reposPerStep;
             $addons = Addon::get()->limit($this->reposPerStep, $start);
-            foreach($addons as $addon) {
-
-                if(file_exists($tempDir)) {
+            foreach ($addons as $addon) {
+                if (file_exists($tempDir)) {
                     $this->removeAllFilesAndFolders($tempDir);
                 } else {
                     mkdir($tempDir);
@@ -61,7 +54,7 @@ class AddonsBuildAPI extends BuildTask
 
                 DB::alteration_message($addon->Name);
                 $version = $addon->MasterVersion();
-                if(!$version) {
+                if (!$version) {
                     $version = $addon->Versions()->first();
                 }
                 //build git clone statement
@@ -79,7 +72,7 @@ class AddonsBuildAPI extends BuildTask
                 $gitPull = shell_exec('git pull');
                 DB::alteration_message('.... '.$gitPull);
 
-                $phpDox = shell_exec('phpdox -f '.$phpDocConfiFile);
+                $phpDox = shell_exec('phpdox -f '.$phpDocConfigFile);
                 DB::alteration_message('.... '.$phpDox);
 
                 chdir($baseDir);
@@ -89,14 +82,14 @@ class AddonsBuildAPI extends BuildTask
                 $folder0 = $baseDir . '/'.$this->destinationDir.'/';
                 $folder1 = $folder0.$destinationFinalDirs[0];
                 $folder2 = $folder1.'/'.$destinationFinalDirs[1];
-                for($i = 0; $i < 3; $i++ ) {
+                for ($i = 0; $i < 3; $i++) {
                     $varName = 'folder'.$i;
-                    if($i < 2) {
-                        if(!file_exists($varName)) {
+                    if ($i < 2) {
+                        if (!file_exists($varName)) {
                             mkdir($varName);
                         }
                     } else {
-                        if(file_exists($varName)) {
+                        if (file_exists($varName)) {
                             unlink($varName);
                         }
                         mkdir($varName);
@@ -111,7 +104,6 @@ class AddonsBuildAPI extends BuildTask
                 DB::alteration_message("--------------------------------------------");
                 ob_flush();
                 flush();
-
             }
         }
     }
@@ -120,17 +112,18 @@ class AddonsBuildAPI extends BuildTask
     {
         $di = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
         $ri = new RecursiveIteratorIterator($di, RecursiveIteratorIterator::CHILD_FIRST);
-        foreach ( $ri as $file ) {
+        foreach ($ri as $file) {
             $file->isDir() ?  rmdir($file) : unlink($file);
         }
         return true;
     }
 
-    function moveAll($src, $dst) {
+    public function moveAll($src, $dst)
+    {
         $dir = opendir($src);
         @mkdir($dst);
-        while(false !== ( $file = readdir($dir)) ) {
-            if (( $file != '.' ) && ( $file != '..' )) {
+        while (false !== ($file = readdir($dir))) {
+            if (($file != '.') && ($file != '..')) {
                 rename(
                     $src . '/' . $file,
                     $dst . '/' . $file
@@ -140,14 +133,21 @@ class AddonsBuildAPI extends BuildTask
         closedir($dir);
     }
 
-    function chmod($pathname)
+    public function chmod($pathname)
     {
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($pathname));
 
-        foreach($iterator as $item) {
-            chmod($item, 0777);
+        foreach ($iterator as $item) {
+            $error = false;
+            try {
+                chmod($item, 0777);
+            } catch (Exception $e) {
+                echo 'Could not change chmod for '.$pathname.': ',  $e->getMessage(), "\n";
+                $error = true;
+            }
+            if ($error) {
+                die('----end----');
+            }
         }
-
     }
-
 }

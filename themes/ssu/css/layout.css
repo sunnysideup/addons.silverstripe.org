@@ -51,77 +51,84 @@ footer p{
 }
 footer a {border-bottom: 1px solid #444; text-decoration: none; color: #444!important;}
 
-a:link, a:visited {
+a:link,
+a:visited {
   color: crimson;
 }
 
-table thead th:first-child,
-table thead th:nth-child(2) {
+.tfs-holder table thead th:first-child,
+.tfs-holder table thead th:nth-child(2) {
     width: 24%;
 }
-table thead th.number {
+
+.tfs-holder table thead th.number {
     width: 16%;
 }
-table thead th:last-child {
+
+.tfs-holder table thead th:last-child {
     width: 20%;
 }
 
-table tbody th {
+.tfs-holder table tbody th {
     background-color: #777;
 }
 
-td span.dl {border-bottom: 1px dotted #000;}
+.tfs-holder td span.dl {border-bottom: 1px dotted #000;}
 
 
-th a:link, th a:visited {
-  border-bottom: 1px solid #222;
+.tfs-holder th a:link,
+.tfs-holder th a:visited {
+  border-bottom: 1px solid #fff;
   text-decoration: none;
 }
 
-thead th a:link, thead th a:visited {
+.tfs-holder thead th a:link,
+.tfs-holder thead th a:visited {
     color: #fff;
 }
 
-a.button {
+.tfs-holder a.button {
   color: #fff;
 }
 
-td.action a {
+.tfs-holder td.action a {
   color: #555;
 }
 
-td. a:hover {
+.tfs-holder td. a:hover {
   color: crimson;
 }
 
-th[scope='col'] {
+.tfs-holder th[scope='col'] {
     text-align: center;
 
 }
-th[scope='row'] {
+.tfs-holder th[scope='row'] {
     font-weight: normal;
 }
 
-th[scope='row'] span[data-filter='Title'] {
+.tfs-holder th[scope='row'] span[data-filter='Title'] {
   font-weight: bold;
   border-bottom: 0px;
   cursor: pointer;
   color: #fff;
 }
-th[scope='row'] span[data-filter='Title']:before {
+.tfs-holder th[scope='row'] span[data-filter='Title']:before {
     width: 16px;
     content: '» ';
 }
-tr.opened th[scope='row'] span[data-filter='Title']:before {
+.tfs-holder tr.opened th[scope='row'] span[data-filter='Title']:before {
     content: '« ';
 }
-th ul li, td.left ul li, td:last-child ul li {
+.tfs-holder th ul li,
+.tfs-holder td.left ul li,
+.tfs-holder td:last-child ul li {
   padding-top: 1em;
   line-height: 1;
 }
 
 
-td h5 {
+.tfs-holder td h5 {
   padding: 0;
   margin: 0;
   padding-top: 1em;
@@ -129,9 +136,10 @@ td h5 {
 
 
 /*th.number, td.dl-row, td.rd-row, td.nv-row {max-width: 7em!important; min-width: 7em!important; width: 7em!important;}*/
-tbody td.right {text-align: right;}
+.tfs-holder tbody td.right {text-align: right;}
 
-th .ext, th .addFav{
+.tfs-holder th .ext,
+.tfs-holder th .addFav{
   text-decoration: none!important;
   border-bottom: none!important;
   display: block;
@@ -141,53 +149,58 @@ th .ext, th .addFav{
   float: left;
   text-indent: -999px;
 }
-th .addFav {
+.tfs-holder th .addFav {
     background: no-repeat url('/themes/ssu/images/favourite.png') 0 2px;
 }
-th .github {
+.tfs-holder th .github {
     background: no-repeat url('/themes/ssu/images/github.png');
 }
-th .packagist {
+.tfs-holder th .packagist {
     background: no-repeat url('/themes/ssu/images/packagist.png');
 }
-th .ext:hover, th .addFav:hover{
+.tfs-holder th .ext:hover,
+.tfs-holder th .addFav:hover{
     opacity: 1;
 }
-tr.fav th .addFav {
+.tfs-holder tr.fav th .addFav {
     opacity: 1;
 }
 
-th ul ul,
-th ul ul li {display: inline;}
-th ul ul li {font-style: italic;}
+.tfs-holder th ul ul,
+.tfs-holder th ul ul li {display: inline;}
+.tfs-holder th ul ul li {font-style: italic;}
 
-.hide {display: none!important;}
-li.download {display: block!important; float: left!important; padding-left: 0!important;}
-.favouritestocomposer {
+.tfs-holder .hide {display: none!important;}
+.tfs-holder li.download {display: block!important; float: left!important; padding-left: 0!important;}
+.tfs-holder .favouritestocomposer {
     text-align: center;
 }
-th span.dl-on {
+.tfs-holder th span.dl-on {
     font-weight: bold!important;
     color: #fff!important;
     border-bottom: 1px solid #fff!important;
 }
 
+
+
+
+
 #tfs-modal-pop-up h1 {
     background-color: #febf04;
 }
 
-div[data-to-filter="Supports"] ul {
+.tfs-holder div[data-to-filter="Supports"] ul {
     -webkit-column-count: 3; /* Chrome, Safari, Opera */
     -moz-column-count: 3; /* Firefox */
     column-count: 3;
 }
 
 
-.badges {clear: left;}
-tbody th .badges li{display: block;}
-tbody th .badges li img {height: 20px;}
-tbody th .badges li a {text-decoration: none; border-bottom: none; font-weight: bold; color: #ccc;}
-span[data-filter="Supports"] {
+.tfs-holder tbody th .badges {clear: left;}
+.tfs-holder tbody th .badges li{display: block;}
+.tfs-holder tbody th .badges li img {height: 20px;}
+.tfs-holder tbody th .badges li a {text-decoration: none; border-bottom: none; font-weight: bold; color: #ccc;}
+.tfs-holder span[data-filter="Supports"] {
     background-color: #aaa;
     border-radius: 20px;
     display: block;
@@ -197,7 +210,7 @@ span[data-filter="Supports"] {
     margin-left: 10px;
     border-bottom: none;
 }
-div.hidden {clear: right;}
+.tfs-holder div.hidden {clear: right;}
 
 
 
