@@ -1307,12 +1307,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunnysideup/silverstripe-table_filter_sort.git",
-                "reference": "f398b57c1866f6246c9dfddd6c4485096fe10b46"
+                "reference": "532f0fe535d7f152a494f0fedc3f4af385c1cda0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunnysideup/silverstripe-table_filter_sort/zipball/f398b57c1866f6246c9dfddd6c4485096fe10b46",
-                "reference": "f398b57c1866f6246c9dfddd6c4485096fe10b46",
+                "url": "https://api.github.com/repos/sunnysideup/silverstripe-table_filter_sort/zipball/532f0fe535d7f152a494f0fedc3f4af385c1cda0",
+                "reference": "532f0fe535d7f152a494f0fedc3f4af385c1cda0",
                 "shasum": ""
             },
             "require": {
@@ -1343,7 +1343,7 @@
                 "sort",
                 "table"
             ],
-            "time": "2017-02-20 21:55:47"
+            "time": "2017-02-21 06:09:48"
         },
         {
             "name": "symfony/console",
