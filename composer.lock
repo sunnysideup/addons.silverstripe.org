@@ -1225,16 +1225,16 @@
         },
         {
             "name": "silverstripe/multivaluefield",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silverstripe-australia/silverstripe-multivaluefield.git",
-                "reference": "200055c8edb08e8607bf0a829475a32b9d9b2bf1"
+                "reference": "f647b1c8897b7e0662817855f365087ba59fc8ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silverstripe-australia/silverstripe-multivaluefield/zipball/200055c8edb08e8607bf0a829475a32b9d9b2bf1",
-                "reference": "200055c8edb08e8607bf0a829475a32b9d9b2bf1",
+                "url": "https://api.github.com/repos/silverstripe-australia/silverstripe-multivaluefield/zipball/f647b1c8897b7e0662817855f365087ba59fc8ad",
+                "reference": "f647b1c8897b7e0662817855f365087ba59fc8ad",
                 "shasum": ""
             },
             "require": {
@@ -1262,7 +1262,7 @@
                 "formfield",
                 "silverstripe"
             ],
-            "time": "2016-07-26T00:58:14+00:00"
+            "time": "2017-02-21T04:08:54+00:00"
         },
         {
             "name": "stojg/silverstripe-resque",
@@ -1307,12 +1307,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunnysideup/silverstripe-table_filter_sort.git",
-                "reference": "c4632ec4534f4beab5fc48c2d36c198c6460cb57"
+                "reference": "f398b57c1866f6246c9dfddd6c4485096fe10b46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunnysideup/silverstripe-table_filter_sort/zipball/c4632ec4534f4beab5fc48c2d36c198c6460cb57",
-                "reference": "c4632ec4534f4beab5fc48c2d36c198c6460cb57",
+                "url": "https://api.github.com/repos/sunnysideup/silverstripe-table_filter_sort/zipball/f398b57c1866f6246c9dfddd6c4485096fe10b46",
+                "reference": "f398b57c1866f6246c9dfddd6c4485096fe10b46",
                 "shasum": ""
             },
             "require": {
@@ -1343,7 +1343,7 @@
                 "sort",
                 "table"
             ],
-            "time": "2017-02-20 21:34:19"
+            "time": "2017-02-20 21:55:47"
         },
         {
             "name": "symfony/console",
