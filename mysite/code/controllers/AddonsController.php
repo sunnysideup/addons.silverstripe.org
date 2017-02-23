@@ -35,7 +35,7 @@ class AddonsController extends SiteController {
     public function index() {
         increase_time_limit_to(600);
         TableFilterSortAPI::include_requirements(
-            $tableSelector = '',
+            $tableSelector = '.tfs-holder',
             $blockArray = array(),
             $jqueryLocation = '',
             $includeInPage = true
