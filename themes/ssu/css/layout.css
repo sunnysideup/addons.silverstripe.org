@@ -179,9 +179,9 @@ a:visited {
 .tfs-holder .favouritestocomposer {
     text-align: center;
 }
-.tfs-holder span.dl-on {
+.tfs-holder th span.dl-on {
     font-weight: bold!important;
-    color: crimson!important;
+    color: #000!important;
     border-bottom: 1px solid #fff!important;
 }
 
