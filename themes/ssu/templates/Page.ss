@@ -173,8 +173,8 @@ jQuery(document).ready(
             '.doc',
             function(event) {
                 event.preventDefault();
-                var width = Math.round(jQuery(window).width() * 0.91);
-                var height = Math.round(jQuery(window).height() * 0.91);
+                var width = Math.round(jQuery(window).width() * 0.95);
+                var height = Math.round(jQuery(window).height() * 0.95);
                 var href = jQuery(this).attr('href');
                 jQuery.modal(
                     '<iframe src="'+href+'" width="'+width+'"height="'+height+'" style="border:0" id="tfs-pop-up-i-frame" name="tfs-pop-up-i-frame">',
