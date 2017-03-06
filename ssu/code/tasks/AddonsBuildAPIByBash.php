@@ -27,21 +27,29 @@ class AddonsBuildAPIByBash extends BuildTask
                 $i = 999999;
             }
             foreach ($addons as $addon) {
-                $version = $addon->MasterVersion();
-                if (!$version) {
-                    $version = $addon->Versions()->first();
+                $link = '';
+                if($this->isHTTPLink($addon->Repository)) {
+                    $link = $addon->Repository;
+                } else {
+                    $version = $addon->MasterVersion();
+                    if (!$version) {
+                        $version = $addon->Versions()->first();
+                    }
+                    if($version) {
+                        $link = $version->SourceUrl;
+                    }
                 }
                 $vendorAndName = explode('/', $addon->Name);
                 if(
                     isset($vendorAndName[0]) &&
                     isset($vendorAndName[1]) &&
-                    isset($version->SourceUrl)
+                    $link
                 ) {
                     DB::alteration_message($vendorAndName[0]);
                     DB::alteration_message(' ... '.$vendorAndName[1]);
-                    DB::alteration_message(' ... '.$version->SourceUrl);
+                    DB::alteration_message(' ... '.$link);
                     $count++;
-                    $ghs .= "\ngh[$count]=\"".$version->SourceUrl."\"";
+                    $ghs .= "\ngh[$count]=\"".$link."\"";
                     $vds .= "\nvd[$count]=\"".$vendorAndName[0]."\"";
                     $mns .= "\nmn[$count]=\"".$vendorAndName[1]."\"";
                 }
@@ -106,4 +114,21 @@ rm ./docs -rf
             echo "</pre><hr />";
         }
     }
+
+    /**
+     * is this an HTTP / HTTPS Link or something else?
+     * @param  string  $link [description]
+     * @return boolean       [description]
+     */
+    function isHTTPLink($link)
+    {
+        if(
+            strpos($link, 'ttp://') === 0 ||
+            strpos($link, 'https://') === 0
+        ) {
+            return true;
+        }
+        return false;
+    }
+
 }
