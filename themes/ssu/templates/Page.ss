@@ -46,6 +46,11 @@
             We love your feedback.  <span class="email-us"></span>
         </p>
 
+        <h3>Silverstripe Module Documentation / API</h3>
+        <p>
+            Looking for a myriad of code examples, API syntax, or additional documentation. Please visit our <a href="http://docs.ssmods.com/">api search</a>.
+        </p>
+
         <h3>Need help building Silverstripe applications?</h3>
         <p>
             We can make your Silverstripe projects shine.
@@ -146,8 +151,8 @@ jQuery(document).ready(
                     return false;
                 }
             }
-
         );
+
         var coded = "AA3EWA@AKqqvAdWmK5.FE.qO";
         var key = "y6Ms9uqhBOJXmGRZ2F10SgdPvIYAVKpa7LoN3rUT4ktlnjWzfbexHD5cC8EwiQ";
         var shift = coded.length;
@@ -162,6 +167,37 @@ jQuery(document).ready(
             }
         }
         jQuery('.email-us').html("<a href='mailto:"+link+"'>Please e-mail us.</a>");
+
+        jQuery('tbody').on(
+            'click',
+            '.doc',
+            function(event) {
+                event.preventDefault();
+                var width = Math.round(jQuery(window).width() * 0.91);
+                var height = Math.round(jQuery(window).height() * 0.91);
+                var href = jQuery(this).attr('href');
+                jQuery.modal(
+                    '<iframe src="'+href+'" width="'+width+'"height="'+height+'" style="border:0" id="tfs-pop-up-i-frame" name="tfs-pop-up-i-frame">',
+                    {
+                        closeHTML:"close",
+                        containerCss:{
+                            backgroundColor:"#fff",
+                            borderColor:"#fff",
+                            padding:0,
+                            width: width,
+                            height: height
+
+                        },
+                        opacity: 75,
+                        overlayClose:true,
+                        onClose: function() {
+                            jQuery.modal.close();
+                        }
+                    }
+                );
+                return false;
+            }
+        );
 
     }
 );
