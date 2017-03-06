@@ -43,7 +43,8 @@ class AddonsBuildAPIByBash extends BuildTask
                 if(
                     isset($vendorAndName[0]) &&
                     isset($vendorAndName[1]) &&
-                    $link
+                    $link &&
+                    $addon->Type === 'module'
                 ) {
                     DB::alteration_message($vendorAndName[0]);
                     DB::alteration_message(' ... '.$vendorAndName[1]);
