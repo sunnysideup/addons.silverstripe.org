@@ -23,7 +23,6 @@ class AddonsBuildAPIByBash extends BuildTask
         for ($i = 0; $i < $this->numberOfSteps; $i++) {
             $start = $i * $this->reposPerStep;
             $addons = Addon::get()->limit($this->reposPerStep, $start);
-            echo "======================================================\n\n";
             if($addons->count() == 0) {
                 $i = 999999;
             }
@@ -38,7 +37,9 @@ class AddonsBuildAPIByBash extends BuildTask
                     isset($vendorAndName[1]) &&
                     isset($version->SourceUrl)
                 ) {
-                    echo $count;
+                    DB::alteration_message($vendorAndName[0]);
+                    DB::alteration_message(' ... '.$vendorAndName[1]);
+                    DB::alteration_message(' ... '.$version->SourceUrl);
                     $count++;
                     $ghs .= "\ngh[$count]=\"".$version->SourceUrl."\"";
                     $vds .= "\nvd[$count]=\"".$vendorAndName[0]."\"";

@@ -90,6 +90,7 @@
                     <p>
                         <a href="#" class="addFav">♥</a>
                         <a href="$Repository" class="ext github" target="_blank">github</a>
+                        <% if $DocLink %><a href="$DocLink" class="ext docs" target="_blank">Docs</a><% end_if %>
                     </p>
                 </th>
                 <td class="left">

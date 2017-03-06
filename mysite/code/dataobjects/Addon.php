@@ -149,6 +149,14 @@ class Addon extends DataObject {
         );
     }
 
+    public function DocLink()
+    {
+        if(file_exists('/var/www/docs.ssmods.com/'.$this->Name)) {
+            $url = '//docs.ssmods.com/'.$this->Name;
+            return $url;
+        }
+    }
+
     public function DescriptionText() {
         return $this->Description;
     }

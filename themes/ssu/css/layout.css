@@ -159,6 +159,9 @@ a:visited {
 .tfs-holder th .github {
     background: no-repeat url('/themes/ssu/images/github.png');
 }
+.tfs-holder th .docs {
+    background: no-repeat url('/themes/ssu/images/docs.png');
+}
 .tfs-holder th .packagist {
     background: no-repeat url('/themes/ssu/images/packagist.png');
 }
