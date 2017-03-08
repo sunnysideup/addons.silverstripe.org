@@ -46,6 +46,11 @@
             We love your feedback.  <span class="email-us"></span>
         </p>
 
+        <h3>Silverstripe Module Documentation / API</h3>
+        <p>
+            Looking for a myriad of code examples, API syntax, or additional documentation. Please visit our <a href="http://docs.ssmods.com/">api search</a>.
+        </p>
+
         <h3>Need help building Silverstripe applications?</h3>
         <p>
             We can make your Silverstripe projects shine.
@@ -103,14 +108,13 @@ jQuery(document).ready(
                     );
                     var linksAndImages = [
                         ['Build Status', 'https://api.travis-ci.org/#VENDOR#/#PACKAGE-LONG#.svg?branch=master', 'https://travis-ci.org/#VENDOR#/#PACKAGE-LONG#'],
-                        ['Scrutinzer', 'https://scrutinizer-ci.com/g/#VENDOR#/#PACKAGE-LONG#/badges/quality-score.png?b=master', 'https://scrutinizer-ci.com/g/sunnysideup/#VENDOR#-ecommerce/?branch=master'],
-                        ['Latest Stable Version', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/version.svg', 'http://www.#VENDOR#.org/stable-download/'],
-                        ['Latest Unstable Version', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/v/unstable.svg', 'https://packagist.org/packages/#VENDOR#/#PACKAGE#'],
+                        ['Scrutinzer', 'https://scrutinizer-ci.com/g/#VENDOR#/#PACKAGE-LONG#/badges/quality-score.png?b=master', 'https://scrutinizer-ci.com/g/#VENDOR#/#PACKAGE-LONG#/?branch=master'],
                         ['codecov', 'https://codecov.io/gh/#VENDOR#/#PACKAGE-LONG#/branch/master/graph/badge.svg', 'https://codecov.io/gh/#VENDOR#/#PACKAGE-LONG#'],
-                        ['Total Downloads', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/downloads.svg', 'https://packagist.org/packages/#VENDOR#/#PACKAGE#'],
-                        ['License', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/license.svg', 'https://github.com/#VENDOR#/#PACKAGE-LONG#license'],
+                        ['Latest Stable Version', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/version.svg', 'https://github.com/#VENDOR#/#PACKAGE-LONG#/tags'],
+                        ['Latest Unstable Version', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/v/unstable.svg', 'https://github.com/#VENDOR#/#PACKAGE-LONG#'],
                         ['Dependency Status', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#/badge.svg', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#'],
-                        ['Reference Status', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#/reference_badge.svg?style=flat', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#/references'],
+                        ['Reference Status', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#/reference_badge.svg', 'https://www.versioneye.com/php/#VENDOR#:#PACKAGE#/references'],
+                        ['License', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/license.svg', 'https://github.com/#VENDOR#/#PACKAGE-LONG#/'],
                         ['helpfulrobot', 'https://helpfulrobot.io/#VENDOR#/#PACKAGE#/badge', 'https://helpfulrobot.io/#VENDOR#/#PACKAGE#/badge'],
                     ];
                     var packageName = tr.find('span[data-filter="Title"]').text().trim();
@@ -147,8 +151,8 @@ jQuery(document).ready(
                     return false;
                 }
             }
-
         );
+
         var coded = "AA3EWA@AKqqvAdWmK5.FE.qO";
         var key = "y6Ms9uqhBOJXmGRZ2F10SgdPvIYAVKpa7LoN3rUT4ktlnjWzfbexHD5cC8EwiQ";
         var shift = coded.length;
@@ -163,6 +167,37 @@ jQuery(document).ready(
             }
         }
         jQuery('.email-us').html("<a href='mailto:"+link+"'>Please e-mail us.</a>");
+
+        jQuery('tbody').on(
+            'click',
+            '.doc',
+            function(event) {
+                event.preventDefault();
+                var width = Math.round(jQuery(window).width() * 0.95);
+                var height = Math.round(jQuery(window).height() * 0.95);
+                var href = jQuery(this).attr('href');
+                jQuery.modal(
+                    '<iframe src="'+href+'" width="'+width+'"height="'+height+'" style="border:0" id="tfs-pop-up-i-frame" name="tfs-pop-up-i-frame">',
+                    {
+                        closeHTML:"close",
+                        containerCss:{
+                            backgroundColor:"#fff",
+                            borderColor:"#fff",
+                            padding:0,
+                            width: width,
+                            height: height
+
+                        },
+                        opacity: 75,
+                        overlayClose:true,
+                        onClose: function() {
+                            jQuery.modal.close();
+                        }
+                    }
+                );
+                return false;
+            }
+        );
 
     }
 );
