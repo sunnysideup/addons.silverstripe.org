@@ -34,7 +34,13 @@ class AddonsController extends SiteController {
 
     public function index() {
         increase_time_limit_to(600);
-        TableFilterSortAPI::include_requirements();
+        TableFilterSortAPI::include_requirements(
+            $tableSelector = '.tfs-holder',
+            $blockArray = array(),
+            $jqueryLocation = '',
+            $includeInPage = true,
+            $jsSettings = '{}'
+        );
         $html = $this->renderWith(array('Addons', 'Page'));
         $html = preg_replace("/\s+/", ' ', trim($html));
         $html = str_replace(array('<!-- -->', '//<![CDATA[', '//]]>'), '', $html);
