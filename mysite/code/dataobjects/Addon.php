@@ -149,9 +149,15 @@ class Addon extends DataObject {
         );
     }
 
+    /**
+     * @return string | null
+     */
     public function DocLink()
     {
-        if(file_exists('/var/www/docs.ssmods.com/public_html/'.$this->Name.'/classes.xhtml') || Director::isdev()) {
+        if(
+            file_exists('/var/www/docs.ssmods.com/public_html/'.$this->Name.'/classes.xhtml') ||
+            Director::isdev()
+        ) {
             $url = '//docs.ssmods.com/'.$this->Name.'/classes.xhtml';
             return $url;
         }
