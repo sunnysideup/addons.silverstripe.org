@@ -13,6 +13,8 @@ class AddonsBuildAPIByBash extends BuildTask
 
     protected $destinationFile = '/var/www/docs.ssmods.com/process/run.sh';
 
+    protected $destinationFile_quick = '/var/www/docs.ssmods.com/process/run_quick.sh';
+
     public function run($request)
     {
 
@@ -20,6 +22,10 @@ class AddonsBuildAPIByBash extends BuildTask
         $ghs = '';
         $vds = '';
         $mns = '';
+        $count_quick = 0;
+        $ghs_quick = '';
+        $vds_quick = '';
+        $mns_quick = '';
         for ($i = 0; $i < $this->numberOfSteps; $i++) {
             $start = $i * $this->reposPerStep;
             $addons = Addon::get()->limit($this->reposPerStep, $start);
@@ -53,66 +59,35 @@ class AddonsBuildAPIByBash extends BuildTask
                     $ghs .= "\ngh[$count]=\"".$link."\"";
                     $vds .= "\nvd[$count]=\"".$vendorAndName[0]."\"";
                     $mns .= "\nmn[$count]=\"".$vendorAndName[1]."\"";
+                    if(! $addon->DocLink()) {
+                        $count_quick++;
+                        $ghs_quick .= "\ngh[$count_quick]=\"".$link."\"";
+                        $vds_quick .= "\nvd[$count_quick]=\"".$vendorAndName[0]."\"";
+                        $mns_quick .= "\nmn[$count_quick]=\"".$vendorAndName[1]."\"";
+                    }
                 }
                 else {
                     $ghs .= '# ERROR GETTING: '.$addon->Name;
                 }
             }
         }
-        $bash =
-'#!/bin/bash
-
-echo "======================================================";
-echo "======================================================";
-echo "======================================================";
-
-date
-
-echo "======================================================";
-echo "======================================================";
-echo "======================================================";
-
-cd /var/www/docs.ssmods.com/process
-echo "====================================================== setting variables";
-'.$ghs.'
-
-'.$mns.'
-
-'.$vds.'
-
-for index in ${!gh[*]}
-do
-    echo "====================================================== starting loop";
-    rm ./src -rf
-    rm ./build -rf
-    rm ./docs -rf
-    echo "====================================================== cloning git repo";
-    printf "%4d: %s\n" $index ${mn[$index]}
-    echo "====================================================== cloning git repo";
-    git clone ${gh[$index]} ./src
-    echo "====================================================== running phpdox";
-    phpdox
-    echo "====================================================== moving";
-    dira="../public_html"
-    dirb="${vd[$index]}"
-    dirc="${mn[$index]}"
-    dir=$dira/$dirb/$dirc
-    echo $dir
-    rm $dir -rf
-    mkdir $dir -p
-    mv ./docs/html/* $dir
-done
-
-rm ./src -rf
-rm ./build -rf
-rm ./docs -rf
-';
+        $bash = $this->getBashScript($ghs, $vds, $mns);
         if(is_writable($this->destinationFile)) {
             file_put_contents($this->destinationFile, $bash);
         } else {
             echo "<hr /><pre>";
             echo $bash;
             echo "</pre><hr />";
+        }
+        if($count_quick) {
+            $bash_quick = $this->getBashScript($ghs_quick, $vds_quick, $mns_quick);
+            if(is_writable($this->destinationFile_quick)) {
+                file_put_contents($this->destinationFile_quick, $bash_quick);
+            } else {
+                echo "<hr /><pre>";
+                echo $bash_quick;
+                echo "</pre><hr />";
+            }
         }
     }
 
@@ -121,7 +96,7 @@ rm ./docs -rf
      * @param  string  $link [description]
      * @return boolean       [description]
      */
-    function isHTTPLink($link)
+    protected function isHTTPLink($link)
     {
         if(
             strpos($link, 'ttp://') === 0 ||
@@ -130,6 +105,61 @@ rm ./docs -rf
             return true;
         }
         return false;
+    }
+
+
+    protected function getBashScript($ghs, $vds, $mns) 
+    {
+        $bash =
+        '#!/bin/bash
+
+        echo "======================================================";
+        echo "======================================================";
+        echo "======================================================";
+
+        date
+
+        echo "======================================================";
+        echo "======================================================";
+        echo "======================================================";
+
+        cd /var/www/docs.ssmods.com/process
+        echo "====================================================== setting variables";
+
+        '.$ghs.'
+
+        '.$mns.'
+
+        '.$vds.'
+
+        for index in ${!gh[*]}
+        do
+        echo "====================================================== starting loop";
+        rm ./src -rf
+        rm ./build -rf
+        rm ./docs -rf
+        echo "====================================================== cloning git repo";
+        printf "%4d: %s\n" $index ${mn[$index]}
+        echo "====================================================== cloning git repo";
+        git clone ${gh[$index]} ./src
+        echo "====================================================== running phpdox";
+        phpdox
+        echo "====================================================== moving";
+        dira="../public_html"
+        dirb="${vd[$index]}"
+        dirc="${mn[$index]}"
+        dir=$dira/$dirb/$dirc
+        echo $dir
+        rm $dir -rf
+        mkdir $dir -p
+        mv ./docs/html/* $dir
+        done
+
+        rm ./src -rf
+        rm ./build -rf
+        rm ./docs -rf
+        ';
+        return $bash;
     }
 
 }
