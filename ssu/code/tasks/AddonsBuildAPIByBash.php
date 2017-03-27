@@ -74,7 +74,7 @@ class AddonsBuildAPIByBash extends BuildTask
             }
         }
         $bash = $this->getBashScript($ghs, $vds, $mns, $errors);
-        if(is_writable($this->destinationFile)) {
+        if(is_writable($this->destinationFile) || ! file_exists($this->destinationFile)) {
             file_put_contents($this->destinationFile, $bash);
         } else {
             echo "<hr /><pre>";
@@ -83,7 +83,7 @@ class AddonsBuildAPIByBash extends BuildTask
         }
         if($count_quick) {
             $bash_quick = $this->getBashScript($ghs_quick, $vds_quick, $mns_quick, $errors_quick);
-            if(is_writable($this->destinationFile_quick)) {
+            if(is_writable($this->destinationFile_quick) || ! file_exists($this->destinationFile_quick)) {
                 file_put_contents($this->destinationFile_quick, $bash_quick);
             } else {
                 echo "<hr /><pre>";
