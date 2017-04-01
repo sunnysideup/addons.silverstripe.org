@@ -22,10 +22,12 @@ class AddonsBuildAPIByBash extends BuildTask
         $ghs = '';
         $vds = '';
         $mns = '';
+        $errors = '';
         $count_quick = 0;
         $ghs_quick = '';
         $vds_quick = '';
         $mns_quick = '';
+        $errors_quick = '';
         for ($i = 0; $i < $this->numberOfSteps; $i++) {
             $start = $i * $this->reposPerStep;
             $addons = Addon::get()->limit($this->reposPerStep, $start);
@@ -67,12 +69,12 @@ class AddonsBuildAPIByBash extends BuildTask
                     }
                 }
                 else {
-                    $ghs .= '# ERROR GETTING: '.$addon->Name;
+                    $errors .= "\n".'# ERROR GETTING: '.$addon->Name;
                 }
             }
         }
-        $bash = $this->getBashScript($ghs, $vds, $mns);
-        if(is_writable($this->destinationFile)) {
+        $bash = $this->getBashScript($ghs, $vds, $mns, $errors);
+        if(is_writable($this->destinationFile) || ! file_exists($this->destinationFile)) {
             file_put_contents($this->destinationFile, $bash);
         } else {
             echo "<hr /><pre>";
@@ -80,8 +82,8 @@ class AddonsBuildAPIByBash extends BuildTask
             echo "</pre><hr />";
         }
         if($count_quick) {
-            $bash_quick = $this->getBashScript($ghs_quick, $vds_quick, $mns_quick);
-            if(is_writable($this->destinationFile_quick)) {
+            $bash_quick = $this->getBashScript($ghs_quick, $vds_quick, $mns_quick, $errors_quick);
+            if(is_writable($this->destinationFile_quick) || ! file_exists($this->destinationFile_quick)) {
                 file_put_contents($this->destinationFile_quick, $bash_quick);
             } else {
                 echo "<hr /><pre>";
@@ -108,7 +110,7 @@ class AddonsBuildAPIByBash extends BuildTask
     }
 
 
-    protected function getBashScript($ghs, $vds, $mns) 
+    protected function getBashScript($ghs, $vds, $mns, $errors)
     {
         $bash =
         '#!/bin/bash
@@ -118,6 +120,12 @@ class AddonsBuildAPIByBash extends BuildTask
         echo "======================================================";
 
         date
+
+        echo "======================================================";
+        echo "======================================================";
+        echo "======================================================";
+
+        '.$errors.'
 
         echo "======================================================";
         echo "======================================================";
@@ -145,6 +153,7 @@ class AddonsBuildAPIByBash extends BuildTask
         echo "====================================================== running phpdox";
         phpdox
         echo "====================================================== moving";
+        rm ./docs/html/index.xhtml
         dira="../public_html"
         dirb="${vd[$index]}"
         dirc="${mn[$index]}"
