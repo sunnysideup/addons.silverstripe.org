@@ -11,7 +11,9 @@ class ExtensionTagGroup extends DataObject {
     );
 
     public static $many_many = array(
-        "AddonKeywords" => "AddonKeyword"
+        "AddonKeywords" => "AddonKeyword",
+        "AlsoInclude" => "Addon",
+        "Exclude" => "Addon"
     );
 
     public static $searchable_fields = array(
@@ -33,12 +35,6 @@ class ExtensionTagGroup extends DataObject {
     }
     public function getCMSFields() {
         $fields = parent::getCMSFields();
-        $source = AddonKeyword::get()->sort("Name", "ASC")->map("ID", "Title");
-        $fields->replaceField("AddonKeywords", new CheckboxSetField(
-             $name = "AddonKeywords",
-             $title = "Tags",
-             $source
-          ));
         return $fields;
     }
 }
