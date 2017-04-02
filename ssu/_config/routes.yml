@@ -4,3 +4,4 @@ After: framework
 Director:
   rules:
     "favouritestocomposer": FavouritesToComposer
+    "topics": ModulesByTopic

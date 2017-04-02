@@ -2,24 +2,36 @@
   "name": "ssmods.com",
   "description": "Sunny Side Up Flavour of the SilverStripe extensions listing site",
   "require": {
-    "composer/installers":              "*",
-    "composer/composer":                "*",
-    "dflydev/markdown": "1.0.*@stable",
-    "ezyang/htmlpurifier": "4.5.*@stable",
-    "guzzle/guzzle": "3.2.0",
-    "silverstripe/framework": "3.*@stable",
-    "silverstripe/multivaluefield": "*",
-    "knplabs/packagist-api": "1.*@stable",
-    "stojg/silverstripe-resque": "*",
-    "silverstripe-australia/elastica": "dev-master",
-    "symfony/event-dispatcher": "^2.8",
-    "symfony/filesystem": "^2.8",
-    "symfony/process": "^2.8",
-    "symfony/finder": "^2.8",
-    "symfony/console": "^2.8",
-    "symfony/yaml": "^2.8",
-    "sunnysideup/table_filter_sort":        "dev-master",
-    "gdmedia/ss-auto-git-ignore": "*"
+    "composer/installers":                                         "*",
+
+    "composer/composer":                                           "*",
+
+    "dflydev/markdown":                                            "1.0.*@stable",
+
+    "ezyang/htmlpurifier":                                         "4.5.*@stable",
+
+    "guzzle/guzzle":                                               "3.2.0",
+
+    "silverstripe/framework":                                      "3.*@stable",
+    "silverstripe/multivaluefield":                                "*",
+    "silverstripe-australia/elastica":                             "dev-master",
+
+    "knplabs/packagist-api":                                       "1.*@stable",
+
+    "stojg/silverstripe-resque":                                   "*",
+
+    "undefinedoffset/sortablegridfield":                           "*",
+
+    "symfony/event-dispatcher":                                    "^2.8",
+    "symfony/filesystem":                                          "^2.8",
+    "symfony/process":                                             "^2.8",
+    "symfony/finder":                                              "^2.8",
+    "symfony/console":                                             "^2.8",
+    "symfony/yaml":                                                "^2.8",
+
+    "sunnysideup/table_filter_sort":                               "dev-master",
+
+    "gdmedia/ss-auto-git-ignore":                                  "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

@@ -4,37 +4,133 @@
 class ExtensionTagGroup extends DataObject {
 
 
-    public static $db = array(
+    private static $db = array(
         "Title" => "Varchar(100)",
         "Explanation" => "Varchar(255)",
-        "Synonyms" => "Text"
+        "Synonyms" => "Text",
+        "AddonsAsText" => "Text",
+        "SortOrder" => "Int"
     );
 
-    public static $many_many = array(
+    private static $many_many = array(
         "AddonKeywords" => "AddonKeyword",
-        "AlsoInclude" => "Addon",
-        "Exclude" => "Addon"
+        "AdditionalOnes" => "Addon",
+        "ExcludedOnes" => "Addon"
     );
 
-    public static $searchable_fields = array(
+    private static $searchable_fields = array(
         "Title" => "PartialMatchFilter"
     );
 
-    public static $field_labels = array();
+    private static $field_labels = array();
 
-    public static $summary_fields = array("Title" => "Name");
+    private static $summary_fields = array("Title" => "Name");
 
-    public static $singular_name = "Tag Group";
+    private static $singular_name = "Topic";
 
-    public static $plural_name = "Tag Groups";
+    private static $plural_name = "Topics";
+
+    private static $default_sort = array(
+        'SortOrder' => 'ASC'
+    );
 
     //defaults
-    public static $default_sort = "\"Title\" ASC";
     public function Link() {return $this->getLink();}
     public function getLink() {
     }
     public function getCMSFields() {
         $fields = parent::getCMSFields();
+        $fields->removeFieldFromTab(
+            'Root.Main',
+            'AddonsAsText'
+        );
+        if($this->AddonsAsText) {
+            $fields->addFieldToTab(
+                'Root.Summary',
+                GridField::create(
+                    'AddonsAsTextSummary',
+                    'Included are ...',
+                    $this->MyModules(),
+                    GridFieldConfig_RecordEditor::create()
+                        ->removeComponentsByType('GridFieldAddNewButton')
+                        ->removeComponentsByType('GridFieldDeleteAction')
+                )
+            );
+        }
         return $fields;
+    }
+
+    private static $_done_after_write = false;
+
+    public function onAfterWrite()
+    {
+        parent::onAfterWrite();
+        if(!self::$_done_after_write) {
+            self::$_done_after_write = true;
+            $this->AddonsAsText = implode(',', $this->MyModules()->column('Name'));
+            $this->write();
+        }
+    }
+
+
+    /**
+     * @return Array
+     */
+    private static $_covered = array();
+
+    /**
+     * @return ArrayList
+     */
+    public function MyModules()
+    {
+        $addons = array();
+        $excludedOnes = $this->ExcludedOnes()->column('ID');
+        $addedOnes = $this->AdditionalOnes()->column('ID');
+        $rows = DB::query('
+            SELECT ExtensionTagGroup_AddonKeywords.AddonKeywordID AS KWID
+            FROM ExtensionTagGroup
+                INNER JOIN ExtensionTagGroup_AddonKeywords
+                    ON ExtensionTagGroup_AddonKeywords.ExtensionTagGroupID = ExtensionTagGroup.ID
+            WHERE ExtensionTagGroup.ID = '.$this->ID.';
+        ');
+        $keywordIDs = array();
+        foreach($rows as $row) {
+            $keywordIDs[$row['KWID']] = $row['KWID'];
+        }
+        if(count($keywordIDs)) {
+            $rows = DB::query('
+                SELECT AddonID
+                FROM Addon_Keywords
+                WHERE Addon_Keywords.AddonKeywordID IN ('.implode(',', $keywordIDs).')
+            ');
+            foreach($rows as $row) {
+                $id = $row['AddonID'];
+                if(! in_array($id, $excludedOnes))  {
+                    $addons[$id] = $id;
+                }
+            }
+        }
+        foreach($addedOnes as $addedOne) {
+            if(! in_array($id, $excludedOnes))  {
+                $addons[$addedOne] = $addedOne;
+            }
+        }
+        if(! count($addons)) {
+            $addons[0] = 0;
+        }
+        foreach($addons as $addon) {
+            self::$_covered[$addon] = $addon;
+        }
+        return Addon::get()->filter(array('ID' => $addons))->sort('RAND()');
+    }
+
+    /**
+     * @return ArrayList
+     */
+    function RestAddons()
+    {
+        $allIDs = Addon::get()->column('ID');
+        $toShow = array_diff($allIDs, self::$_covered);
+        return Addon::get()->filter(array('ID' => $toShow))->sort('RAND()');
     }
 }
