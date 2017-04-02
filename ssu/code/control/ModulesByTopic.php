@@ -17,14 +17,20 @@ class ModulesByTopic extends Controller
     {
         Requirements::customCSS('
 body {
-    max-width: 900px;
-    margin: 20px auto 200px auto;
+    padding: 0;
+    margin: 0;
     color: #808383;
     font-family: lato;
+}
+#LayoutHolder {
+    max-width: 990px;
+    padding: 2%;
+    margin: 0 auto 0 auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: Voces;
+    text-transform: lowercase;
 }
 
 h1 {
@@ -42,11 +48,19 @@ h2 {
     color: #FF336D;
 }
 
+ul {
+    padding-left: 63px;
+    margin-left: 0;
+}
+
 li {
-    padding: 0.5em 0 0.5em 0;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 0;
+    margin-left: 0;
 }
 li.hide {display: none;}
-
+li a {font-weight: bold;}
 a {
     color: #808383;
     border-bottom: 1px solid #ffcc1a;
@@ -57,6 +71,9 @@ ul, div, main, footer {
     clear: both;
 }
 .action-p {
+    float: left;
+}
+.action-p.back-to-top {
     float: right;
 }
 .action-p a{
@@ -71,13 +88,20 @@ ul, div, main, footer {
     border-bottom: 0;
 }
 .show-all.closed a {
-    background-image: url(\'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%233498db" height="48" viewBox="0 0 24 24" width="48"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>\');
+    background-image: url(\'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23838080" height="48" viewBox="0 0 24 24" width="48"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>\');
 }
 .show-all.opened a {
     background-image: url(\'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23FF336D" height="48" viewBox="0 0 24 24" width="48"><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg>\');
 }
 .back-to-top a {
     background-image: url(\'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23838080" height="48" viewBox="0 0 24 24" width="48"><path d="M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>\');
+}
+footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color:#ffcc1a;
+    padding: auto;
 }
 
         ');

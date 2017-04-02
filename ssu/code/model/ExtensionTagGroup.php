@@ -7,8 +7,8 @@ class ExtensionTagGroup extends DataObject {
     private static $db = array(
         "Title" => "Varchar(100)",
         "Explanation" => "Varchar(255)",
-        "Synonyms" => "Text",
         "AddonsAsText" => "Text",
+        "AddonsAsIDs" => "Text",
         "SortOrder" => "Int"
     );
 
@@ -40,9 +40,12 @@ class ExtensionTagGroup extends DataObject {
     }
     public function getCMSFields() {
         $fields = parent::getCMSFields();
-        $fields->removeFieldFromTab(
+        $fields->removeFieldsFromTab(
             'Root.Main',
-            'AddonsAsText'
+            array(
+                'AddonsAsText',
+                'AddonsAsIDs'
+            )
         );
         if($this->AddonsAsText) {
             $fields->addFieldToTab(
@@ -50,7 +53,7 @@ class ExtensionTagGroup extends DataObject {
                 GridField::create(
                     'AddonsAsTextSummary',
                     'Included are ...',
-                    $this->MyModules(),
+                    $this->MyModulesQuick(),
                     GridFieldConfig_RecordEditor::create()
                         ->removeComponentsByType('GridFieldAddNewButton')
                         ->removeComponentsByType('GridFieldDeleteAction')
@@ -67,16 +70,28 @@ class ExtensionTagGroup extends DataObject {
         parent::onAfterWrite();
         if(!self::$_done_after_write) {
             self::$_done_after_write = true;
-            $this->AddonsAsText = implode(',', $this->MyModules()->column('Name'));
+            $modules = $this->MyModules();
+            $this->AddonsAsText = implode(',', $modules->column('Name'));
+            $this->AddonsAsIDs = implode(',', $modules->column('ID'));
             $this->write();
         }
     }
 
-
     /**
-     * @return Array
-     */
+    * @return Array
+    */
     private static $_covered = array();
+
+    public function MyModulesQuick()
+    {
+        $array = explode(',', $this->AddonsAsIDs);
+        foreach($array as $id) {
+            self::$_covered[$id] = $id;
+        }
+
+        return Addon::get()->filter(array('ID' => $array));
+    }
+
 
     /**
      * @return ArrayList

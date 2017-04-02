@@ -2,14 +2,15 @@
 
     <div id="LayoutHolder" class="typography">
         <h1>Silverstripe Modules by Topic</h1>
+        <% if $AddonKeywords %><% loop $AddonKeywords %><span class="pill">$Title</span><% end_loop %><% end_if %>
 <% loop Topics %>
     <div class="topic">
         <p class="show-all closed action-p"><a href="#Topic$ID">see all</a></p>
 <h2 id="Topic$ID">$Title</h2>
 <p>$Explanation</p>
-<% if MyModules %>
+<% if MyModulesQuick %>
 <ul>
-    <% loop MyModules %>
+    <% loop MyModulesQuick %>
     <li class="module-$Pos"><a href="$Link">$Name</a>: $Description</li>
     <% end_loop %>
 </ul>

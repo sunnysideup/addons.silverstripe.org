@@ -22,6 +22,8 @@
 
     "undefinedoffset/sortablegridfield":                           "*",
 
+    "unclecheese/betterbuttons":                                   "*",
+
     "symfony/event-dispatcher":                                    "^2.8",
     "symfony/filesystem":                                          "^2.8",
     "symfony/process":                                             "^2.8",
