@@ -44,7 +44,8 @@ class ExtensionTagGroup extends DataObject {
             'Root.Main',
             array(
                 'AddonsAsText',
-                'AddonsAsIDs'
+                'AddonsAsIDs',
+                'SortOrder'
             )
         );
         if($this->AddonsAsText) {
@@ -89,7 +90,7 @@ class ExtensionTagGroup extends DataObject {
             self::$_covered[$id] = $id;
         }
 
-        return Addon::get()->filter(array('ID' => $array));
+        return Addon::get()->filter(array('ID' => $array))->Sort('RAND()');
     }
 
 
@@ -147,5 +148,13 @@ class ExtensionTagGroup extends DataObject {
         $allIDs = Addon::get()->column('ID');
         $toShow = array_diff($allIDs, self::$_covered);
         return Addon::get()->filter(array('ID' => $toShow))->sort('RAND()');
+    }
+
+    function SortedKeywords()
+    {
+        $objects = $this->AddonKeywords();
+        $objects = $objects->Sort(array('Name' => 'ASC'));
+
+        return $objects;
     }
 }

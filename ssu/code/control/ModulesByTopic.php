@@ -43,13 +43,26 @@ h2 {
     padding-top: 4vh;
     font-size: 3vh;
     color: #838080;
+    margin-bottom: 0;
 }
 .topic.opened h2 {
     color: #FF336D;
 }
 
+.pill:before {
+    content: \'[\';
+}
+.pill {
+    font-size: 10px;
+    display: inline-block;
+    padding: 0 0.5em 0 0;
+}
+.pill:after {
+    content: \']\';
+}
+
 ul {
-    padding-left: 63px;
+    padding-left: 67px;
     margin-left: 0;
 }
 
@@ -72,6 +85,7 @@ ul, div, main, footer {
 }
 .action-p {
     float: left;
+    padding-bottom: 30px;
 }
 .action-p.back-to-top {
     float: right;
@@ -101,9 +115,20 @@ footer {
     left: 0;
     right: 0;
     background-color:#ffcc1a;
-    padding: auto;
+    padding: 100px 0 200px 0;
+    margin-top: 5em;
 }
-
+footer h3, footer p {
+    max-width: 990px;
+    margin: 0 auto 10px auto;
+    color: #444!important;
+    line-height: 1.5;
+    padding-left: 65px;
+}
+footer h3 {
+    padding-bottom: 0;
+    padding-top: 20px;
+}
         ');
         Requirements::insertHeadTags('
         <script

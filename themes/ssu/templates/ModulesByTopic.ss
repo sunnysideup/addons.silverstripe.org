@@ -2,16 +2,16 @@
 
     <div id="LayoutHolder" class="typography">
         <h1>Silverstripe Modules by Topic</h1>
-        <% if $AddonKeywords %><% loop $AddonKeywords %><span class="pill">$Title</span><% end_loop %><% end_if %>
 <% loop Topics %>
     <div class="topic">
         <p class="show-all closed action-p"><a href="#Topic$ID">see all</a></p>
 <h2 id="Topic$ID">$Title</h2>
-<p>$Explanation</p>
+<% if $SortedKeywords %><% loop $SortedKeywords %><span class="pill">$Title</span><% end_loop %><% end_if %>
+<p class="desc">$Explanation</p>
 <% if MyModulesQuick %>
 <ul>
     <% loop MyModulesQuick %>
-    <li class="module-$Pos"><a href="$Link">$Name</a>: $Description</li>
+    <li class="module-$Pos"><a href="$Repository.URL">$Name</a>: $Description</li>
     <% end_loop %>
 </ul>
 <% else %>
@@ -27,7 +27,11 @@
 <p>Below is a list of modules that have not been places under any topic.</p>
 <ul>
     <% loop RestAddons %>
-    <li class="module-$Pos"><a href="$Link">$Name</a>: $Description</li>
+    <li class="module-$Pos">
+        <a href="$Repository.URL">$Name</a>:
+        $Description
+        <% if $Keywords %><% loop $Keywords %><span class="pill">$Title</span><% end_loop %><% end_if %>
+    </li>
     <% end_loop %>
 </ul>
 </div>
