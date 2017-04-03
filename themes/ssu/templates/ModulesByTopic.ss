@@ -5,7 +5,7 @@
 <div id="toc-topics">
     <ul>
     <% loop $MetaTopics %>
-        <li><a href="#Metatopic$ID">$Title</a>: <% loop Topics %><a href="#Topic$ID" class="light">$Title</a><% if $Last %>.<% else %>, <% end_if %><% end_loop %></li>
+        <li><a href="#Metatopic$ID" class="int">$Title</a>: <% loop Topics %><a href="#Topic$ID" class="light int">$Title</a><% if $Last %>.<% else %>, <% end_if %><% end_loop %></li>
     <% end_loop %>
     </ul>
 
@@ -19,7 +19,7 @@
     <% if $Topics %>
         <% loop $Topics %>
         <div class="topic closed">
-            <h3 id="Topic$ID"><a href="#Topic$ID">$Title</a></h3>
+            <h3 id="Topic$ID"><a href="#Topic$ID" class="int">$Title</a></h3>
             <% if $SortedKeywords %><% loop $SortedKeywords %><span class="pill">$Title</span><% end_loop %><% end_if %>
             <p class="desc metatopic">$Explanation</p>
             <% if MyModulesQuick %>
@@ -27,7 +27,7 @@
                 <% loop MyModulesQuick %>
                 <li class="hide">
                     <% if $LinkNew %>
-                    <a href="$LinkNew">$Name</a>: $Description
+                    <a href="$LinkNew" class="ext">$Name</a>: $Description
                     <% else %>
                     <a>$Name</a>: $Description
                     <% end_if %>
@@ -40,7 +40,7 @@
         </div>
         <% end_loop %>
     <% end_if %>
-    <p class="back-to-top action-p"><a href="#top">back to top</a>
+        <p class="back-to-top action-p"><a  class="int" href="#LayoutHolder">back to top</a>
     </div>
 <% end_loop %>
 
@@ -53,13 +53,13 @@
     <div class="meta-topic">
         <h2>Not yet classified</h2>
         <div class="topic closed">
-            <h3 id="Topic9999999"><a href="#Topic9999999">Modules without categorisation</a></h3>
+            <h3 id="Topic9999999"><a href="#Topic9999999" class="int">Modules without categorisation</a></h3>
             <p>Below is a list of modules that have not been places under any topic.</p>
             <ul>
         <% loop RestAddons %>
                 <li class="hide">
                 <% if $Repository %>
-                    <a href="$Repository.URL">$Name</a>: $Description
+                    <a href="$Repository.URL" class="ext">$Name</a>: $Description
                 <% else %>
                     <a>$Name</a>: $Description
                 <% end_if %>
@@ -68,15 +68,16 @@
         <% end_loop %>
             </ul>
         </div>
+        <p class="back-to-top action-p"><a href="#LayoutHolder" class="int">back to top</a>
     </div>
 <% end_if %>
 
 
 </div>
-<p class="back-to-top action-p"><a href="#top">back to top</a>
 
 
 <script>
+
 
 var loadMyStuff = function(){
     jQuery('.topic ul').each(
@@ -104,6 +105,40 @@ var loadMyStuff = function(){
     );
 }
 loadMyStuff();
+jQuery(document).ready(
+    function()
+    {
+        jQuery('a.int').on(
+            'click',
+            function (e) {
+                e.preventDefault();
+                var target = jQuery(this).attr('href');
+                var targets = target.split("#");
+                target = target.split("#")[1];
+                // var jQtarget = jQuery('#' + target);
+                //
+                // jQuery('html, body').animate(
+                //     {'scrollTop': jQtarget.offset().top},
+                //     900,
+                //     'swing',
+                //     function () {
+                        window.location.hash = target;
+                //     }
+                // );
+            }
+        );
+        jQuery('a.ext').on(
+            'click',
+            function (e) {
+                jQuery(this).attr({
+                    target: "_blank",
+                    title: "Opens in a new window"
+                });
+                return true;
+            }
+        );
+    }
+);
 
 </script>
 

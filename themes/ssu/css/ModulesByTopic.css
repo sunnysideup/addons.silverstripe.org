@@ -93,8 +93,6 @@ ul, div, main, footer {
     clear: both;
 }
 .action-p.back-to-top {
-    margin-left: auto;
-    margin-right: auto;
     width: 48px;
 }
 .action-p a{
