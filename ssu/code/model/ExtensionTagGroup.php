@@ -77,7 +77,9 @@ class ExtensionTagGroup extends DataObject {
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();
-        $this->AddonsAsIDs = '';
+        if(!self::$_done_after_write) {
+            $this->AddonsAsIDs = '';
+        }
     }
 
     public function onAfterWrite()
