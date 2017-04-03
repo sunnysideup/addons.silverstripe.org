@@ -38,28 +38,32 @@
 
 
 
-<hr />
-<hr />
+
 
 <% if RestAddons %>
-    <div class="topic closed">
-        <p class="show-all closed action-p"><a href="#Topic9999999">see all</a></p>
-        <h3 id="Topic9999999">Modules without categorisation</h3>
-        <p>Below is a list of modules that have not been places under any topic.</p>
-        <ul>
-    <% loop RestAddons %>
-            <li class="hide">
-            <% if $Repository %>
-                <a href="$Repository.URL">$Name</a>: $Description
-            <% else %>
-                <a>$Name</a>: $Description
-            <% end_if %>
-                <% if $Keywords %><% loop $Keywords %><span class="pill">$Title</span><% end_loop %><% end_if %>
-            </li>
-    <% end_loop %>
-        </ul>
+    <div class="meta-topic">
+        <h2>Not yet classified</h2>
+        <div class="topic closed">
+            <p class="show-all closed action-p"><a href="#Topic9999999">see all</a></p>
+            <h3 id="Topic9999999">Modules without categorisation</h3>
+            <p>Below is a list of modules that have not been places under any topic.</p>
+            <ul>
+        <% loop RestAddons %>
+                <li class="hide">
+                <% if $Repository %>
+                    <a href="$Repository.URL">$Name</a>: $Description
+                <% else %>
+                    <a>$Name</a>: $Description
+                <% end_if %>
+                    <% if $Keywords %><% loop $Keywords %><span class="pill">$Title</span><% end_loop %><% end_if %>
+                </li>
+        <% end_loop %>
+            </ul>
+        </div>
     </div>
 <% end_if %>
+
+
 </div>
 <p class="back-to-top action-p"><a href="#top">back to top</a>
 
