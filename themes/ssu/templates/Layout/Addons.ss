@@ -221,20 +221,6 @@ jQuery(document).ready(
             }
         );
 
-        var coded = "AA3EWA@AKqqvAdWmK5.FE.qO";
-        var key = "y6Ms9uqhBOJXmGRZ2F10SgdPvIYAVKpa7LoN3rUT4ktlnjWzfbexHD5cC8EwiQ";
-        var shift = coded.length;
-        var link = "";
-        for (i = 0; i < coded.length; i++) {
-            if (key.indexOf(coded.charAt(i))==-1) {
-                ltr = coded.charAt(i);
-                link += (ltr);
-            } else {
-                ltr = (key.indexOf(coded.charAt(i))-shift+key.length) % key.length;
-                link += (key.charAt(ltr));
-            }
-        }
-        jQuery('.email-us').html("<a href='mailto:"+link+"'>Please e-mail us.</a>");
 
         jQuery('tbody').on(
             'click',

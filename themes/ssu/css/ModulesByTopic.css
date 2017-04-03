@@ -130,6 +130,11 @@ footer h3 {
     padding-top: 20px;
 }
 
+footer a {
+    color: #444;
+    text-decoration: underline;
+}
+
 #toc-topics {
     padding: 20px 40px;
     background-color: #eee;
@@ -141,4 +146,5 @@ footer h3 {
 #toc-topics a {
     color: #333;
     list-style: none;
+    text-transform: lowercase;
 }

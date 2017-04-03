@@ -68,4 +68,10 @@ class ModulesByTopic extends Controller
         return $obj->RestAddons();
     }
 
+
+    function LocalNow($format = '')
+    {
+        return date(DATE_RFC2822);
+    }
+
 }
