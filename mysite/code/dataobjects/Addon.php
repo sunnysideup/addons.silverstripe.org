@@ -149,6 +149,23 @@ class Addon extends DataObject {
         );
     }
 
+    public function LinkNew() {
+        $nameArray = explode('/', $this->Name);
+        if(isset($nameArray[0]) && $nameArray[0]) {
+            if(isset($nameArray[1]) && $nameArray[1]) {
+                $team = strtolower($nameArray[0]);
+                $title = strtolower($nameArray[1]);
+                return '//ssmods.com/#~(cfi~(Title~(~(vtm~\''.$title.'~ivl~\''.$title.'))~Team~(~(vtm~\''.$team.'~ivl~\''.$team.')))~csr~(sdi~\'desc~sct~\'RD))';
+                return
+                    '/'.
+                    '#~(cfi('.
+                    '~Title~(~(vtm~\''.$title.'~ivl~\''.$title.'))'.
+                    '~Team~(~(vtm~\''.$team.'~ivl~\''.$team.'))'.
+                    '))';
+            }
+        }
+    }
+
     /**
      * @return string | null
      */

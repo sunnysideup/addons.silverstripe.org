@@ -2,13 +2,12 @@
 <div id="LayoutHolder" class="typography">
     <h1>Silverstripe Modules by Topic</h1>
 
-<div>
-<h4>Table of Contents</h4>
-<ul>
-<% loop $MetaTopics %>
-<li><a href="#Metatopic$ID">$Title</a>: <% loop Topics %><a href="#Topic$ID" class="light">$Title</a><% if $Last %>.<% else %>, <% end_if %><% end_loop %></li>
-<% end_loop %>
-</ul>
+<div id="toc-topics">
+    <ul>
+    <% loop $MetaTopics %>
+        <li><a href="#Metatopic$ID">$Title</a>: <% loop Topics %><a href="#Topic$ID" class="light">$Title</a><% if $Last %>.<% else %>, <% end_if %><% end_loop %></li>
+    <% end_loop %>
+    </ul>
 
 </div>
 
@@ -20,16 +19,15 @@
     <% if $Topics %>
         <% loop $Topics %>
         <div class="topic closed">
-            <p class="show-all closed action-p"><a href="#Topic$ID">see all</a></p>
-            <h3 id="Topic$ID">$Title</h3>
+            <h3 id="Topic$ID"><a href="#Topic$ID">$Title</a></h3>
             <% if $SortedKeywords %><% loop $SortedKeywords %><span class="pill">$Title</span><% end_loop %><% end_if %>
             <p class="desc metatopic">$Explanation</p>
             <% if MyModulesQuick %>
             <ul>
                 <% loop MyModulesQuick %>
                 <li class="hide">
-                    <% if $Repository %>
-                    <a href="$Repository.URL">$Name</a>: $Description
+                    <% if $LinkNew %>
+                    <a href="$LinkNew">$Name</a>: $Description
                     <% else %>
                     <a>$Name</a>: $Description
                     <% end_if %>
@@ -42,6 +40,7 @@
         </div>
         <% end_loop %>
     <% end_if %>
+    <p class="back-to-top action-p"><a href="#top">back to top</a>
     </div>
 <% end_loop %>
 
@@ -54,8 +53,7 @@
     <div class="meta-topic">
         <h2>Not yet classified</h2>
         <div class="topic closed">
-            <p class="show-all closed action-p"><a href="#Topic9999999">see all</a></p>
-            <h3 id="Topic9999999">Modules without categorisation</h3>
+            <h3 id="Topic9999999"><a href="#Topic9999999">Modules without categorisation</a></h3>
             <p>Below is a list of modules that have not been places under any topic.</p>
             <ul>
         <% loop RestAddons %>
@@ -91,7 +89,7 @@ var loadMyStuff = function(){
                     }
                 }
             );
-            jQuery(ul).closest('.topic').find('.show-all').click(
+            jQuery(ul).closest('.topic').find('h3 > a').click(
                 function(e) {
                     jQuery(this)
                         .toggleClass('opened')
