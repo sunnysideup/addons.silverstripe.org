@@ -9,7 +9,7 @@
 
     <% if $Topics %>
         <% loop $Topics %>
-        <div class="topic">
+        <div class="topic closed">
             <p class="show-all closed action-p"><a href="#Topic$ID">see all</a></p>
             <h3 id="Topic$ID">$Title</h3>
             <% if $SortedKeywords %><% loop $SortedKeywords %><span class="pill">$Title</span><% end_loop %><% end_if %>
@@ -42,7 +42,7 @@
 <hr />
 
 <% if RestAddons %>
-    <div class="topic">
+    <div class="topic closed">
         <p class="show-all closed action-p"><a href="#Topic9999999">see all</a></p>
         <h3 id="Topic9999999">Modules without categorisation</h3>
         <p>Below is a list of modules that have not been places under any topic.</p>
