@@ -16,7 +16,7 @@
     <h3>Credits</h3>
     <p>
         This site is provided by <a href="//sunnysideup.co.nz/">Sunny Side Up</a>.
-        It use the basic code from <a href="//addons.silverstripe.org/">the original Silverstripe addons site</a>.
+        It uses the basic code from <a href="//addons.silverstripe.org/">the original Silverstripe addons site</a>.
         It aims to provide an alternative way to find <a href="//www.silverstripe.org/">Silverstripe</a> Modules and Themes.
         A big thank you to Ralph, Florian, Ingrid and Aaron for their feedback.
     </p>
