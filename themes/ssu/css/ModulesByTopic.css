@@ -70,6 +70,7 @@ li.hide {display: none;}
 .topic.opened li.hide {display: list-item;}
 
 li a {font-weight: bold;}
+li a.light {font-weight: normal; border-bottom: none;}
 a {
     color: #808383;
     border-bottom: 1px solid #ffcc1a;

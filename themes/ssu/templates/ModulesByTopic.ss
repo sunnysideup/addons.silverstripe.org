@@ -2,8 +2,18 @@
 <div id="LayoutHolder" class="typography">
     <h1>Silverstripe Modules by Topic</h1>
 
+<div>
+<h4>Table of Contents</h4>
+<ul>
 <% loop $MetaTopics %>
-    <div class="meta-topic">
+<li><a href="#Metatopic$ID">$Title</a>: <% loop Topics %><a href="#Topic$ID" class="light">$Title</a><% if $Last %>.<% else %>, <% end_if %><% end_loop %></li>
+<% end_loop %>
+</ul>
+
+</div>
+
+<% loop $MetaTopics %>
+    <div id="Metatopic$ID" class="meta-topic">
         <h2>$Title</h2>
         <% if $Explanation %><p class="desc metatopic">$Explanation</p><% end_if %>
 
