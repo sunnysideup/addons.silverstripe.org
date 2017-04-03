@@ -27,9 +27,12 @@ h2 {
     color: #326874;
     margin-bottom: 0;
 }
-
+.topic {
+    padding-top: 5vh;
+}
 h3 {
-    padding-top: 4vh;
+    padding-top: 7px;
+    margin-top: 0;
     font-size: 3vh;
     color: #838080;
     margin-bottom: 0;
@@ -79,6 +82,8 @@ ul, div, main, footer {
 .action-p {
     float: left;
     padding-bottom: 30px;
+    margin-top: 0;
+    padding-top: 0;
 }
 .action-p.back-to-top {
     float: right;
