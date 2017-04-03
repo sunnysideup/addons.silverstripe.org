@@ -12,6 +12,10 @@ class ExtensionTagGroup extends DataObject {
         "SortOrder" => "Int"
     );
 
+    private static $has_one = array(
+        "MetaTopic" => "MetaExtensionTagGroup"
+    );
+
     private static $many_many = array(
         "AddonKeywords" => "AddonKeyword",
         "AdditionalOnes" => "Addon",
@@ -29,6 +33,10 @@ class ExtensionTagGroup extends DataObject {
     private static $singular_name = "Topic";
 
     private static $plural_name = "Topics";
+
+    private static $indexes = array(
+        'SortOrder' => true
+    );
 
     private static $default_sort = array(
         'SortOrder' => 'ASC'
@@ -65,6 +73,12 @@ class ExtensionTagGroup extends DataObject {
     }
 
     private static $_done_after_write = false;
+
+    public function onBeforeWrite()
+    {
+        parent::onBeforeWrite();
+        $this->AddonsAsIDs = '';
+    }
 
     public function onAfterWrite()
     {

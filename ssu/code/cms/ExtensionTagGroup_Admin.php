@@ -2,7 +2,7 @@
 
 class ExtensionTagGroup_Admin extends ModelAdmin {
 
-    public static $managed_models = array('ExtensionTagGroup', 'AddonKeyword', 'FavouritesToComposerRecord');
+    public static $managed_models = array('MetaExtensionTagGroup', 'ExtensionTagGroup', 'AddonKeyword', 'FavouritesToComposerRecord');
 
     public static $url_segment = 'taggroup';
 
@@ -13,7 +13,7 @@ class ExtensionTagGroup_Admin extends ModelAdmin {
     function getEditForm($id = null, $fields = null){
         $form = parent::getEditForm();
         //This check is simply to ensure you are on the managed model you want adjust accordingly
-        if($this->modelClass === 'ExtensionTagGroup') {
+        if($this->modelClass === 'MetaExtensionTagGroup' || $this->modelClass === 'ExtensionTagGroup') {
             if($gridField = $form->Fields()->dataFieldByName($this->sanitiseClassName($this->modelClass))) {
                 $gridField->getConfig()->addComponent(new GridFieldSortableRows('SortOrder'));
             }
