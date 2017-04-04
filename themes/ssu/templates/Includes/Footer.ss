@@ -11,7 +11,7 @@
         <strong><a href="//ssmods.com/">search</a></strong>
         <br />
         Search a list of all Silverstripe Modules.
-        The search options include filter options by name, creator, silverstripe version support, requirements, and so on.
+        The search options include filters by name, creator, silverstripe version support, requirements, and so on.
     </p>
     <p>
         <strong><a href="//topics.ssmods.com/">topics</a></strong>
@@ -28,7 +28,7 @@
         These sites are provided by <a href="//sunnysideup.co.nz/">Sunny Side Up</a>.
         It uses code base from <a href="//addons.silverstripe.org/">the original Silverstripe addons site</a>.
         Our couse, we have built these sites using the <a href="//www.silverstripe.org/">Silverstripe CMS</a>.
-        If you like to support this project then please hire us for your next project.
+        If you like to support this project then please hire us for your next Silverstripe project.
     </p>
 
     <h3>Credits</h3>
