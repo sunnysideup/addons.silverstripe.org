@@ -35,7 +35,7 @@ class ModulesByTopic extends Controller
     {
         $objects = ExtensionTagGroup::get();
         foreach($objects as $object) {
-            $object->AddonsAsIDs = '';
+            $object->AddonsAsIDs = rand(1,999999999);;
             $object->write();
         }
         return $this->renderWith('ModulesByTopic');
