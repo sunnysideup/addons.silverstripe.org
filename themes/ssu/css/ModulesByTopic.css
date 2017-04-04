@@ -39,13 +39,12 @@ h3 {
 
 .topic h3 {
     background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23838080" height="48" viewBox="0 0 24 24" width="48"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-    background-position: bottom left;
+    background-position: bottom right;
     background-repeat: no-repeat;
     background-size: contain;
 }
 .topic h3 a {
     display: block;
-    text-indent: 1.37em;
     border-bottom: 1px solid #ccc;
 }
 .topic.opened h3 {
