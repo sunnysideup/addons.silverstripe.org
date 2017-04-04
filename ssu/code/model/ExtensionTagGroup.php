@@ -77,15 +77,15 @@ class ExtensionTagGroup extends DataObject {
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();
-        if(!self::$_done_after_write) {
-            $this->AddonsAsIDs = '';
+        if(! self::$_done_after_write) {
+            $this->AddonsAsIDs = rand(1,999999999);
         }
     }
 
     public function onAfterWrite()
     {
         parent::onAfterWrite();
-        if(!self::$_done_after_write) {
+        if(! self::$_done_after_write) {
             self::$_done_after_write = true;
             $modules = $this->MyModules();
             $this->AddonsAsText = implode(',', $modules->column('Name'));
