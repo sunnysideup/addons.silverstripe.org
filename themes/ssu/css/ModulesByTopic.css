@@ -54,7 +54,9 @@ h3 {
 .topic.opened h3 a{
     color: #FF336D;
 }
-
+.topic.opened li, .topic.opened li a {
+    color: #525050!important;
+}
 .pill:before {
     content: '{';
 }
