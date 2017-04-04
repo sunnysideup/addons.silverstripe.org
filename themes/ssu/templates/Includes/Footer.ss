@@ -1,23 +1,38 @@
 <footer>
 
 
-    <h3>Also see ...</h3>
+    <h3>About ssmods.com</h3>
     <p>
-        <strong><a href="//docs.ssmods.com/">Silverstripe module documentation / API</a></strong>: <br />
-        Here you will find a myriad of code examples, API syntax, and additional documentation for all Silverstripe modules.
-    </p>
+        <a href="//ssmods.com/">ssmods.com</a> is a selection of micro-websites making Silverstripe
+        modules easier to find.
+        There are three components:
 
     <p>
-        <strong><a href="//topics.ssmods.com/">Silverstripe modules by area of interest</a></strong>: <br />
+        <strong><a href="//ssmods.com/">search</a></strong>
+        <br />
+        Search a list of all Silverstripe Modules.
+        The search options include filter options by name, creator, silverstripe version support, requirements, and so on.
+    </p>
+    <p>
+        <strong><a href="//topics.ssmods.com/">topics</a></strong>
+        <br />
+        This is a list of Silverstripe modules by area of interest.
         We have gone through all the modules and sorted them into categories.
     </p>
-
+    <p>
+        <strong><a href="//docs.ssmods.com/">api / docs</a></strong>
+        <br />
+        Here you will find a myriad of code examples, API syntax, and additional documentation for all Silverstripe modules.
+    </p>
+    <p>
+        These sites are provided by <a href="//sunnysideup.co.nz/">Sunny Side Up</a>.
+        It uses code base from <a href="//addons.silverstripe.org/">the original Silverstripe addons site</a>.
+        Our couse, we have built these sites using the <a href="//www.silverstripe.org/">Silverstripe CMS</a>.
+        If you like to support this project then please hire us for your next project.
+    </p>
 
     <h3>Credits</h3>
     <p>
-        This site is provided by <a href="//sunnysideup.co.nz/">Sunny Side Up</a>.
-        It uses the basic code from <a href="//addons.silverstripe.org/">the original Silverstripe addons site</a>.
-        It aims to provide an alternative way to find <a href="//www.silverstripe.org/">Silverstripe</a> Modules and Themes.
         A big thank you to Ralph, Florian, Ingrid and Aaron for their feedback.
     </p>
 
@@ -25,7 +40,6 @@
     <p>
         Do not rely on search results provided here.
         They can be misleading and out-of-date.
-        Our aim is to make it easier to discover Silverstripe modules, not to provide advice or consultancy.
     </p>
 
     <h3>Feedback</h3>

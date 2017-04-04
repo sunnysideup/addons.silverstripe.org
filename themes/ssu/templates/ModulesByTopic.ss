@@ -112,6 +112,7 @@ jQuery(document).ready(
             'click',
             function (e) {
                 e.preventDefault();
+                window.location.hash = '';
                 var target = jQuery(this).attr('href');
                 var targets = target.split("#");
                 target = target.split("#")[1];
@@ -122,7 +123,7 @@ jQuery(document).ready(
                 //     900,
                 //     'swing',
                 //     function () {
-                        window.location.hash = target;
+                window.location.hash = target;
                 //     }
                 // );
             }
