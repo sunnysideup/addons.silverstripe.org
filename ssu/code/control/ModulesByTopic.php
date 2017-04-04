@@ -33,6 +33,11 @@ class ModulesByTopic extends Controller
 
     function index()
     {
+        $objects = ExtensionTagGroup::get();
+        foreach($objects as $object) {
+            $object->AddonsAsIDs = '';
+            $object->write();
+        }
         return $this->renderWith('ModulesByTopic');
     }
 
