@@ -47,6 +47,11 @@ class MetaExtensionTagGroup extends DataObject {
                 'SortOrder'
             )
         );
+        if($this->exists()) {
+            $gridField = $fields->dataFieldByName('Topics');
+            $myGridConfig = $gridField->getConfig();
+            $myGridConfig->addComponent(new GridFieldSortableRows('SortOrder'));
+        }
         return $fields;
     }
 }
