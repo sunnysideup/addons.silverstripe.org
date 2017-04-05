@@ -1,4 +1,4 @@
-<footer>
+<footer id="footer">
 
 
     <h3>Also see ...</h3>
@@ -35,6 +35,7 @@
 
     <h3>Last Updated</h3>
     <p>$LocalNow</p>
+    <p class="back-to-top action-p"><a  class="int" href="#LayoutHolder">back to top</a>
 </footer>
 </div>
 <script>
