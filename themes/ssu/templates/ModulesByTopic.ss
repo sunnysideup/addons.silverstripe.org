@@ -126,7 +126,7 @@ jQuery(document).ready(
             'click',
             function (e) {
                 e.preventDefault();
-                window.location.hash = '';
+                // window.location.hash = '';
                 var target = jQuery(this).attr('href');
                 var targets = target.split("#");
                 target = target.split("#")[1];
