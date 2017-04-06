@@ -1,7 +1,10 @@
 <% include Header %>
 <div id="LayoutHolder" class="typography">
     <h1>Silverstripe Modules by Topic<sup>beta</sup></h1>
-    <p>Below is a list of all silverstripe modules, categorised by topic. More information about this site can be found in <a href="#footer">the footer.</p>
+    <p>
+        Below is a list of all silverstripe modules, categorised by topic.
+        More information about this site can be found in <a href="#footer">the footer.
+    </p>
 
 <div id="toc-topics">
     <ul>
@@ -19,7 +22,7 @@
 
     <% if $Topics %>
         <% loop $Topics %>
-        <div class="topic closed">
+        <div class="topic closed" data-id="$ID">
             <h3 id="Topic$ID"><a href="#Topic$ID" class="int">$Title</a></h3>
             <% if $SortedKeywords %><% loop $SortedKeywords %><span class="pill">$Title</span><% end_loop %><% end_if %>
             <p class="desc metatopic">$Explanation</p>
@@ -27,6 +30,7 @@
             <ul>
                 <% loop MyModulesQuick %>
                 <li class="hide">
+                    <a href="/" class="change" data-id="$ID">change</a>
                     <% if $LinkNew %>
                     <a href="$LinkNew" class="ext">$Name</a>: $Description
                     <% else %>
@@ -41,7 +45,7 @@
         </div>
         <% end_loop %>
     <% end_if %>
-        <p class="back-to-top action-p"><a  class="int" href="#LayoutHolder">back to top</a>
+        <p class="back-to-top action-p"><a  class="int" href="#LayoutHolder">back to top</a></p>
     </div>
 <% end_loop %>
 
@@ -53,12 +57,13 @@
 <% if RestAddons %>
     <div class="meta-topic">
         <h2>Not yet classified</h2>
-        <div class="topic closed">
-            <h3 id="Topic9999999"><a href="#Topic9999999" class="int">Modules without categorisation</a></h3>
+        <div class="topic closed" data-id="$ID">
+            <h3 id="Topic0"><a href="#Topic0" class="int">Modules without categorisation</a></h3>
             <p>Below is a list of modules that have not been places under any topic.</p>
             <ul>
         <% loop RestAddons %>
                 <li class="hide">
+                    <a href="/" class="change" data-id="$ID">change</a>
                 <% if $Repository %>
                     <a href="$Repository.URL" class="ext">$Name</a>: $Description
                 <% else %>
@@ -69,13 +74,21 @@
         <% end_loop %>
             </ul>
         </div>
-        <p class="back-to-top action-p"><a href="#LayoutHolder" class="int">back to top</a>
+        <p class="back-to-top action-p"><a href="#LayoutHolder" class="int">back to top</a></p>
     </div>
 <% end_if %>
 
 
 </div>
 
+<select class="change-selector" style="display: none;">
+<% loop $MetaTopics %>
+  <optgroup label="$Title">
+      <% loop $Topics %><option value="$ID">$Title</option><% end_loop %>
+  </optgroup>
+<% end_loop %>
+</select>
+</form>
 
 <script>
 
@@ -117,16 +130,16 @@ jQuery(document).ready(
                 var target = jQuery(this).attr('href');
                 var targets = target.split("#");
                 target = target.split("#")[1];
-                // var jQtarget = jQuery('#' + target);
-                //
-                // jQuery('html, body').animate(
-                //     {'scrollTop': jQtarget.offset().top},
-                //     900,
-                //     'swing',
-                //     function () {
-                window.location.hash = target;
-                //     }
-                // );
+                var jQtarget = jQuery('#' + target);
+
+                jQuery('html, body').animate(
+                    {'scrollTop': jQtarget.offset().top},
+                    900,
+                    'swing',
+                    function () {
+                        window.location.hash = target;
+                    }
+                );
             }
         );
         jQuery('a.ext').on(
@@ -137,6 +150,48 @@ jQuery(document).ready(
                     title: "Opens in a new window"
                 });
                 return true;
+            }
+        );
+        var changeSelector = jQuery('.change-selector').first().html();
+        jQuery('a.change').on(
+            'click',
+            function(e)
+            {
+                e.preventDefault();
+                var a = jQuery(this);
+                var li = a.closest('li');
+                var id = a.attr('data-id')
+                li.prepend('<select data-id="'+id+'">'+ changeSelector + '</select>');
+                li.find('select').on(
+                    'change',
+                    function()
+                    {
+                        var url = '//addons.silverstripe.org.localhost/change-topic';
+                        var select = jQuery(this);
+                        var data = {};
+                        var id = select.attr('data-id')
+                        var newCategory = select.val();
+                        data.id = id;
+                        data.from = select.closest('.topic').attr('data-id');
+                        data.to = newCategory;
+                        jQuery.ajax(
+                            {
+                              type: "GET",
+                              url: url,
+                              data: data,
+                              success: function() {
+                                  select.remove();
+                                  alert('Thank you for your suggested change.  We will include this in our next update.')
+                              },
+                              error: function(){
+                                  alert('Sorry, there was an error - please try again.');
+                              },
+                              dataType: 'html'
+                            }
+                        );
+                    }
+                );
+                return false;
             }
         );
     }

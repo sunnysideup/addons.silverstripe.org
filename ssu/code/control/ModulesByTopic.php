@@ -18,12 +18,8 @@ class ModulesByTopic extends Controller
     function init()
     {
         Requirements::themedCSS('ModulesByTopic.min', 'mysite');
+        Requirements::javascript('https://code.jquery.com/jquery-3.2.1.min.js');
         Requirements::insertHeadTags('
-        <script
-          src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-          integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-          crossorigin="anonymous"></script>
-
           <link href="http://fonts.googleapis.com/css?family=Voces" rel="stylesheet" type="text/css" />
 
           <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />

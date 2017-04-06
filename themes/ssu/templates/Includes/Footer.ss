@@ -49,7 +49,7 @@
 
     <h3>Last Updated</h3>
     <p>$LocalNow</p>
-    <p class="back-to-top action-p"><a  class="int" href="#LayoutHolder">back to top</a>
+    <p><a  class="int" href="#LayoutHolder">back to top</a></p>
 </footer>
 </div>
 <script>

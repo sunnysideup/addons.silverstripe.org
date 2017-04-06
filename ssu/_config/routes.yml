@@ -5,3 +5,4 @@ Director:
   rules:
     "favouritestocomposer": FavouritesToComposer
     "topics": ModulesByTopic
+    "change-topic": ChangeTopic
