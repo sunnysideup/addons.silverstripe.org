@@ -30,7 +30,7 @@
             <ul>
                 <% loop MyModulesQuick %>
                 <li class="hide">
-                    <a href="/" class="change" data-id="$ID">change</a>
+                    <a href="/" class="change" data-id="$ID">✎</a>
                     <% if $LinkNew %>
                     <a href="$LinkNew" class="ext">$Name</a>: $Description
                     <% else %>
@@ -63,7 +63,7 @@
             <ul>
         <% loop RestAddons %>
                 <li class="hide">
-                    <a href="/" class="change" data-id="$ID">change</a>
+                    <a href="/" class="change" data-id="$ID">✎</a>
                 <% if $Repository %>
                     <a href="$Repository.URL" class="ext">$Name</a>: $Description
                 <% else %>
