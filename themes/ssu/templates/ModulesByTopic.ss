@@ -166,7 +166,7 @@ jQuery(document).ready(
                     'change',
                     function()
                     {
-                        var url = '//addons.silverstripe.org.localhost/change-topic';
+                        var url = '//ssmods.com/change-topic';
                         var select = jQuery(this);
                         var data = {};
                         var id = select.attr('data-id')
