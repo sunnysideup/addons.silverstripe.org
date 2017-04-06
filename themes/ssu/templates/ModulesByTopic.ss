@@ -30,7 +30,7 @@
             <ul>
                 <% loop MyModulesQuick %>
                 <li class="hide">
-                    <a href="/" class="change" data-id="$ID">✎</a>
+                    <a href="/" class="change" data-id="$ID" style="display: none;">✎</a>
                     <% if $LinkNew %>
                     <a href="$LinkNew" class="ext">$Name</a>: $Description
                     <% else %>
@@ -63,7 +63,7 @@
             <ul>
         <% loop RestAddons %>
                 <li class="hide">
-                    <a href="/" class="change" data-id="$ID">✎</a>
+                    <a href="/" class="change" data-id="$ID" style="display: none;">✎</a>
                 <% if $Repository %>
                     <a href="$Repository.URL" class="ext">$Name</a>: $Description
                 <% else %>
@@ -166,7 +166,7 @@ jQuery(document).ready(
                     'change',
                     function()
                     {
-                        var url = '//ssmods.com/change-topic';
+                        var url = '//topics.ssmods.com/change-topic';
                         var select = jQuery(this);
                         var data = {};
                         var id = select.attr('data-id')
