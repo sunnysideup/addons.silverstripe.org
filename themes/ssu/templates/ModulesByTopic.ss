@@ -3,13 +3,13 @@
     <h1>Silverstripe Modules by Topic<sup>beta</sup></h1>
     <p>
         Below is a list of all silverstripe modules, categorised by topic.
-        More information about this site can be found in <a href="#footer">the footer.
+        More information about this site can be found in <a href="#footer">the footer</a>.
     </p>
 
 <div id="toc-topics">
     <ul>
     <% loop $MetaTopics %>
-        <li><a href="#Metatopic$ID" class="int">$Title</a>: <% loop Topics %><a href="#Topic$ID" class="light int">$Title</a><% if $Last %>.<% else %>, <% end_if %><% end_loop %></li>
+        <li><a href="#Metatopic$ID" class="int">$Title</a>: <% loop Topics %><% if $Last %>and <% else %><% end_if %><a href="#Topic$ID" class="light int">$Title</a><% if $Last %>.<% else %>, <% end_if %><% end_loop %></li>
     <% end_loop %>
     </ul>
 

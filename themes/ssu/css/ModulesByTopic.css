@@ -6,7 +6,7 @@ body {
     background-color: #fff;
 }
 #LayoutHolder {
-    max-width: 990px;
+    max-width: 1300px;
     padding: 2%;
     margin: 0 auto 0 auto;
 }
@@ -79,7 +79,7 @@ ul.change-request li {
     font-weight: bold;
 }
 optgroup, option {text-transform: lowercase;}
- 
+
 .pill:before {
     content: '{';
 }
@@ -145,7 +145,7 @@ footer {
 }
 footer h3,
 footer p {
-    max-width: 990px;
+    max-width: 1300px;
     margin: 0 auto 10px auto;
     color: #444!important;
     line-height: 1.5;
@@ -164,6 +164,9 @@ footer a {
     padding: 20px 40px;
     background-color: #eee;
     border-radius: 5px;
+    -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
 }
 
 #toc-topics h4,
