@@ -1,7 +1,7 @@
 <?php
 
 
-class ExtensionTagGroup extends DataObject {
+class ExtensionTagGroup extends DataObject implements PermissionProvider {
 
 
     private static $db = array(
@@ -162,4 +162,38 @@ class ExtensionTagGroup extends DataObject {
 
         return $objects;
     }
+
+    function canCreate($member = null)
+    {
+        return $this->canEdit($member);
+    }
+
+    function canView($member = null)
+    {
+        return $this->canEdit($member);
+    }
+
+    function canEdit($member = null)
+    {
+        if(Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
+            return true;
+        }
+        return parent::canEdit($member);
+    }
+
+    function canDelete($member = null)
+    {
+        return $this->MyModules()->count() > 0 ? false : $this->canEdit($member);
+    }
+
+    public function providePermissions() {
+        $perms = array(
+            "CMS_ACCESS_EDIT_KEYWORDS" => array(
+                'name' => 'Edit Keywords',
+                'category' => _t('Permission.CMS_ACCESS_CATEGORY', 'CMS Access')
+            )
+        );
+        return $perms;
+    }
+
 }

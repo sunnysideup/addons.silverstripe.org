@@ -105,14 +105,22 @@ class TopicChangeIPAddress extends DataObject
         return false;
     }
 
+    function canView($member = null)
+    {
+        return $this->canEdit($member);
+    }
+
     function canEdit($member = null)
     {
+        if(Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
+            return true;
+        }
         return parent::canEdit($member);
     }
 
     function canDelete($member = null)
     {
-        return parent::canEdit($member);
+        return $this->TopicChanges()->count() > 0 ? false : $this->canEdit($member);
     }
 
 }

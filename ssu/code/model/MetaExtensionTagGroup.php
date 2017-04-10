@@ -54,4 +54,28 @@ class MetaExtensionTagGroup extends DataObject {
         }
         return $fields;
     }
+
+    function canCreate($member = null)
+    {
+        return $this->canEdit($member);
+    }
+
+    function canView($member = null)
+    {
+        return $this->canEdit($member);
+    }
+
+    function canEdit($member = null)
+    {
+        if(Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
+            return true;
+        }
+        return parent::canEdit($member);
+    }
+
+    function canDelete($member = null)
+    {
+        return $this->Topics()->count() > 0 ? false : $this->canEdit($member);
+    }
+
 }

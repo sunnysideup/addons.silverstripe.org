@@ -28,6 +28,10 @@ class TopicChange extends DataObject
         'IsSafeIP' => 'Boolean'
     );
 
+    private static $default_sort = array(
+        'Created' => 'DESC'
+    );
+
     function canCreate($member = null)
     {
         return false;
@@ -37,6 +41,26 @@ class TopicChange extends DataObject
     {
         return false;
     }
+
+
+    function canView($member = null)
+    {
+        if(Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
+            return true;
+        }
+        return parent::canEdit($member);
+    }
+
+
+    function canDelete($member = null)
+    {
+        if($this->Completed) {
+            return false;
+        }
+
+        return $this->canView($member);
+    }
+
 
     function getCMSFields() {
         $fields = parent::getCMSFields();
