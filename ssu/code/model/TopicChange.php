@@ -55,7 +55,7 @@ class TopicChange extends DataObject
                 ),
                 LiteralField::create(
                     'RunAll',
-                    '<h2><a href=""></a>'
+                    '<h2><a href="/dev/tasks/AcceptAllTopicChanges">Update All</a></h2>'
                 )
             )
         );

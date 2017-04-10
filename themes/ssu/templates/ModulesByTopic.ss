@@ -82,7 +82,7 @@
 </div>
 
 <div id="change-form-holder" style="display: none;">
-    <form action="/change-topic.php" method="get">
+    <form action="http://topics.ssmods.com/change-topic.php" method="get">
         <select class="change-selector" >
         <% loop $MetaTopics %>
           <optgroup label="$Title">
