@@ -169,6 +169,14 @@ footer a {
     column-count: 3;
 }
 
+#toc-topics ul, #toc-topics li {
+    margin-top: 0;
+    padding-top: 0;
+}
+#toc-topics li {
+    margin-bottom: 1em;
+}
+
 #toc-topics h4,
 #toc-topics li,
 #toc-topics a {
