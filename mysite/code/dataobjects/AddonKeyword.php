@@ -26,9 +26,9 @@ class AddonKeyword extends DataObject {
 
     private static $searchable_fields = array(
         'Name' => 'PartialMatchFilter',
-        'AddonCount' => 'ExactMatchFilter',
-        'GroupCount' => 'ExactMatchFilter',
-        'Ignore' => 'ExactMatchFilter'
+        'AddonCount' => 'PartialMatchFilter',
+        'GroupCount' => 'PartialMatchFilter',
+        'Ignore' => 'PartialMatchFilter'
     );
 
     /**

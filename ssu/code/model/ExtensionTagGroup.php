@@ -23,7 +23,8 @@ class ExtensionTagGroup extends DataObject {
     );
 
     private static $searchable_fields = array(
-        "Title" => "PartialMatchFilter"
+        "Title" => "PartialMatchFilter",
+        "Explanation" => "PartialMatchFilter"
     );
 
     private static $field_labels = array();
