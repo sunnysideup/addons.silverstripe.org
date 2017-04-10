@@ -170,68 +170,63 @@ jQuery(document).ready(
             function(e)
             {
                 e.preventDefault();
+                //immediate variables
                 var a = jQuery(this);
                 var li = a.closest('li');
                 var id = a.attr('data-id');
                 var oldCategory = li.closest('.topic').attr('data-id');
+                //changes ...
                 a.fadeOut();
                 li.prepend(changeFormHTML);
-                li.find('select').
+                //find form and select ...
+                var form = li.find('form');
+                var select = form.find('select');
+                select.
                     val(oldCategory).
-                    on(
-                        'change',
-                        function()
-                        {
-                            //elements
-                            var select = jQuery(this);
-                            var form = select.closest('form');
-                            var li = form.closest('li');
-                            var a = li.find('a.change')
-                            //values
-                            var oldCategory = select.closest('.topic').attr('data-id');
-                            var newCategory = select.val();
-                            //create data
-                            var data = {};
-                            data.id = id;
-                            data.from = oldCategory;
-                            data.to = newCategory;
-                            form.autosubmit(
-                                {
-                                    type: form.attr('method'),
-                                    url: form.attr('action'),
-                                    data: data,
-                                    dataType: 'html',
-                                    success: function() {
-                                        form.remove();
-                                        a.fadeIn();
-                                        alert('Thank you for your suggested change.  We will include this in our next update.')
-                                    },
-                                    error: function(){
-                                        alert('Sorry, there was an error - please try again.');
-                                    }
+                    attr('data-old-category', oldCategory).
+                    attr('data-id', id);
+                form.on(
+                    'submit',
+                    function(event)
+                    {
+                        event.preventDefault();
+                        //values
+                        var form = jQuery(this);
+                        var select = form.find('select');
+                        var newCategory = select.val();
+                        //create data
+                        var data = {};
+                        data.id = select.attr('data-id');
+                        data.from = select.attr('data-old-category');
+                        data.to = newCategory;
+                        //submit
+                        jQuery.ajax(
+                            {
+                                type: form.attr('method'),
+                                crossDomain: true,
+                                url: form.attr('action'),
+                                data: data,
+                                dataType: 'html',
+                                cache: false,
+                                success: function() {
+                                    form.remove();
+                                    a.fadeIn();
+                                    alert('Thank you for your suggested change.  We will include this in our next update.')
+                                },
+                                error: function(){
+                                    form.remove();
+                                    a.fadeIn();
+                                    alert('Sorry, there was an error - please try again.');
                                 }
-                            );
-                        }
-                    );
+                            }
+                        );
+                    }
+                );
             }
         );
     }
 );
 
-(
-    function($) {
-        $.fn.autosubmit = function(options) {
-            this.submit(
-                function(event) {
-                    event.preventDefault();
-                    var form = $(this);
-                    $.ajax(options);
-                }
-            );
-            return this;
-        }
-    }
-)(jQuery);
 
 </script>
 
