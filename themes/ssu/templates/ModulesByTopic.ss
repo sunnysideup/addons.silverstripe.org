@@ -209,15 +209,18 @@ jQuery(document).ready(
                                 dataType: 'html',
                                 cache: false,
                                 success: function() {
-                                    var li = for.closest('li');
+
+                                },
+                                error: function(){
+                                    var newLI = null;
+                                    alert('Sorry, there was an error - please try again.');
+                                },
+                                complete: function()
+                                {
+                                    var li = form.closest('li');
                                     li.addClass('changed');
                                     form.remove();
                                     a.fadeIn();
-                                },
-                                error: function(){
-                                    form.remove();
-                                    a.fadeIn();
-                                    alert('Sorry, there was an error - please try again.');
                                 }
                             }
                         );
