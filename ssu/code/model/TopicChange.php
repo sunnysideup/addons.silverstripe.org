@@ -16,12 +16,51 @@ class TopicChange extends DataObject
     );
 
     private static $summary_fields = array(
+        'Completed.Ago' => 'Completed',
+        'Created.Ago' => 'Created',
         'AddonName' => 'Name',
         'OldGroup.Title' => 'Old Group',
         'NewGroup.Title' => 'New Group',
-        'IP1' => 'IP1',
-        'IP2' => 'IP2'
+        'IsSafeIP' => 'Is Safe'
     );
+
+    private static $casting = array(
+        'IsSafeIP' => 'Boolean'
+    );
+
+    function canCreate($member = null)
+    {
+        return false;
+    }
+
+    function canEdit($member = null)
+    {
+        return false;
+    }
+
+    function getCMSFields() {
+        $fields = parent::getCMSFields();
+        $fields->removeByName('AddonID');
+        $fields->addFieldsToTab(
+            'Root.Main',
+            array(
+                ReadonlyField::create(
+                    'Created',
+                    'Created'
+                ),
+                ReadonlyField::create(
+                    'IsSafeIP',
+                    'IsSafeIP',
+                    $this->getIsSafeIP()->Nice()
+                ),
+                LiteralField::create(
+                    'RunAll',
+                    '<h2><a href=""></a>'
+                )
+            )
+        );
+        return $fields;
+    }
 
     /**
      * Event handler called before writing to the database.
@@ -29,11 +68,11 @@ class TopicChange extends DataObject
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();
-        if($this->IP1) {
-            $this->IP1 = $this->get_client_ip_1();
-        }
-        if($this->IP2) {
-            $this->IP2 = $this->get_client_ip_2();
+        if(! $this->AddonName) {
+            $addon = Addon::get()->byID($this->AddonID);
+            if($addon) {
+                $this->AddonName = $addon->Name;
+            }
         }
     }
 
@@ -44,19 +83,23 @@ class TopicChange extends DataObject
     {
         parent::onAfterWrite();
 
-        if($this->IsSafeIP() && ! $this->Completed) {
-            $addon = Addon::get()->byID($this->AddOnID);
-            if($addon) {
-                $oldCategory = ExtensionTagGroup::get()->byID(intval($oldOne));
-                $newCategory = ExtensionTagGroup::get()->byID(intval($newOne));
-                if($oldCategory) {
-                    $oldCategory->ExcludedOnes()->remove($addon);
+        if($this->Completed) {
+            //do nothing...
+        } else {
+            if($this->IsSafeIP()) {
+                $addon = Addon::get()->byID($this->AddOnID);
+                if($addon) {
+                    $oldCategory = ExtensionTagGroup::get()->byID(intval($this->OldGroupID));
+                    $newCategory = ExtensionTagGroup::get()->byID(intval($this->NewGroupID));
+                    if($oldCategory) {
+                        $oldCategory->ExcludedOnes()->remove($addon);
+                    }
+                    if($newCategory) {
+                        $newCategory->AdditionalOnes()->add($addon);
+                    }
+                    $this->Completed = true;
+                    $this->write();
                 }
-                if($newCategory) {
-                    $newCategory->AdditionalOnes()->add($addon);
-                }
-                $this->Completed = true;
-                $this->write();
             }
         }
     }
@@ -70,11 +113,9 @@ class TopicChange extends DataObject
                 $oldCategory = ExtensionTagGroup::get()->byID(intval($oldOne));
                 $newCategory = ExtensionTagGroup::get()->byID(intval($newOne));
                 if($oldCategory) {
-                    //$oldCategory->ExcludedOnes()->remove($addon);
                     $this->OldGroupID = $oldCategory->ID;
                 }
                 if($newCategory) {
-                    //$newCategory->AdditionalOnes()->add($addon);
                     $this->NewGroupID = $newCategory->ID;
                 } else {
                     return false;
@@ -92,11 +133,20 @@ class TopicChange extends DataObject
 
     function IsSafeIP()
     {
+        return $this->getIsSafeIP();
+    }
+
+    function getIsSafeIP()
+    {
         $obj = $this->TopicChangeIPAddress();
         if($obj && $obj->exists()) {
-            $obj->SafeIP;
+            $outcome = $obj->SafeIP;
+        } else {
+            $outcome = false;
         }
-        return false;
+
+        return DBField::create_field('Boolean', $outcome);
+
     }
 
 }

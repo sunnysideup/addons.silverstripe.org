@@ -9,12 +9,18 @@ class TopicChangeIPAddress extends DataObject
         'IP2' => 'Varchar(70)'
     );
     private static $indexes = array(
-        'IP1' => true,
-        'IP2' => true
+        array(
+            'type' => 'unique',
+            'value' => '"IP1", "IP2"'
+        )
     );
 
     private static $has_many = array(
         'TopicChanges' => 'TopicChange'
+    );
+
+    private static $casting = array(
+        'Title' => 'Varchar'
     );
 
     private static $summary_fields = array(
@@ -24,13 +30,26 @@ class TopicChangeIPAddress extends DataObject
         'SafeIP.Nice' => 'Safe IP'
     );
 
+    /**
+     * Event handler called before writing to the database.
+     */
+    public function onBeforeWrite()
+    {
+        parent::onBeforeWrite();
+        if($this->IsDodgy) {
+            $this->IsSafe = false;
+        }
+    }
+
     public static function find_or_make()
     {
         $filter = array(
             'IP1' => self::get_client_ip_1(),
             'IP2' => self::get_client_ip_2()
         );
-        $obj = TopicChangeIPAddress::get()->filter($filter);
+        $obj = TopicChangeIPAddress::get()
+            ->filter($filter)
+            ->first();
         if(! $obj) {
             $obj = TopicChangeIPAddress::create($obj);
             $obj->write();
@@ -67,6 +86,29 @@ class TopicChangeIPAddress extends DataObject
             $ipaddress = 'UNKNOWN';
         }
         return $ipaddress;
+    }
+
+    function getTitle()
+    {
+        if($this->IP2 !== $this->IP1) {
+            return $this->IP1 . '  -  '.$this->IP2;
+        }
+        return $this->IP2;
+    }
+
+    function canCreate($member = null)
+    {
+        return false;
+    }
+
+    function canEdit($member = null)
+    {
+        return false;
+    }
+
+    function canDelete($member = null)
+    {
+        return false;
     }
 
 }
