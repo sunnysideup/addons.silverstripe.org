@@ -2,7 +2,14 @@
 
 class ExtensionTagGroup_Admin extends ModelAdmin {
 
-    public static $managed_models = array('MetaExtensionTagGroup', 'ExtensionTagGroup', 'TopicChange', 'AddonKeyword', 'FavouritesToComposerRecord');
+    public static $managed_models = array(
+        'MetaExtensionTagGroup',
+        'ExtensionTagGroup',
+        'TopicChange',
+        'TopicChangeIPAddress',
+        'AddonKeyword',
+        'FavouritesToComposerRecord',
+    );
 
     public static $url_segment = 'taggroup';
 

@@ -30,7 +30,7 @@
             <ul>
                 <% loop MyModulesQuick %>
                 <li class="hide">
-                    <a href="/" class="change" data-id="$ID" style="display: none;">✎</a>
+                    <a href="/" class="change" data-id="$ID">✎</a>
                     <% if $LinkNew %>
                     <a href="$LinkNew" class="ext">$Name</a>: $Description
                     <% else %>
@@ -63,7 +63,7 @@
             <ul>
         <% loop RestAddons %>
                 <li class="hide">
-                    <a href="/" class="change" data-id="$ID" style="display: none;">✎</a>
+                    <a href="/" class="change" data-id="$ID">✎</a>
                 <% if $Repository %>
                     <a href="$Repository.URL" class="ext">$Name</a>: $Description
                 <% else %>
@@ -81,14 +81,18 @@
 
 </div>
 
-<select class="change-selector" style="display: none;">
-<% loop $MetaTopics %>
-  <optgroup label="$Title">
-      <% loop $Topics %><option value="$ID">$Title</option><% end_loop %>
-  </optgroup>
-<% end_loop %>
-</select>
-</form>
+<div id="change-form-holder" style="display: none;">
+    <form action="//ssmods.com/change-topic/" method="get">
+        <select class="change-selector" >
+        <% loop $MetaTopics %>
+          <optgroup label="$Title">
+              <% loop $Topics %><option value="$ID">$Title</option><% end_loop %>
+          </optgroup>
+        <% end_loop %>
+        </select>
+        <input type="submit" value="request change" />
+    </form>
+</div>
 
 <script>
 
@@ -119,9 +123,13 @@ var loadMyStuff = function(){
     );
 }
 loadMyStuff();
+
+
 jQuery(document).ready(
     function()
     {
+
+        //internal links
         jQuery('a.int').on(
             'click',
             function (e) {
@@ -142,6 +150,8 @@ jQuery(document).ready(
                 );
             }
         );
+
+        //external links ...
         jQuery('a.ext').on(
             'click',
             function (e) {
@@ -152,7 +162,9 @@ jQuery(document).ready(
                 return true;
             }
         );
-        var changeSelector = jQuery('.change-selector').first().html();
+
+        //change
+        var changeFormHTML = jQuery('#change-form-holder').first().html();
         jQuery('a.change').on(
             'click',
             function(e)
@@ -160,42 +172,66 @@ jQuery(document).ready(
                 e.preventDefault();
                 var a = jQuery(this);
                 var li = a.closest('li');
-                var id = a.attr('data-id')
-                li.prepend('<select data-id="'+id+'">'+ changeSelector + '</select>');
-                li.find('select').on(
-                    'change',
-                    function()
-                    {
-                        var url = '//topics.ssmods.com/change-topic';
-                        var select = jQuery(this);
-                        var data = {};
-                        var id = select.attr('data-id')
-                        var newCategory = select.val();
-                        data.id = id;
-                        data.from = select.closest('.topic').attr('data-id');
-                        data.to = newCategory;
-                        jQuery.ajax(
-                            {
-                              type: "GET",
-                              url: url,
-                              data: data,
-                              success: function() {
-                                  select.remove();
-                                  alert('Thank you for your suggested change.  We will include this in our next update.')
-                              },
-                              error: function(){
-                                  alert('Sorry, there was an error - please try again.');
-                              },
-                              dataType: 'html'
-                            }
-                        );
-                    }
-                );
-                return false;
+                var id = a.attr('data-id');
+                var oldCategory = li.closest('.topic').attr('data-id');
+                a.fadeOut();
+                li.prepend(changeFormHTML);
+                li.find('select').
+                    val(oldCategory).
+                    on(
+                        'change',
+                        function()
+                        {
+                            //elements
+                            var select = jQuery(this);
+                            var form = select.closest('form');
+                            var li = form.closest('li');
+                            var a = li.find('a.change')
+                            //values
+                            var oldCategory = select.closest('.topic').attr('data-id');
+                            var newCategory = select.val();
+                            //create data
+                            var data = {};
+                            data.id = id;
+                            data.from = oldCategory;
+                            data.to = newCategory;
+                            form.autosubmit(
+                                {
+                                    type: form.attr('method'),
+                                    url: form.attr('action'),
+                                    data: data,
+                                    dataType: 'html',
+                                    success: function() {
+                                        form.remove();
+                                        a.fadeIn();
+                                        alert('Thank you for your suggested change.  We will include this in our next update.')
+                                    },
+                                    error: function(){
+                                        alert('Sorry, there was an error - please try again.');
+                                    }
+                                }
+                            );
+                        }
+                    );
             }
         );
     }
 );
+
+(
+    function($) {
+        $.fn.autosubmit = function(options) {
+            this.submit(
+                function(event) {
+                    event.preventDefault();
+                    var form = $(this);
+                    $.ajax(options);
+                }
+            );
+            return this;
+        }
+    }
+)(jQuery);
 
 </script>
 
