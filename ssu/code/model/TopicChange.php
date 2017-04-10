@@ -16,7 +16,7 @@ class TopicChange extends DataObject
     );
 
     private static $summary_fields = array(
-        'Completed.Ago' => 'Completed',
+        'Completed.Nice' => 'Completed',
         'Created.Ago' => 'Created',
         'AddonName' => 'Name',
         'OldGroup.Title' => 'Old Group',

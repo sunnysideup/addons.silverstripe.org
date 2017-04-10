@@ -198,7 +198,7 @@ jQuery(document).ready(
                         var li = form.closest('li');
                         //values
                         var newCategory = select.val();
-                        if(oldCategory.trim() === newCategory.trim()) {
+                        if(oldCategory === newCategory) {
                             form.remove();
                             a.fadeIn();
                             return;
