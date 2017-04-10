@@ -78,7 +78,11 @@ ul.change-request li {
     color: yellow;
     font-weight: bold;
 }
-optgroup, option {text-transform: lowercase;}
+optgroup,
+option,
+select {
+    text-transform: lowercase;
+}
 
 .pill:before {
     content: '{';
