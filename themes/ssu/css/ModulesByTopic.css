@@ -60,6 +60,9 @@ a.change {
 .topic.opened li, .topic.opened li a {
     color: #525050!important;
 }
+li.changed {
+    background-color: yellow;
+}
 .pill:before {
     content: '{';
 }

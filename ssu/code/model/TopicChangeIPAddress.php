@@ -103,12 +103,12 @@ class TopicChangeIPAddress extends DataObject
 
     function canEdit($member = null)
     {
-        return false;
+        return parent::canEdit($member);
     }
 
     function canDelete($member = null)
     {
-        return false;
+        return parent::canEdit($member);
     }
 
 }

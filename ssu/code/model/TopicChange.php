@@ -86,11 +86,11 @@ class TopicChange extends DataObject
         if($this->Completed) {
             //do nothing...
         } else {
-            if($this->IsSafeIP()) {
-                $addon = Addon::get()->byID($this->AddOnID);
+            if($this->getIsSafeIP()->raw() ) {
+                $addon = Addon::get()->byID($this->AddonID);
                 if($addon) {
-                    $oldCategory = ExtensionTagGroup::get()->byID(intval($this->OldGroupID));
-                    $newCategory = ExtensionTagGroup::get()->byID(intval($this->NewGroupID));
+                    $oldCategory = ExtensionTagGroup::get()->byID($this->OldGroupID);
+                    $newCategory = ExtensionTagGroup::get()->byID($this->NewGroupID);
                     if($oldCategory) {
                         $oldCategory->ExcludedOnes()->remove($addon);
                     }

@@ -24,7 +24,7 @@
         <% loop $Topics %>
         <div class="topic closed" data-id="$ID">
             <h3 id="Topic$ID"><a href="#Topic$ID" class="int">$Title</a></h3>
-            <% if $SortedKeywords %><% loop $SortedKeywords %><span class="pill">$Title</span><% end_loop %><% end_if %>
+            <% if $SortedKeywords %><% loop $SortedKeywords %><% if $Ignore %><% else %><span class="pill">$Title</span><% end_if %><% end_loop %><% end_if %>
             <p class="desc metatopic">$Explanation</p>
             <% if MyModulesQuick %>
             <ul>
@@ -69,7 +69,7 @@
                 <% else %>
                     <a>$Name</a>: $Description
                 <% end_if %>
-                    <% if $Keywords %><% loop $Keywords %><span class="pill">$Title</span><% end_loop %><% end_if %>
+                    <% if $Keywords %><% loop $Keywords %><% if $Ignore %><% else %><span class="pill">$Title</span><% end_if %><% end_loop %><% end_if %>
                 </li>
         <% end_loop %>
             </ul>
@@ -209,9 +209,10 @@ jQuery(document).ready(
                                 dataType: 'html',
                                 cache: false,
                                 success: function() {
+                                    var li = for.closest('li');
+                                    li.addClass('changed');
                                     form.remove();
                                     a.fadeIn();
-                                    alert('Thank you for your suggested change.  We will include this in our next update.')
                                 },
                                 error: function(){
                                     form.remove();
