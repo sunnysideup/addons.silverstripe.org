@@ -82,7 +82,7 @@
 </div>
 
 <div id="change-form-holder" style="display: none;">
-    <form action="http://topics.ssmods.com/change-topic.php" method="get">
+    <form action="$ChangeTopicFormAction" method="get">
         <select class="change-selector" >
         <% loop $MetaTopics %>
           <optgroup label="$Title">
@@ -90,7 +90,7 @@
           </optgroup>
         <% end_loop %>
         </select>
-        <input type="submit" value="request change" />
+        <input type="submit" value="request category change" />
     </form>
 </div>
 
@@ -155,10 +155,12 @@ jQuery(document).ready(
         jQuery('a.ext').on(
             'click',
             function (e) {
-                jQuery(this).attr({
-                    target: "_blank",
-                    title: "Opens in a new window"
-                });
+                jQuery(this).attr(
+                    {
+                        target: "_blank",
+                        title: "Opens in a new window"
+                    }
+                );
                 return true;
             }
         );
@@ -190,11 +192,19 @@ jQuery(document).ready(
                     function(event)
                     {
                         event.preventDefault();
-                        //values
+                        //elements
                         var form = jQuery(this);
                         var select = form.find('select');
+                        var li = form.closest('li');
+                        //values
                         var newCategory = select.val();
+                        if(oldCategory.trim() === newCategory.trim()) {
+                            form.remove();
+                            a.fadeIn();
+                            return;
+                        }
                         //create data
+                        var newCategoryText = select.find("option[value='"+newCategory+"']").text();
                         var data = {};
                         data.id = select.attr('data-id');
                         data.from = select.attr('data-old-category');
@@ -209,18 +219,17 @@ jQuery(document).ready(
                                 dataType: 'html',
                                 cache: false,
                                 success: function() {
-
+                                    li.addClass('success');
+                                    li.append('<ul class="change-request"><li>Requested changed to: <em>' + newCategoryText + '</em>. Most requests will be actioned within 3 working days.</li></ul>');
                                 },
                                 error: function(){
-                                    var newLI = null;
+                                    li.addClass('error');
                                     alert('Sorry, there was an error - please try again.');
                                 },
                                 complete: function()
                                 {
-                                    var li = form.closest('li');
                                     li.addClass('changed');
                                     form.remove();
-                                    a.fadeIn();
                                 }
                             }
                         );

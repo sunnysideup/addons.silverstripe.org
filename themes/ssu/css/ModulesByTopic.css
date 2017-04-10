@@ -60,9 +60,26 @@ a.change {
 .topic.opened li, .topic.opened li a {
     color: #525050!important;
 }
-li.changed {
-    background-color: yellow;
+li.changed.success,
+li.changed.success a {
+    background-color: green;
+    color: #fff!important;
 }
+li.changed.error,
+li.changed.error a {
+    background-color: red;
+    color: #fff!important;
+}
+
+ul.change-request {
+    padding-left: 2em;
+}
+ul.change-request li {
+    color: yellow;
+    font-weight: bold;
+}
+optgroup, option {text-transform: lowercase;}
+ 
 .pill:before {
     content: '{';
 }

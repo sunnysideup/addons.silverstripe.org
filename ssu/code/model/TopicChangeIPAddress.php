@@ -5,6 +5,7 @@ class TopicChangeIPAddress extends DataObject
     private static $db = array(
         'DodgyIP' => 'Boolean',
         'SafeIP' => 'Boolean',
+        'Title' => 'Varchar',
         'IP1' => 'Varchar(70)',
         'IP2' => 'Varchar(70)'
     );
@@ -90,6 +91,9 @@ class TopicChangeIPAddress extends DataObject
 
     function getTitle()
     {
+        if($this->Title) {
+            return $this->Title;
+        }
         if($this->IP2 !== $this->IP1) {
             return $this->IP1 . '  -  '.$this->IP2;
         }

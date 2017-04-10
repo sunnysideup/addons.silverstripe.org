@@ -74,4 +74,14 @@ class ModulesByTopic extends Controller
         return date(DATE_RFC2822);
     }
 
+
+    function ChangeTopicFormAction()
+    {
+        if(Director::isDev()) {
+            return '/change-topic.php';
+        } else {
+            return 'http://topics.ssmods.com/change-topic.php';
+        }
+    }
+
 }
