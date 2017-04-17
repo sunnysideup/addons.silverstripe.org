@@ -17,7 +17,6 @@ class AddonsBuildAPIByBash extends BuildTask
 
     public function run($request)
     {
-
         $count = 0;
         $ghs = '';
         $vds = '';
@@ -57,15 +56,19 @@ class AddonsBuildAPIByBash extends BuildTask
                     DB::alteration_message($vendorAndName[0]);
                     DB::alteration_message(' ... '.$vendorAndName[1]);
                     DB::alteration_message(' ... '.$link);
-                    $count++;
-                    $ghs .= "\ngh[$count]=\"".$link."\"";
-                    $vds .= "\nvd[$count]=\"".$vendorAndName[0]."\"";
-                    $mns .= "\nmn[$count]=\"".$vendorAndName[1]."\"";
-                    if(! $addon->DocLink()) {
-                        $count_quick++;
-                        $ghs_quick .= "\ngh[$count_quick]=\"".$link."\"";
-                        $vds_quick .= "\nvd[$count_quick]=\"".$vendorAndName[0]."\"";
-                        $mns_quick .= "\nmn[$count_quick]=\"".$vendorAndName[1]."\"";
+                    if(strpos($link, 'simon.geek.')) {
+                        $errors .= "\n".'# BYPASSING SIMON MODULE: '.$addon->Name;
+                    } else {
+                        $count++;
+                        $ghs .= "\ngh[$count]=\"".$link."\"";
+                        $vds .= "\nvd[$count]=\"".$vendorAndName[0]."\"";
+                        $mns .= "\nmn[$count]=\"".$vendorAndName[1]."\"";
+                        if(! $addon->DocLink()) {
+                            $count_quick++;
+                            $ghs_quick .= "\ngh[$count_quick]=\"".$link."\"";
+                            $vds_quick .= "\nvd[$count_quick]=\"".$vendorAndName[0]."\"";
+                            $mns_quick .= "\nmn[$count_quick]=\"".$vendorAndName[1]."\"";
+                        }
                     }
                 }
                 else {

@@ -95,7 +95,7 @@ class ExtensionTagGroup extends DataObject implements PermissionProvider {
             self::$_covered[$id] = $id;
         }
 
-        return Addon::get()->filter(array('ID' => $array))->Sort('RAND()');
+        return Addon::get()->filter(array('ID' => $array))->Sort(array('Created' => 'DESC'));
     }
 
 
@@ -142,7 +142,7 @@ class ExtensionTagGroup extends DataObject implements PermissionProvider {
         foreach($addons as $addon) {
             self::$_covered[$addon] = $addon;
         }
-        return Addon::get()->filter(array('ID' => $addons))->sort('RAND()');
+        return Addon::get()->filter(array('ID' => $addons))->sort(array('Created' => 'DESC'));
     }
 
     /**
@@ -152,7 +152,7 @@ class ExtensionTagGroup extends DataObject implements PermissionProvider {
     {
         $allIDs = Addon::get()->column('ID');
         $toShow = array_diff($allIDs, self::$_covered);
-        return Addon::get()->filter(array('ID' => $toShow))->sort('RAND()');
+        return Addon::get()->filter(array('ID' => $toShow))->sort(array('Created' => 'DESC'));
     }
 
     function SortedKeywords()
