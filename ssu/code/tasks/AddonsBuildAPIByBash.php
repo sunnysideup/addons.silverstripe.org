@@ -11,6 +11,13 @@ class AddonsBuildAPIByBash extends BuildTask
 
     protected $reposPerStep = 100;
 
+    protected $badApples = array(
+        'studiothick/silverstripe-srcset',
+        'studiothick/silverstripe-vagrant',
+        'wilr/silverstripe-googlemapselectionfield',
+        'unclecheese/zero'
+    );
+
     protected $destinationFile = '/var/www/docs.ssmods.com/process/run.sh';
 
     protected $destinationFile_quick = '/var/www/docs.ssmods.com/process/run_quick.sh';
@@ -58,6 +65,8 @@ class AddonsBuildAPIByBash extends BuildTask
                     DB::alteration_message(' ... '.$link);
                     if(strpos($link, 'simon.geek.')) {
                         $errors .= "\n".'# BYPASSING SIMON MODULE: '.$addon->Name;
+                    } elseif(in_array($addon->Name, $this->badApples) {
+                        $errors .= "\n".'# BYPASSING BAD APPLED MODULE: '.$addon->Name;
                     } else {
                         $count++;
                         $ghs .= "\ngh[$count]=\"".$link."\"";
