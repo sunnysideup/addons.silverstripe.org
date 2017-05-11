@@ -122,6 +122,7 @@ var loadMyStuff = function(){
 }
 loadMyStuff();
 
+var doInternalLinks = false;
 
 jQuery(document).ready(
     function()
@@ -254,11 +255,30 @@ jQuery(document).ready(
         jQuery('#show-all').on(
             'click',
             function(e) {
-                jQuery('.topic.closed').each(
-                    function(i, el) {
-                        jQuery(el).find('h3 > a').click();
+                var myclass = 'closed';
+                if(jQuery(this).hasClass('all-are-shown')) {
+                    var myclass = 'opened';
+                    jQuery(this).removeClass('all-are-shown');
+                    jQuery(this).text('show all');
+                } else {
+                    jQuery(this).addClass('all-are-shown');
+                    if(jQuery('#keyword-search').val().length) {
+                        jQuery(this).text('show matches');
+                    } else {
+                        jQuery(this).text('show selection');
                     }
-                )
+                }
+                jQuery('.topic.'+myclass).each(
+                    function(i, el) {
+                        var el = jQuery(el).find('h3 > a');
+                        jQuery(el)
+                            .toggleClass('opened')
+                            .toggleClass('closed');
+                        jQuery(el).closest('.topic')
+                            .toggleClass('opened')
+                            .toggleClass('closed');
+                    }
+                );
             }
         );
         jQuery('#keyword-search').on(
