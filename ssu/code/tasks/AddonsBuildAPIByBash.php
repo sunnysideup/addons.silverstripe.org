@@ -15,7 +15,8 @@ class AddonsBuildAPIByBash extends BuildTask
         'studiothick/silverstripe-srcset',
         'studiothick/silverstripe-vagrant',
         'wilr/silverstripe-googlemapselectionfield',
-        'unclecheese/zero'
+        'unclecheese/zero',
+        'navidonskis/silverstripe-blocks-accessories'
     );
 
     protected $destinationFile = '/var/www/docs.ssmods.com/process/run.sh';
