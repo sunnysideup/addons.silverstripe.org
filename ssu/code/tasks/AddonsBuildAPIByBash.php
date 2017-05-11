@@ -66,7 +66,7 @@ class AddonsBuildAPIByBash extends BuildTask
                     DB::alteration_message(' ... '.$link);
                     if(strpos($link, 'simon.geek.')) {
                         $errors .= "\n".'# BYPASSING SIMON MODULE: '.$addon->Name;
-                    } elseif(in_array($addon->Name, $this->badApples) {
+                    } elseif(in_array($addon->Name, $this->badApples)) {
                         $errors .= "\n".'# BYPASSING BAD APPLED MODULE: '.$addon->Name;
                     } else {
                         $count++;

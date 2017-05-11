@@ -90,7 +90,7 @@
                     <p>
                         <a href="#" class="adf">♥</a>
                         <% if $Repository %><a href="$Repository.URL" class="ext git" target="_blank">repo</a><% end_if %>
-                        <% if $DocLink %><a href="$DocLink.URL" class="ext doc">api</a><% end_if %>
+                        <% if $DocLink %><a href="$DocLink" class="ext doc">api</a><% end_if %>
                     </p>
                 </th>
                 <td class="left">
