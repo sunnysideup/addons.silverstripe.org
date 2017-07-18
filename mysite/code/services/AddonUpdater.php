@@ -4,7 +4,7 @@ use Composer\Package\AliasPackage;
 use Composer\Package\CompletePackage;
 use Composer\Semver\Constraint\Constraint;
 use Guzzle\Http\Exception\ClientErrorResponseException;
-use SilverStripe\Elastica\ElasticaService;
+use Symbiote\Elastica\ElasticaService;
 use Packagist\Api\Result\Package;
 use Composer\Package\Version\VersionParser;
 
@@ -19,7 +19,7 @@ class AddonUpdater {
     private $packagist;
 
     /**
-     * @var SilverStripe\Elastica\ElasticaService
+     * @var Symbiote\Elastica\ElasticaService
      */
     private $elastica;
 

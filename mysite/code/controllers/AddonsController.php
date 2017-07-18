@@ -2,8 +2,8 @@
 
 use Elastica\Query;
 use Elastica\Query\Match;
-use SilverStripe\Elastica\ElasticaService;
-use SilverStripe\Elastica\ResultList;
+use Symbiote\Elastica\ElasticaService;
+use Symbiote\Elastica\ResultList;
 
 /**
  * Lists and searches add-ons.
@@ -28,7 +28,7 @@ class AddonsController extends SiteController {
     );
 
     /**
-     * @var \SilverStripe\Elastica\ElasticaService
+     * @var \Symbiote\Elastica\ElasticaService
      */
     private $elastica;
 

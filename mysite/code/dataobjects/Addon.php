@@ -43,7 +43,7 @@ class Addon extends DataObject {
     public static $default_sort = 'Name';
 
     public static $extensions = array(
-        'SilverStripe\\Elastica\\Searchable'
+        'Symbiote\\Elastica\\Searchable'
     );
 
     private $_lastTaggedVersion = null;
