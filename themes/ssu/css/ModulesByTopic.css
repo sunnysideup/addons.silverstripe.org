@@ -214,3 +214,20 @@ footer a {
 
 
 }
+
+
+
+.action {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 0.7em;
+    float: none;
+    max-width: 300px;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.action.left {float: left;}
+.action.right {float: right;}

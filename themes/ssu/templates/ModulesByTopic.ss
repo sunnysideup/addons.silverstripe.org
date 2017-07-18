@@ -11,9 +11,16 @@
     <% loop $MetaTopics %>
         <li><a href="#Metatopic$ID" class="int">$Title</a>: <% loop Topics %><% if $Last %>and <% else %><% end_if %><a href="#Topic$ID" class="light int">$Title</a><% if $Last %>.<% else %>, <% end_if %><% end_loop %></li>
     <% end_loop %>
+        <li><a href="#rest-addons">To be categorised</a></li>
     </ul>
 
 </div>
+
+<div class="action-holder">
+    <button id="show-all" class="action right">show all</button>
+    <input type="text" name="keyword" placeholder="keyword search" class="action left" id="keyword-search"/>
+</div>
+
 
 <% loop $MetaTopics %>
     <div id="Metatopic$ID" class="meta-topic">
@@ -55,11 +62,11 @@
 
 
 <% if RestAddons %>
-    <div class="meta-topic">
+    <div class="meta-topic" id="rest-addons">
         <h2>Not yet classified</h2>
         <div class="topic closed" data-id="$ID">
             <h3 id="Topic0"><a href="#Topic0" class="int">Modules without categorisation</a></h3>
-            <p>Below is a list of modules that have not been places under any topic.</p>
+            <p>Below is a list of modules that have not been placed under any topic.</p>
             <ul>
         <% loop RestAddons %>
                 <li class="hide">
@@ -105,18 +112,9 @@ var loadMyStuff = function(){
                 function(j, li) {
                     if(j < 3) {
                         jQuery(li).removeClass('hide');
+                    } else {
+                        jQuery(li).addClass('hide');
                     }
-                }
-            );
-            jQuery(ul).closest('.topic').find('h3 > a').click(
-                function(e) {
-                    jQuery(this)
-                        .toggleClass('opened')
-                        .toggleClass('closed');
-                    jQuery(this).closest('.topic')
-                        .toggleClass('opened')
-                        .toggleClass('closed');
-                    return false;
                 }
             );
         }
@@ -124,10 +122,26 @@ var loadMyStuff = function(){
 }
 loadMyStuff();
 
+var doInternalLinks = false;
 
 jQuery(document).ready(
     function()
     {
+        jQuery('.topic ul').each(
+            function(i, ul) {
+                jQuery(ul).closest('.topic').find('h3 > a').click(
+                    function(e) {
+                        jQuery(this)
+                            .toggleClass('opened')
+                            .toggleClass('closed');
+                        jQuery(this).closest('.topic')
+                            .toggleClass('opened')
+                            .toggleClass('closed');
+                        return false;
+                    }
+                );
+            }
+        );
 
         //internal links
         jQuery('a.int').on(
@@ -237,6 +251,69 @@ jQuery(document).ready(
                 );
             }
         );
+
+        jQuery('#show-all').on(
+            'click',
+            function(e) {
+                var myclass = 'closed';
+                if(jQuery(this).hasClass('all-are-shown')) {
+                    var myclass = 'opened';
+                    jQuery(this).removeClass('all-are-shown');
+                    jQuery(this).text('show all');
+                } else {
+                    jQuery(this).addClass('all-are-shown');
+                    if(jQuery('#keyword-search').val().length) {
+                        jQuery(this).text('show matches');
+                    } else {
+                        jQuery(this).text('show selection');
+                    }
+                }
+                jQuery('.topic.'+myclass).each(
+                    function(i, el) {
+                        var el = jQuery(el).find('h3 > a');
+                        jQuery(el)
+                            .toggleClass('opened')
+                            .toggleClass('closed');
+                        jQuery(el).closest('.topic')
+                            .toggleClass('opened')
+                            .toggleClass('closed');
+                    }
+                );
+            }
+        );
+        jQuery('#keyword-search').on(
+            'keyup',
+            function(e)
+            {
+                if(e.keyCode === 13) {
+                     // 13 corresponds to enter key
+
+                    // your code here when user presses enter key
+                }
+                else {
+                    var val = jQuery('#keyword-search').val();
+                    var re = new RegExp(val, 'i');
+                    if (val.length > 0) {
+                        jQuery('.topic li').each(
+                            function(i, el) {
+                                var text = jQuery(el).text();
+                                if(text.match(re)){
+                                    jQuery(el).removeClass('hide');
+                                }
+                                else {
+                                    jQuery(el).addClass('hide');
+                                }
+                            }
+                        );
+
+                    } else {
+                        loadMyStuff();
+                    }
+                }
+            }
+        );
+
+
     }
 );
 
