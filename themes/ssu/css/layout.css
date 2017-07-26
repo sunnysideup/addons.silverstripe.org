@@ -21,7 +21,8 @@ body {
     background-image: url("/themes/main/images/logo.gif");*/
 
 
-body header h1 {font-size: 7vw!important; color: #febf04; margin-bottom: 0; padding-bottom: 0; padding-top: 12vh;}
+body header h1 {font-size: 9vw!important; color: #febf04; margin-bottom: 0; padding-bottom: 0; padding-top: 12vh; line-height: 1;}
+body header h1 sup {font-size: 2vw;}
 body header h1 span {font-size: 7vw!important; }
 body header p {color: #aaa; padding-bottom: 20em; padding-top: 0; margin-top: 0;}
 body header p a{color: #aaa!important;}

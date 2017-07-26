@@ -75,7 +75,7 @@ class AddonsController extends SiteController {
     }
 
     public function Title() {
-        return 'The World\'s best Silverstripe Modules and Themes';
+        return 'Find Silverstripe Modules and Themes';
     }
 
     public function Link($slug = null) {
