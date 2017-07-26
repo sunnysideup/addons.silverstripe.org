@@ -20,22 +20,12 @@ class AddonController extends SiteController {
     {
         // print_r($aa);
         $request = $this->request->param('Vendor') . '/' . $this->request->param('Module');
-        $this->addon = Addon::get()->filter(
-            array(
-                'Name' => Convert::raw2sql($request)
-            )
-        )->first();
+        $this->addon = Addon::get()
+            ->filter(array('Name' => Convert::raw2sql($request)))->first();
         if(! $this->addon) {
-            die('Can not find');
+            return $this->httpError(404, 'Not found');
         }
         return $this->renderWith(array('Addon', 'Page'));
-    }
-
-    public function index() {
-        print_r($aa);
-        // print_r($bb);
-        die('sdf');
-
     }
 
     public function Title() {
