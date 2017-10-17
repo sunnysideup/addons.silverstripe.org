@@ -35,7 +35,7 @@ After:
 ---
 Injector:
   ElasticaService:
-    class: SilverStripe\Elastica\ElasticaService
+    class: Symbiote\Elastica\ElasticaService
     constructor:
       client: %$ElasticClient
       index: addons
@@ -47,7 +47,7 @@ After:
 ---
 Injector:
   ElasticaService:
-    class: SilverStripe\Elastica\ElasticaService
+    class: Symbiote\Elastica\ElasticaService
     constructor:
       client: %$ElasticClient
       index: addons-dev
