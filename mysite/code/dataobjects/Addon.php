@@ -283,14 +283,14 @@ class Addon extends DataObject {
 
     function canEdit($member = null)
     {
-        if(Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
-            return true;
-        }
         return parent::canEdit($member);
     }
 
     function canView($member = null)
     {
+        if(Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
+            return true;
+        }        
         return $this->canEdit($member);
     }
 
