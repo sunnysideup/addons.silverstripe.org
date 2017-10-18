@@ -12,7 +12,7 @@
 
     "guzzle/guzzle":                                               "3.2.0",
 
-    "silverstripe/framework":                                      "3.*@stable",
+    "silverstripe/framework":                                      "3.6.2",
     "silverstripe/multivaluefield":                                "*",
     "silverstripe-australia/elastica":                             "dev-master",
 
