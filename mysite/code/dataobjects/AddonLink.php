@@ -2,8 +2,8 @@
 /**
  * A link from one add-ons to another, such as a requirement dependency.
  */
-class AddonLink extends DataObject {
-
+class AddonLink extends DataObject
+{
     public static $db = array(
         'Name' => 'Varchar(100)',
         'Type' => 'Enum(array("require", "require-dev", "suggest", "provide", "conflict", "replace"))',
@@ -16,7 +16,8 @@ class AddonLink extends DataObject {
         'Target' => 'Addon'
     );
 
-    public function Link() {
+    public function Link()
+    {
         // if ($this->TargetID) {
         // 	return $this->Target()->Link();
         // }
@@ -28,22 +29,21 @@ class AddonLink extends DataObject {
         return "https://packagist.org/packages/$this->Name";
     }
 
-    function ConstraintSimple()
+    public function ConstraintSimple()
     {
         $constraint = $this->Constraint;
-        if($constraint === '*') {
+        if ($constraint === '*') {
             return '*';
         }
         $constraint = str_replace(array('>', '=', '~', '<', '*', '^', '@', 'dev', '-', 'v'), '', $constraint);
         $constraint = explode(".", $constraint);
-        if(is_array($constraint) && count($constraint)) {
+        if (is_array($constraint) && count($constraint)) {
             $v = trim($constraint[0]);
-            if(in_array($v, array(2,3,4,5,6,7))) {
+            if (in_array($v, array(2,3,4,5,6,7))) {
                 //$secondary = isset($constraint[1]) && strlen($constraint[1]) == 1 ? trim($constraint[1]) : '0';
                 return $v; // . '.' . $secondary;
             }
             return 'n/a';
         }
     }
-
 }

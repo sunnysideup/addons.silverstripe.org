@@ -8,8 +8,8 @@ use Symbiote\Elastica\ResultList;
 /**
  * Lists and searches add-ons.
  */
-class AddonsController extends SiteController {
-
+class AddonsController extends SiteController
+{
     public static $url_handlers = array(
         'rss' => 'rss',
         '$Vendor!/$Name!' => 'addon',
@@ -32,7 +32,8 @@ class AddonsController extends SiteController {
      */
     private $elastica;
 
-    public function index() {
+    public function index()
+    {
         increase_time_limit_to(600);
         TableFilterSortAPI::include_requirements(
             $tableSelector = '.tfs-holder',
@@ -47,11 +48,13 @@ class AddonsController extends SiteController {
         return $html;
     }
 
-    public function setElasticaService(ElasticaService $elastica) {
+    public function setElasticaService(ElasticaService $elastica)
+    {
         $this->elastica = $elastica;
     }
 
-    public function addon($request) {
+    public function addon($request)
+    {
         $vendor = $request->param('Vendor');
         $name = $request->param('Name');
         $addon = Addon::get()->filter('Name', "$vendor/$name")->first();
@@ -63,7 +66,8 @@ class AddonsController extends SiteController {
         return new AddonController($this, $addon);
     }
 
-    public function vendor($request) {
+    public function vendor($request)
+    {
         $name = $request->param('Vendor');
         $vendor = AddonVendor::get()->filter('Name', $name)->first();
 
@@ -74,28 +78,32 @@ class AddonsController extends SiteController {
         return new VendorController($this, $vendor);
     }
 
-    public function Title() {
+    public function Title()
+    {
         return 'Find Silverstripe Modules and Themes';
     }
 
-    public function Link($slug = null) {
-        if($slug){
+    public function Link($slug = null)
+    {
+        if ($slug) {
             return Controller::join_links(Director::baseURL(), 'add-ons', $slug);
         } else {
             return Controller::join_links(Director::baseURL(), 'add-ons');
         }
     }
 
-    public function ListView() {
+    public function ListView()
+    {
         $view = $this->request->getVar('view');
-        if($view) {
+        if ($view) {
             return $view;
         } else {
             return 'list';
         }
     }
 
-    public function Addons() {
+    public function Addons()
+    {
         $list = Addon::get();
 
         $search = $this->request->getVar('search');
@@ -115,7 +123,6 @@ class AddonsController extends SiteController {
 
         // Proxy out a search to elastic if any parameters are set.
         if ($search || $type || $compat || $tags) {
-
             $bool = new Query\BoolQuery();
 
             $query = new Query();
@@ -156,7 +163,9 @@ class AddonsController extends SiteController {
                 $list = $list->toArrayList();
             }
         } else {
-            if (!$sort) $sort = 'downloads';
+            if (!$sort) {
+                $sort = 'downloads';
+            }
         }
 
         switch ($sort) {
@@ -165,7 +174,7 @@ class AddonsController extends SiteController {
             case 'downloads': $list = $list->sort('Downloads', 'DESC'); break;
         }
         $limit = 99999;
-        if(Director::isDev()){
+        if (Director::isDev()) {
             $limit = 52;
             $list = $list->sort('RAND()');
         }
@@ -175,7 +184,8 @@ class AddonsController extends SiteController {
         return $list;
     }
 
-    public function AddonsSearchForm() {
+    public function AddonsSearchForm()
+    {
         $form = new Form(
             $this,
             'AddonsSearchForm',
@@ -209,7 +219,8 @@ class AddonsController extends SiteController {
             ->setFormAction($this->Link());
     }
 
-    public function rss($request, $limit = 10) {
+    public function rss($request, $limit = 10)
+    {
         $addons = Addon::get()
             ->sort('Released', 'DESC')
             ->limit($limit);
@@ -225,9 +236,8 @@ class AddonsController extends SiteController {
         return $rss->outputToBrowser();
     }
 
-    function LocalNow($format = '')
+    public function LocalNow($format = '')
     {
         return date(DATE_RFC2822);
     }
-
 }

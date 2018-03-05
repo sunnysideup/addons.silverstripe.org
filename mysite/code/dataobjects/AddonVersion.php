@@ -2,8 +2,8 @@
 /**
  * A version of an add-on package.
  */
-class AddonVersion extends DataObject {
-
+class AddonVersion extends DataObject
+{
     public static $db = array(
         'Name' => 'Varchar(255)',
         'Description' => 'Text',
@@ -49,19 +49,22 @@ class AddonVersion extends DataObject {
         'Description' => 'Description'
     );
 
-    public function DisplayVersion() {
+    public function DisplayVersion()
+    {
         return $this->PrettyVersion;
     }
 
-    public function DisplayRequireVersion() {
+    public function DisplayRequireVersion()
+    {
         return str_replace('.x-dev', '.*@dev', $this->DisplayVersion());
     }
 
     /**
      * Fallback to SourceUrl with normalized github links.
      */
-    public function DisplayHomepage() {
-        if($this->Homepage) {
+    public function DisplayHomepage()
+    {
+        if ($this->Homepage) {
             return $this->Homepage;
         } else {
             return str_replace(
@@ -72,58 +75,67 @@ class AddonVersion extends DataObject {
         }
     }
 
-    public function getRequires() {
+    public function getRequires()
+    {
         return $this->Links()->filter('Type', 'require');
     }
 
-    public function getFrameworkRequires() {
+    public function getFrameworkRequires()
+    {
         return $this->Links()
             ->filter(array('Type' => 'require', 'Name' => array('silverstripe/framework', 'silverstripe/cms')))
             ->first();
     }
 
 
-    public function getNonFrameworkRequires() {
+    public function getNonFrameworkRequires()
+    {
         return $this->Links()
             ->filter(array('Type' => 'require'))
             ->exclude(array('Name' => 'silverstripe/framework'));
     }
 
-    public function getRequiresDev() {
+    public function getRequiresDev()
+    {
         return $this->Links()->filter('Type', 'require-dev');
     }
 
-    public function getSuggests() {
+    public function getSuggests()
+    {
         return $this->Links()->filter('Type', 'suggest');
     }
 
-    public function getProvides() {
+    public function getProvides()
+    {
         return $this->Links()->filter('Type', 'provide');
     }
 
-    public function getConflicts() {
+    public function getConflicts()
+    {
         return $this->Links()->filter('Type', 'conflict');
     }
 
-    public function getReplaces() {
+    public function getReplaces()
+    {
         return $this->Links()->filter('Type', 'replace');
     }
 
-    public function InstallLink() {
+    public function InstallLink()
+    {
         return Controller::join_links($this->Addon()->Link(), 'install', $this->ID);
     }
 
-    public function onBeforeDelete() {
+    public function onBeforeDelete()
+    {
         parent::onBeforeDelete();
 
         // Remove our relations but leave the related objects for objects
         // that may be used by other objects.
-        foreach($this->Links() as $link) {
+        foreach ($this->Links() as $link) {
             $link->delete();
         }
         $this->Authors()->removeAll();
         $this->Keywords()->removeAll();
         $this->CompatibleVersions()->removeAll();
     }
-
 }

@@ -2,9 +2,10 @@
 /**
  * The base site controller.
  */
-class SiteController extends Controller {
-
-    public function init() {
+class SiteController extends Controller
+{
+    public function init()
+    {
         RSSFeed::linkToFeed("add-ons/rss", "New modules on addons.silverstripe.org");
 
         Requirements::block(THIRDPARTY_DIR . '/jquery/jquery.js');
@@ -18,9 +19,4 @@ class SiteController extends Controller {
 
         parent::init();
     }
-
-
-
-
-
 }

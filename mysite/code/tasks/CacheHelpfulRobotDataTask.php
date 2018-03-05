@@ -17,7 +17,7 @@ class CacheHelpfulRobotDataTask extends BuildTask
      */
     public function run($request)
     {
-        set_error_handler(function($code, $message) {
+        set_error_handler(function ($code, $message) {
             throw new ErrorException($message, $code);
         });
 

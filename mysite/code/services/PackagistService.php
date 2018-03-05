@@ -9,7 +9,8 @@ use Guzzle\Http\Client;
 /**
  * Interacts with Packagist to retrieve package listings and details.
  */
-class PackagistService {
+class PackagistService
+{
 
     /**
      * @var Composer\Composer
@@ -21,7 +22,8 @@ class PackagistService {
      */
     private $repository;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->composer = Factory::create(new NullIO());
         $this->client = new Packagist\Api\Client();
     }
@@ -29,7 +31,8 @@ class PackagistService {
     /**
      * @return Composer\Composer
      */
-    public function getComposer() {
+    public function getComposer()
+    {
         return $this->composer;
     }
 
@@ -41,11 +44,12 @@ class PackagistService {
      * @param string (optional) $limitAddons
      * @return Packagist\Api\Package[]
      */
-    public function getPackages($limitAddons = null) {
+    public function getPackages($limitAddons = null)
+    {
         $packages = array();
         $loader = new ArrayLoader();
-        if(is_array($limitAddons)) {
-            foreach($limitAddons as $limitAddon) {
+        if (is_array($limitAddons)) {
+            foreach ($limitAddons as $limitAddon) {
                 $packages[] = $this->client->get($limitAddon);
                 echo $limitAddon . PHP_EOL; //output to give feedback when running
             }
@@ -55,10 +59,9 @@ class PackagistService {
                 'silverstripe-theme'
             );
             foreach ($addonTypes as $type) {
-                if($limitAddons) {
+                if ($limitAddons) {
                     $repositoriesNames = $this->client->all(array('vendor' => $limitAddons));
-                }
-                else {
+                } else {
                     $repositoriesNames = $this->client->all(array('type' => $type));
                 }
                 foreach ($repositoriesNames as $name) {
@@ -75,7 +78,8 @@ class PackagistService {
      *
      * @return array
      */
-    public function getGroupedPackages() {
+    public function getGroupedPackages()
+    {
         $grouped = array();
 
         foreach ($this->getPackages() as $package) {
@@ -97,7 +101,8 @@ class PackagistService {
      * @param string $name
      * @return array
      */
-    public function getPackageDetails($name) {
+    public function getPackageDetails($name)
+    {
         return $this->client->get($name);
     }
 
@@ -107,7 +112,8 @@ class PackagistService {
      * @param $name
      * @return \Composer\Package\PackageInterface[]
      */
-    public function getPackageVersions($name) {
+    public function getPackageVersions($name)
+    {
         $packages = array();
         $loader = new ArrayLoader();
 
@@ -119,5 +125,4 @@ class PackagistService {
 
         return $packages;
     }
-
 }

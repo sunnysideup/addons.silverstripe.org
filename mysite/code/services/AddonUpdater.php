@@ -11,7 +11,8 @@ use Composer\Package\Version\VersionParser;
 /**
  * Updates all add-ons from Packagist.
  */
-class AddonUpdater {
+class AddonUpdater
+{
 
     /**
      * @var PackagistService
@@ -57,8 +58,9 @@ class AddonUpdater {
      * Will also clear their search index, and cascade the delete for associated data.
      * @param Array Limit to specific addons, using their name incl. vendor prefix.
      */
-    public function update($clear = false, $limitAddons = null) {
-        if($clear && !$limitAddons) {
+    public function update($clear = false, $limitAddons = null)
+    {
+        if ($clear && !$limitAddons) {
             Addon::get()->removeAll();
             AddonAuthor::get()->removeAll();
             AddonKeyword::get()->removeAll();
@@ -73,11 +75,11 @@ class AddonUpdater {
 
         // This call to packagist can be expensive. Requests are served from a cache if usePackagistCache() returns true
         $cache = SS_Cache::factory('addons');
-        if($this->usePackagistCache() && $packages = $cache->load('packagist')) {
+        if ($this->usePackagistCache() && $packages = $cache->load('packagist')) {
             $packages = unserialize($packages);
         } else {
             $packages = $this->packagist->getPackages($limitAddons);
-            if(!$limitAddons) {
+            if (!$limitAddons) {
                 $cache->save(serialize($packages), 'packagist');
             }
         }
@@ -87,7 +89,9 @@ class AddonUpdater {
             $name = $package->getName();
             $versions = $package->getVersions();
 
-            if($limitAddons && !in_array($name, $limitAddons)) continue;
+            if ($limitAddons && !in_array($name, $limitAddons)) {
+                continue;
+            }
 
             $addon = Addon::get()->filter('Name', $name)->first();
             if (!$addon) {
@@ -114,13 +118,15 @@ class AddonUpdater {
      *
      * @return bool
      */
-    protected function usePackagistCache() {
+    protected function usePackagistCache()
+    {
         return Director::isDev();
     }
 
     private $frameworkSupportArray = array();
 
-    private function updateAddon(Addon $addon, Package $package, array $versions) {
+    private function updateAddon(Addon $addon, Package $package, array $versions)
+    {
         unset($this->frameworkSupportArray);
         $this->frameworkSupportArray = array();
         if (!$addon->VendorID) {
@@ -153,7 +159,8 @@ class AddonUpdater {
         $addon->write();
     }
 
-    private function updateVersion(Addon $addon, Packagist\Api\Result\Package\Version $versionFromPackagist) {
+    private function updateVersion(Addon $addon, Packagist\Api\Result\Package\Version $versionFromPackagist)
+    {
         $version = null;
 
         if ($addon->isInDB()) {
@@ -190,7 +197,7 @@ class AddonUpdater {
         $version->SourceUrl = $versionFromPackagist->getSource()->getUrl();
         $version->SourceReference = $versionFromPackagist->getSource()->getReference();
 
-        if($versionFromPackagist->getDist()) {
+        if ($versionFromPackagist->getDist()) {
             $version->DistType = $versionFromPackagist->getDist()->getType();
             $version->DistUrl = $versionFromPackagist->getDist()->getUrl();
             $version->DistReference = $versionFromPackagist->getDist()->getReference();
@@ -208,9 +215,9 @@ class AddonUpdater {
         $this->updateCompatibility($addon, $version, $versionFromPackagist);
         $this->updateAuthors($version, $versionFromPackagist);
         $framework = $version->getFrameworkRequires();
-        if($framework) {
+        if ($framework) {
             $constraint = trim($framework->ConstraintSimple());
-            if(intval($constraint)) {
+            if (intval($constraint)) {
                 $this->frameworkSupportArray[$constraint] = $constraint;
             } else {
                 $this->frameworkSupportArray['unknown'] = 'unknown';
@@ -219,7 +226,8 @@ class AddonUpdater {
         DB::alteration_message("... ... VERSION: ".$version->PrettyVersion);
     }
 
-    private function updateLinks(AddonVersion $version, Packagist\Api\Result\Package\Version $versionFromPackagist) {
+    private function updateLinks(AddonVersion $version, Packagist\Api\Result\Package\Version $versionFromPackagist)
+    {
         $getLink = function ($name, $type) use ($version) {
             $link = null;
 
@@ -245,7 +253,7 @@ class AddonUpdater {
         );
 
         foreach ($types as $type => $method) {
-            if ($linked = $versionFromPackagist->$method())
+            if ($linked = $versionFromPackagist->$method()) {
                 foreach ($linked as $link => $constraint) {
                     $name = $link;
                     $addon = Addon::get()->filter('Name', $name)->first();
@@ -258,6 +266,7 @@ class AddonUpdater {
                     }
 
                     $version->Links()->add($local);
+                }
             }
         }
 
@@ -272,19 +281,24 @@ class AddonUpdater {
         }*/
     }
 
-    private function updateCompatibility(Addon $addon, AddonVersion $version, Packagist\Api\Result\Package\Version $versionFromPackagist) {
+    private function updateCompatibility(Addon $addon, AddonVersion $version, Packagist\Api\Result\Package\Version $versionFromPackagist)
+    {
         $require = null;
 
-        if($versionFromPackagist->getRequire()) foreach ($versionFromPackagist->getRequire() as $name => $link) {
-            if((string)$link == 'self.version') continue;
+        if ($versionFromPackagist->getRequire()) {
+            foreach ($versionFromPackagist->getRequire() as $name => $link) {
+                if ((string)$link == 'self.version') {
+                    continue;
+                }
 
-            if ($name == 'silverstripe/framework') {
-                $require = $link;
-                break;
-            }
+                if ($name == 'silverstripe/framework') {
+                    $require = $link;
+                    break;
+                }
 
-            if ($name == 'silverstripe/cms') {
-                $require = $link;
+                if ($name == 'silverstripe/cms') {
+                    $require = $link;
+                }
             }
         }
 
@@ -302,52 +316,60 @@ class AddonUpdater {
                     $addon->CompatibleVersions()->add($id);
                     $version->CompatibleVersions()->add($id);
                 }
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 // An exception here shouldn't prevent further updates.
                 Debug::log($addon->Name . "\t" . $addon->ID . "\t" . $e->getMessage());
             }
         }
     }
 
-    private function updateAuthors(AddonVersion $version, Packagist\Api\Result\Package\Version $versionFromPackagist) {
-        if ($versionFromPackagist->getAuthors()) foreach ($versionFromPackagist->getAuthors() as $details) {
-            $author = null;
+    private function updateAuthors(AddonVersion $version, Packagist\Api\Result\Package\Version $versionFromPackagist)
+    {
+        if ($versionFromPackagist->getAuthors()) {
+            foreach ($versionFromPackagist->getAuthors() as $details) {
+                $author = null;
 
-            if (!$details->getName() && !$details->getEmail()) {
-                continue;
-            }
+                if (!$details->getName() && !$details->getEmail()) {
+                    continue;
+                }
 
-            if ($details->getEmail()) {
-                $author = AddonAuthor::get()->filter('Email', $details->getEmail())->first();
-            }
+                if ($details->getEmail()) {
+                    $author = AddonAuthor::get()->filter('Email', $details->getEmail())->first();
+                }
 
-            if (!$author && $details->getHomepage()) {
-                $author = AddonAuthor::get()
+                if (!$author && $details->getHomepage()) {
+                    $author = AddonAuthor::get()
                     ->filter('Name', $details->getName())
                     ->filter('Homepage', $details->getHomepage())
                     ->first();
-            }
+                }
 
-            if (!$author && $details->getName()) {
-                $author = AddonAuthor::get()
+                if (!$author && $details->getName()) {
+                    $author = AddonAuthor::get()
                     ->filter('Name', $details->getName())
                     ->filter('Versions.Addon.Name', $versionFromPackagist->getName())
                     ->first();
+                }
+
+                if (!$author) {
+                    $author = new AddonAuthor();
+                }
+
+                if ($details->getName()) {
+                    $author->Name = $details->getName();
+                }
+                if ($details->getEmail()) {
+                    $author->Email = $details->getEmail();
+                }
+                if ($details->getHomepage()) {
+                    $author->Homepage = $details->getHomepage();
+                }
+
+                //to-do not supported by API
+                //if(isset($details['role'])) $author->Role = $details['role'];
+
+                $version->Authors()->add($author->write());
             }
-
-            if (!$author) {
-                $author = new AddonAuthor();
-            }
-
-            if($details->getName()) $author->Name = $details->getName();
-            if($details->getEmail()) $author->Email = $details->getEmail();
-            if($details->getHomepage()) $author->Homepage = $details->getHomepage();
-
-            //to-do not supported by API
-            //if(isset($details['role'])) $author->Role = $details['role'];
-
-            $version->Authors()->add($author->write());
         }
     }
-
 }

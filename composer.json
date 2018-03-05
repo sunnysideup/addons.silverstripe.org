@@ -14,7 +14,7 @@
 
     "silverstripe/framework":                                      "3.*@stable",
     "silverstripe/multivaluefield":                                "*",
-    "silverstripe-australia/elastica":                             "dev-master",
+    "symbiote-library/silverstripe-elastica":                      "dev-master",
 
     "knplabs/packagist-api":                                       "1.*@stable",
 

@@ -2,8 +2,8 @@
 /**
  * A keyword which is attached to add-ons and versions.
  */
-class AddonKeyword extends DataObject {
-
+class AddonKeyword extends DataObject
+{
     public static $db = array(
         'Name' => 'Varchar(255)',
         'AddonCount' => 'Int',
@@ -37,7 +37,8 @@ class AddonKeyword extends DataObject {
      * @param string $name
      * @return AddonKeyword
      */
-    public static function get_by_name($name) {
+    public static function get_by_name($name)
+    {
         $name = strtolower($name);
         $kw = AddonKeyword::get()->filter('Name', $name)->first();
 
@@ -56,34 +57,32 @@ class AddonKeyword extends DataObject {
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();
-        if($this->exists()) {
+        if ($this->exists()) {
             $this->AddonCount = $this->Addons()->count();
             $this->GroupCount = $this->ExtensionTagGroups()->count();
         }
     }
 
-    function canCreate($member = null)
+    public function canCreate($member = null)
     {
         return $this->canEdit($member);
     }
 
-    function canView($member = null)
+    public function canView($member = null)
     {
         return $this->canEdit($member);
     }
 
-    function canEdit($member = null)
+    public function canEdit($member = null)
     {
-        if(Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
+        if (Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
             return true;
         }
         return parent::canEdit($member);
     }
 
-    function canDelete($member = null)
+    public function canDelete($member = null)
     {
         return $this->Addons()->count() > 0 ? false : $this->canEdit($member);
     }
-
-
 }
