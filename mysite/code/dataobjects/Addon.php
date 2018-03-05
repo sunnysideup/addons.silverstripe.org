@@ -6,8 +6,8 @@ use Elastica\Type\Mapping;
 /**
  * An add-on with one or more versions.
  */
-class Addon extends DataObject
-{
+class Addon extends DataObject {
+
     public static $db = array(
         'Name' => 'Varchar(255)',
         'Description' => 'Text',
@@ -48,22 +48,22 @@ class Addon extends DataObject
 
     private $_lastTaggedVersion = null;
 
-    public function LastTaggedVersion()
+    function LastTaggedVersion()
     {
-        if (! $this->_lastTaggedVersion) {
+        if(! $this->_lastTaggedVersion) {
             $excludeArray = array(
                 'Version' => array('dev-master', 'trunk'),
                 'PrettyVersion' => array('dev-master', 'trunk')
             );
             $keys = $this->Versions()->exclude($excludeArray)->column('ID');
-            if (count($keys)) {
+            if(count($keys)) {
                 $values = $this->Versions()->exclude($excludeArray)->column('PrettyVersion');
             } else {
                 $keys = $this->Versions()->column('ID');
                 $values = $this->Versions()->column('PrettyVersion');
             }
             $versions = array_combine($keys, $values);
-            uasort($versions, function ($a, $b) {
+            uasort($versions, function($a, $b) {
                 return version_compare($b, $a);
             });
             reset($versions);
@@ -73,11 +73,11 @@ class Addon extends DataObject
         return $this->_lastTaggedVersion;
     }
 
-    public function DownloadsMonthlyIfEditedThisMonth()
+    function DownloadsMonthlyIfEditedThisMonth()
     {
         $lastTaggedVersion = $this->LastTaggedVersion();
         $ageInSeconds = time() - strtotime($lastTaggedVersion->Released);
-        if ($ageInSeconds < (86400 * 30)) {
+        if($ageInSeconds < (86400 * 30)) {
             return $this->DownloadsMonthly;
         }
         return 0;
@@ -88,11 +88,10 @@ class Addon extends DataObject
      *
      * @return ArrayList
      */
-    public function SortedVersions()
-    {
+    public function SortedVersions() {
         $versions = $this->Versions()->toArray();
 
-        usort($versions, function ($a, $b) {
+        usort($versions, function($a, $b) {
             return version_compare($b->Version, $a->Version);
         });
 
@@ -101,70 +100,59 @@ class Addon extends DataObject
 
     public function getFrameworkSupport()
     {
-        $array = explode(',', $this->FrameworkSupportList);
-        if (is_array($array) && count($array)) {
+        $array = explode(',',$this->FrameworkSupportList);
+        if(is_array($array) && count($array)) {
             sort($array);
             $al = ArrayList::create();
             $hasConstraints = false;
-            if (count($array)) {
-                foreach ($array as $constraint) {
-                    if (intval($constraint) > 0) {
+            if(count($array)) {
+                foreach($array as $constraint) {
+                    if(intval($constraint) > 0) {
                         $hasConstraints = true;
                         $al->push(ArrayData::create(array('Supports' => $constraint)));
                     }
                 }
             }
         }
-        if ($hasConstraints === false) {
+        if($hasConstraints === false) {
             return null;
         }
         return $al;
     }
 
 
-    public function MasterVersion()
-    {
+    public function MasterVersion() {
         return $this->Versions()->filter('PrettyVersion', array('dev-master', 'trunk'))->First();
     }
 
-    public function Authors()
-    {
+    public function Authors() {
         return $this->Versions()->relation('Authors');
     }
 
-    public function VendorName()
-    {
+    public function VendorName() {
         return substr($this->Name, 0, strpos($this->Name, '/'));
     }
 
-    public function VendorLink()
-    {
+    public function VendorLink() {
         return Controller::join_links(
-            Director::baseURL(),
-            'add-ons',
-            $this->VendorName()
+            Director::baseURL(), 'add-ons', $this->VendorName()
         );
     }
 
-    public function PackageName()
-    {
+    public function PackageName() {
         return substr($this->Name, strpos($this->Name, '/') + 1);
     }
 
-    public function Link()
-    {
+    public function Link() {
         return Controller::join_links(
-            Director::baseURL(),
-            'add-ons',
-            $this->Name
+            Director::baseURL(), 'add-ons', $this->Name
         );
     }
 
-    public function LinkNew()
-    {
+    public function LinkNew() {
         $nameArray = explode('/', $this->Name);
-        if (isset($nameArray[0]) && $nameArray[0]) {
-            if (isset($nameArray[1]) && $nameArray[1]) {
+        if(isset($nameArray[0]) && $nameArray[0]) {
+            if(isset($nameArray[1]) && $nameArray[1]) {
                 $team = strtolower($nameArray[0]);
                 $title = strtolower($nameArray[1]);
                 return '//ssmods.com/#~(cfi~(Title~(~(vtm~\''.$title.'~ivl~\''.$title.'))~Team~(~(vtm~\''.$team.'~ivl~\''.$team.')))~csr~(sdi~\'desc~sct~\'RD))';
@@ -183,7 +171,7 @@ class Addon extends DataObject
      */
     public function DocLink()
     {
-        if (
+        if(
             file_exists('/var/www/docs.ssmods.com/public_html/'.$this->Name.'/classes.xhtml') ||
             Director::isdev()
         ) {
@@ -192,13 +180,11 @@ class Addon extends DataObject
         }
     }
 
-    public function DescriptionText()
-    {
+    public function DescriptionText() {
         return $this->Description;
     }
 
-    public function RSSTitle()
-    {
+    public function RSSTitle() {
         return sprintf('New module release: %s', $this->Name);
     }
 
@@ -217,8 +203,7 @@ class Addon extends DataObject
         return round(min(100, $this->HelpfulRobotScore / 92.9 * 100));
     }
 
-    public function getElasticaMapping()
-    {
+    public function getElasticaMapping() {
         return new Mapping(null, array(
             'name' => array('type' => 'string'),
             'description' => array('type' => 'string'),
@@ -232,8 +217,7 @@ class Addon extends DataObject
         ));
     }
 
-    public function getElasticaDocument()
-    {
+    public function getElasticaDocument() {
         return new Document($this->ID, array(
             'name' => $this->Name,
             'description' => $this->Description,
@@ -248,18 +232,17 @@ class Addon extends DataObject
         ));
     }
 
-    public function onBeforeDelete()
-    {
+    public function onBeforeDelete() {
         parent::onBeforeDelete();
 
         // Partially cascade delete. Leave author and keywords in place,
         // since they might be related to other addons.
-        foreach ($this->Screenshots() as $image) {
+        foreach($this->Screenshots() as $image) {
             $image->delete();
         }
         $this->Screenshots()->removeAll();
 
-        foreach ($this->Versions() as $version) {
+        foreach($this->Versions() as $version) {
             $version->delete();
         }
 
@@ -267,8 +250,7 @@ class Addon extends DataObject
         $this->CompatibleVersions()->removeAll();
     }
 
-    public function getDateCreated()
-    {
+    public function getDateCreated() {
         return date('Y-m-d', strtotime($this->Created));
     }
 
@@ -282,8 +264,7 @@ class Addon extends DataObject
         return new ArrayData($data["inspections"][0]);
     }
 
-    public function FilteredKeywords()
-    {
+    function FilteredKeywords() {
         $list = $this->Keywords()->exclude(
             array(
                 'Name' => array(
@@ -300,16 +281,17 @@ class Addon extends DataObject
     }
 
 
-    public function canEdit($member = null)
+    function canEdit($member = null)
     {
-        if (Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
-            return true;
-        }
         return parent::canEdit($member);
     }
 
-    public function canView($member = null)
+    function canView($member = null)
     {
+        if(Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
+            return true;
+        }        
         return $this->canEdit($member);
     }
+
 }
