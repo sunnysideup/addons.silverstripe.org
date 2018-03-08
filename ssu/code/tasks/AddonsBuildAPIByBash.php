@@ -60,7 +60,10 @@ class AddonsBuildAPIByBash extends BuildTask
                     isset($vendorAndName[0]) &&
                     isset($vendorAndName[1]) &&
                     $link &&
-                    $addon->Type === 'module'
+                    (
+                        $addon->Type === 'module' ||
+                        $addon->Type === 'silverstripe-vendormodule'
+                    )
                 ) {
                     DB::alteration_message($vendorAndName[0]);
                     DB::alteration_message(' ... '.$vendorAndName[1]);
