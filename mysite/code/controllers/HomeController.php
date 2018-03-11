@@ -33,24 +33,6 @@ class HomeController extends SiteController
         return Director::baseURL();
     }
 
-    public function PopularAddons($limit = 10)
-    {
-        return Addon::get()
-            ->sort('Downloads', 'DESC')
-            ->exclude('Name', $this->config()->popular_blacklist)
-            ->limit($limit);
-    }
-
-    public function NewestAddons($limit = 10)
-    {
-        return Addon::get()->sort('Released', 'DESC')->limit($limit);
-    }
-
-    public function RandomAddons($limit = 10)
-    {
-        return Addon::get()->sort(DB::getConn()->random(), 'DESC')->limit($limit);
-    }
-
     public function NewestVersions($limit = 10)
     {
         return AddonVersion::get()

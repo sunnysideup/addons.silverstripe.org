@@ -8,25 +8,25 @@
         Sites currently available are:
 
     <p>
-        <strong><a href="//ssmods.com/">ssmods search</a></strong>
+        <strong><a href="//ssmods.com/">ssmods.com</a></strong>
         <br />
-        Search a list of all Silverstripe Modules.
-        The search options include filters by name, creator, silverstripe version support, requirements, and others.
+        Search a list of all Silverstripe Modules and Themes.
+        The search options include filters by name, creator, Silverstripe version support, requirements, and others.
     </p>
     <p>
-        <strong><a href="//topics.ssmods.com/">ssmods topics</a></strong>
+        <strong><a href="//topics.ssmods.com/">topics.ssmods.com</a></strong>
         <br />
         We have gone through all the modules and sorted them into categories;
         resulting in a long list of Silverstripe modules by area of interest.
     </p>
     <p>
-        <strong><a href="//docs.ssmods.com/">ssmods api / docs</a></strong>
+        <strong><a href="//docs.ssmods.com/">docs.ssmods.com</a></strong>
         <br />
         Here you will find a myriad of code examples, API syntax, and additional documentation for Silverstripe modules.
     </p>
     <p>
         These sites are provided by <a href="//sunnysideup.co.nz/">Sunny Side Up</a>.
-        They use code base from <a href="//addons.silverstripe.org/">the original Silverstripe addons site</a>.
+        They use code from <a href="//addons.silverstripe.org/">the original Silverstripe addons site</a>.
         And, of couse, we have built these sites using the <a href="//www.silverstripe.org/">Silverstripe CMS</a>.
         If you like to support this project then please hire us for your next Silverstripe project, help out, or sponsor one of the sites.
     </p>

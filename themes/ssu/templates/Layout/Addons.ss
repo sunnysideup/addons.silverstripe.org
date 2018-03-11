@@ -70,6 +70,9 @@
                 </th>
             </tr>
         </thead>
+        <tbody>
+        <% include AddonsBody %>
+        </tbody>
 
     </table>
 

@@ -35,13 +35,7 @@ class AddonsController extends SiteController
     public function index()
     {
         increase_time_limit_to(600);
-        TableFilterSortAPI::include_requirements(
-            $tableSelector = '.tfs-holder',
-            $blockArray = array(),
-            $jqueryLocation = '',
-            $includeInPage = true,
-            $jsSettings = '{}'
-        );
+
         $html = $this->renderWith(array('Addons', 'Page'));
         $html = preg_replace("/\s+/", ' ', trim($html));
         $html = str_replace(array('<!-- -->', '//<![CDATA[', '//]]>'), '', $html);
@@ -104,131 +98,93 @@ class AddonsController extends SiteController
 
     public function Addons()
     {
-        $list = Addon::get();
+        $list = Addon::get()
+            ->exclude(['Obsolete' => 1])
+            ->sort(['Released' => 'DESC']);
 
-        $search = $this->request->getVar('search');
-        $type = $this->request->getVar('type');
-        $compat = $this->request->getVar('compatibility');
-        $tags = $this->request->getVar('tags');
-        $sort = $this->request->getVar('sort');
-        $view = $this->request->getVar('view');
-
-        if (!$view) {
-            $view = 'list';
-        }
-
-        if (!in_array($sort, array('name', 'downloads', 'newest'))) {
-            $sort = null;
-        }
-
-        // Proxy out a search to elastic if any parameters are set.
-        if ($search || $type || $compat || $tags) {
-            $bool = new Query\BoolQuery();
-
-            $query = new Query();
-            $query->setQuery($bool);
-            $query->setSize(count($list));
-
-
-            if ($search) {
-                $match = new Match();
-                $match->setField('_all', $search);
-
-                $bool->addMust($match);
-            }
-
-            if ($type) {
-                $bool->addMust(new Query\Term(array('type' => $type)));
-            }
-
-            if ($compat) {
-                $bool->addMust(new Query\Terms('compatibility', (array) $compat));
-            }
-
-            if ($tags) {
-                $bool->addMust(new Query\Terms('tag', (array) $tags));
-            }
-
-            $list = new ResultList($this->elastica->getIndex(), $query);
-
-            if ($sort) {
-                $ids = $list->column('ID');
-
-                if ($ids) {
-                    $list = Addon::get()->byIDs($ids);
-                } else {
-                    $list = new ArrayList();
-                }
-            } else {
-                $list = $list->toArrayList();
-            }
-        } else {
-            if (!$sort) {
-                $sort = 'downloads';
-            }
-        }
-
-        switch ($sort) {
-            case 'name': $list = $list->sort('Name'); break;
-            case 'newest': $list = $list->sort('Released', 'DESC'); break;
-            case 'downloads': $list = $list->sort('Downloads', 'DESC'); break;
-        }
         $limit = 99999;
         if (Director::isDev()) {
-            $limit = 52;
+            $limit = 7;
             $list = $list->sort('RAND()');
         }
-        $list = new PaginatedList($list, $this->request);
-        $list->setPageLength($limit);
+        // ID
+        // PackageName
 
-        return $list;
-    }
-
-    public function AddonsSearchForm()
-    {
-        $form = new Form(
-            $this,
-            'AddonsSearchForm',
-            new FieldList(array(
-                TextField::create('search', 'Keyword(s)')
-                    ->setValue($this->request->getVar('search')),
-                DropdownField::create('sort', 'Sort by')
-                    ->setSource(array(
-                        'name' => 'Name',
-                        'downloads' => 'Most downloaded',
-                        'newest' => 'Newest'
-                    ))
-                    ->setEmptyString('Best match')
-                    ->setValue($this->request->getVar('sort')),
-                DropdownField::create('type', 'Add-on type')
-                    ->setSource(array(
-                        'module' => 'Modules',
-                        'theme' => 'Themes'
-                    ))
-                    ->setEmptyString('Modules and themes')
-                    ->setValue($this->request->getVar('type')),
-                OptionSetField::create('compatibility', 'Minimum Silverstripe Version')
-                    ->setSource(SilverStripeVersion::get()->map('Name', 'Name'))
-                    ->setValue($this->request->getVar('compatibility')),
-            )),
-            new FieldList()
+        $list = $list->limit($limit);
+        $arMain = [];
+        foreach($list as $addon) {
+            $ar['ID'] = $addon->ID;
+            $ar['PackageName'] = $addon->PackageName();
+            $ar['Type'] = $addon->Type;
+            $ar['Vendor__Name'] = $addon->Vendor()->Name;
+            $ar['AddonsAuthors'] = [];
+            foreach($addon->Authors() as $author) {
+                $ar['AddonsAuthors'][] = [
+                    'Name' => $author->Name
+                ];
+            }
+            if(! count($ar['AddonsAuthors'])) {
+                $ar['AddonsAuthors'] = false;
+            }
+            $ar['Repository__URL'] = DBField::create_field('Varchar', $addon->Repository)->URL();
+            $ar['DocLink'] = $addon->DocLink();
+            $ar['Description'] = DBField::create_field('Varchar', $addon->Description)->LimitCharacters($limit = 450, $add = '...');
+            $lastTaggedVersion = $addon->LastTaggedVersion();
+            $ar['LastTaggedVersion__Released__Ago'] = DBField::create_field('Date', $lastTaggedVersion->Released)->Ago();
+            $ar['Released__Format__U'] = DBField::create_field('Date', $addon->Released)->Format('U');
+            $ar['LastTaggedVersion__Released__Format__U'] = DBField::create_field('Date', $lastTaggedVersion->Released)->format('U');
+            // $ar['DownloadsMonthly__Formatted'] = $addon->xxx;
+            // $ar['Downloads__Formatted'] = $addon->xxx;
+            //
+            $supports = $addon->getFrameworkSupport();
+            if($supports === null) {
+                $ar['FrameworkSupport'] = null;
+            } else {
+                $ar['FrameworkSupport'] = [];
+                foreach($supports as $support) {
+                    $ar['FrameworkSupport']['Support'] = $support->Support;
+                }
+            }
+            $ar['Versions__Count'] = $addon->Versions()->count();
+            // $ar['LastTaggedVersion'] = $addon->xxx;
+            // $ar['LastTaggedVersion.Requires'] = $addon->xxx;
+            // $ar['LastTaggedVersion.Suggests'] = $addon->xxx;
+            // $ar['LastTaggedVersion.Replaces'] = $addon->xxx;
+            // $ar['LastTaggedVersion.Provides'] = $addon->xxx;
+            $arMain['TFS'.$addon->ID] = $ar;
+        }
+        TableFilterSortAPI::add_settings(
+            [
+                'scrollToTopAtPageOpening' => false,
+                'sizeOfFixedHeader' => 45,
+                'maximumNumberOfFilterOptions' => 300,
+                'rowRawData' => $arMain,
+                'excludeFromFilter' => [
+                    'ID'
+                ]
+            ]
         );
-
-        return $form
-            ->setFormMethod('GET')
-            ->setFormAction($this->Link());
+        TableFilterSortAPI::include_requirements(
+            $tableSelector = '.tfs-holder',
+            $blockArray = array(),
+            $jqueryLocation = '',
+            $includeInPage = true,
+            $jsSettings = null
+        );
+        return $list;
     }
 
     public function rss($request, $limit = 10)
     {
         $addons = Addon::get()
-            ->sort('Released', 'DESC')
+            ->exclude(['Obsolete', 1])
+            ->sort(['Released' => 'DESC'])
             ->limit($limit);
 
         $rss = new RSSFeed(
             $addons,
             $this->Link(),
-            "Newest addons on addons.silverstripe.org",
+            "Newest addons on ssmods.com",
             null,
             'RSSTitle'
         );

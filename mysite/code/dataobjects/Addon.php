@@ -24,6 +24,7 @@ class Addon extends DataObject
         'HelpfulRobotData' => 'Text',
         'HelpfulRobotScore' => 'Int',
         'FrameworkSupportList' => 'Varchar(50)',
+        'Obsolete' => 'Boolean'
     );
 
     public static $has_one = array(
@@ -38,6 +39,11 @@ class Addon extends DataObject
         'Keywords' => 'AddonKeyword',
         'Screenshots' => 'Image',
         'CompatibleVersions' => 'SilverStripeVersion'
+    );
+
+    public static $indexes = array(
+        'Name' => true,
+        'Obsolete' => true
     );
 
     public static $default_sort = 'Name';

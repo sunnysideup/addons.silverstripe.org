@@ -1,18 +1,18 @@
-<% if $Items.count %>
+{{? Items }}
     <ul>
-        <% loop $Items %>
+        {{~ Items :Item }}
             <li>
-                <% if $Link %>
-                    <a href="$Link"><span data-filter="Requires">$Name</span></a>:
-                    <% if $Description %>
-                        $Description
-                    <% else %>
-                        $Constraint
-                    <% end_if %>
-                <% else %>
-                    <span data-filter="Requires">$Name</span>: <% if $Description %>$Description<% else %>$Constraint<% end_if %>
-                <% end_if %>
+                {{? Item.Link }}
+                    <a href="{{= Item.Link}}"><span data-filter="Requires">{{ Item.Name }}</span></a>:
+                    {{? Item.Description }}
+                        {{= Item.Description }}
+                    {{??}}
+                        {{= Item.Constraint }}
+                    {{?}}
+                {{??}}
+                    <span data-filter="Requires">{{ Item.Name</span>: {{ if {{ Item.Description }}{{ Item.Description{{ else }}{{ Item.Constraint{{ end_if }}
+                {{?}}
             </li>
-        <% end_loop %>
+        {{ end_loop }}
     </ul>
-<% end_if %>
+{{?}}

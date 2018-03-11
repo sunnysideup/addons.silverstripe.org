@@ -55,6 +55,7 @@ class AddonsBuildAPIByBash extends BuildTask
                         $link = $version->SourceUrl;
                     }
                 }
+                $error = false;
                 $vendorAndName = explode('/', $addon->Name);
                 if(
                     isset($vendorAndName[0]) &&
@@ -62,16 +63,23 @@ class AddonsBuildAPIByBash extends BuildTask
                     $link &&
                     (
                         $addon->Type === 'module' ||
-                        $addon->Type === 'silverstripe-vendormodule'
+                        $addon->Type === 'vendormodule'
                     )
                 ) {
+                    DB::alteration_message('--------------------------------');
+                    DB::alteration_message('--------------------------------');
                     DB::alteration_message($vendorAndName[0]);
-                    DB::alteration_message(' ... '.$vendorAndName[1]);
+                    DB::alteration_message(' ... '.$vendorAndName[0]);
                     DB::alteration_message(' ... '.$link);
                     if(strpos($link, 'simon.geek.')) {
-                        $errors .= "\n".'# BYPASSING SIMON MODULE: '.$addon->Name;
+                        $errors .= "\n".'# BYPASSING SIMON MODULE: '.$vendorAndName[0].', '.$vendorAndName[1].', '.$link;
+                        $error = true;
                     } elseif(in_array($addon->Name, $this->badApples)) {
-                        $errors .= "\n".'# BYPASSING BAD APPLED MODULE: '.$addon->Name;
+                        $errors .= "\n".'# BYPASSING BAD APPLE MODULE: '.$vendorAndName[0].', '.$vendorAndName[1].', '.$link;
+                        $error = true;
+                    } elseif( ! $this->urlExists($link)) {
+                        $errors .= "\n".'# URL DOES NOT EXIST: '.$vendorAndName[0].', '.$vendorAndName[1].', '.$link;
+                        $error = true;
                     } else {
                         $count++;
                         $ghs .= "\ngh[$count]=\"".$link."\"";
@@ -87,6 +95,11 @@ class AddonsBuildAPIByBash extends BuildTask
                 }
                 else {
                     $errors .= "\n".'# ERROR GETTING: '.$addon->Name;
+                    $error = true;
+                }
+                if($error) {
+                    $addon->Obsolete = true;
+                    $addon->write();
                 }
             }
         }
@@ -186,6 +199,29 @@ class AddonsBuildAPIByBash extends BuildTask
         rm ./docs -rf
         ';
         return $bash;
+    }
+
+    /**
+     * Check that given URL is valid and exists.
+     * @param string $url URL to check
+     * @return bool TRUE when valid | FALSE anyway
+     */
+    protected function urlExists ( $url ) {
+        // Remove all illegal characters from a url
+        $url = filter_var($url, FILTER_SANITIZE_URL);
+
+        // Validate URI
+        if (filter_var($url, FILTER_VALIDATE_URL) === FALSE
+            // check only for http/https schemes.
+            || !in_array(strtolower(parse_url($url, PHP_URL_SCHEME)), ['http','https'], true )
+        ) {
+            return false;
+        }
+
+        // Check that URL exists
+        $file_headers = @get_headers($url);
+
+        return !(!$file_headers || $file_headers[0] === 'HTTP/1.1 404 Not Found');
     }
 
 }
