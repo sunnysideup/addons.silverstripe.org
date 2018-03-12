@@ -1,3 +1,4 @@
+{{~ Row : it}}
 <tr class="tfstr" id="tfsP{{= it.ID }}">
     <th scope="row">
         <span data-filter="Title" class="more">{{= it.PackageName}}</span>
@@ -9,7 +10,7 @@
                     {{? it.Authors }} -
                         <ul>
                             {{~ it.Authors :Author }}
-                                <li><span data-filter="Author" class="dl">{{= Author.Name}}</span></li>
+                                <li><span data-filter="Author" class="dl">{{=Author.Name}}</span></li>
                             {{~}}
                         </ul>
                     {{?}}
@@ -18,8 +19,8 @@
         </div>
         <p>
             <a href="#" class="adf">♥</a>
-            {{? it.Repository__URL }}<a href="{{= it.Repository__URL}}" class="ext git" target="_blank">repo</a>{{?}}
-            {{? it.DocLink }}<a href="{{= it.DocLink}}" class="ext doc">api</a>{{?}}
+            <a href="{{= it.Repository__URL}}" class="ext git" target="_blank">repo</a>
+            <a href="{{= it.DocLink}}" class="ext doc">api</a><% end_if %>
         </p>
     </th>
     <td class="left">
@@ -96,3 +97,4 @@
         </div>
     </td>
 </tr>
+{{~}}

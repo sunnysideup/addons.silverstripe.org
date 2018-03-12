@@ -147,10 +147,30 @@ class AddonsController extends SiteController
             }
             $ar['Versions__Count'] = $addon->Versions()->count();
             // $ar['LastTaggedVersion'] = $addon->xxx;
-            // $ar['LastTaggedVersion.Requires'] = $addon->xxx;
+            $linkArray = [
+                'Requires',
+                'FrameworkRequires',
+                'RequiresDev',
+                'Suggests',
+                'Provides',
+                'Conflicts',
+                'Replaces'
+            ];
+            foreach($linkArray as $linkName)
+                $varName = $linkName;
+                $methodName = 'get'.$linkName;
+                foreach($lastTaggedVersion->$methodName() as $link){
+                    $ar[$varName][] = [
+                        'Name' => $link->Name,
+                        'Link' => $link->Link(),
+                        'Description' => $link->Description,
+                        'Constraint' => $link->ConstraintSimple()
+                    ]
+                }
+            }
             // $ar['LastTaggedVersion.Suggests'] = $addon->xxx;
             // $ar['LastTaggedVersion.Replaces'] = $addon->xxx;
-            // $ar['LastTaggedVersion.Provides'] = $addon->xxx;
+            $ar['Versions__Count'] = $addon->Versions()->count();
             $arMain['TFS'.$addon->ID] = $ar;
         }
         TableFilterSortAPI::add_settings(
