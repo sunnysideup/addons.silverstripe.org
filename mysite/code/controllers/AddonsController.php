@@ -112,18 +112,18 @@ class AddonsController extends SiteController
 
         $list = $list->limit($limit);
         $arMain = [];
-        foreach($list as $addon) {
+        foreach ($list as $addon) {
             $ar['ID'] = $addon->ID;
             $ar['PackageName'] = $addon->PackageName();
             $ar['Type'] = $addon->Type;
             $ar['Vendor__Name'] = $addon->Vendor()->Name;
             $ar['AddonsAuthors'] = [];
-            foreach($addon->Authors() as $author) {
+            foreach ($addon->Authors() as $author) {
                 $ar['AddonsAuthors'][] = [
                     'Name' => $author->Name
                 ];
             }
-            if(! count($ar['AddonsAuthors'])) {
+            if (! count($ar['AddonsAuthors'])) {
                 $ar['AddonsAuthors'] = false;
             }
             $ar['Repository__URL'] = DBField::create_field('Varchar', $addon->Repository)->URL();
@@ -137,11 +137,11 @@ class AddonsController extends SiteController
             // $ar['Downloads__Formatted'] = $addon->xxx;
             //
             $supports = $addon->getFrameworkSupport();
-            if($supports === null) {
+            if ($supports === null) {
                 $ar['FrameworkSupport'] = null;
             } else {
                 $ar['FrameworkSupport'] = [];
-                foreach($supports as $support) {
+                foreach ($supports as $support) {
                     $ar['FrameworkSupport']['Support'] = $support->Support;
                 }
             }
@@ -156,16 +156,26 @@ class AddonsController extends SiteController
                 'Conflicts',
                 'Replaces'
             ];
-            foreach($linkArray as $linkName)
+            foreach ($linkArray as $linkName) {
                 $varName = $linkName;
                 $methodName = 'get'.$linkName;
-                foreach($lastTaggedVersion->$methodName() as $link){
-                    $ar[$varName][] = [
-                        'Name' => $link->Name,
-                        'Link' => $link->Link(),
-                        'Description' => $link->Description,
-                        'Constraint' => $link->ConstraintSimple()
-                    ]
+                $objects = $lastTaggedVersion->$methodName();
+                $ar[$varName] = [];
+                if ($objects instanceof AddonLink) {
+                    $objects = ArrayList::create([$objects]);
+                }
+                if ($objects && $objects->count()) {
+                    foreach ($objects as $link) {
+                        $ar[$varName][] = [
+                            'Name' => $link->Name,
+                            'Link' => $link->Link(),
+                            'Description' => $link->Description,
+                            'Constraint' => $link->ConstraintSimple()
+                        ];
+                    }
+                }
+                if (count($ar[$varName] === 0)) {
+                    $ar[$varName] = false;
                 }
             }
             // $ar['LastTaggedVersion.Suggests'] = $addon->xxx;
