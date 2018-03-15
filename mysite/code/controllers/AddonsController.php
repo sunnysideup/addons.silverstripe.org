@@ -113,39 +113,44 @@ class AddonsController extends SiteController
         $list = $list->limit($limit);
         $arMain = [];
         foreach ($list as $addon) {
-            $ar['ID'] = $addon->ID;
-            $ar['PackageName'] = $addon->PackageName();
-            $ar['Type'] = $addon->Type;
-            $ar['Vendor__Name'] = $addon->Vendor()->Name;
-            $ar['AddonsAuthors'] = [];
-            foreach ($addon->Authors() as $author) {
-                $ar['AddonsAuthors'][] = [
-                    'Name' => $author->Name
-                ];
-            }
-            if (! count($ar['AddonsAuthors'])) {
-                $ar['AddonsAuthors'] = false;
-            }
-            $ar['Repository__URL'] = DBField::create_field('Varchar', $addon->Repository)->URL();
-            $ar['DocLink'] = $addon->DocLink();
-            $ar['Description'] = DBField::create_field('Varchar', $addon->Description)->LimitCharacters($limit = 450, $add = '...');
             $lastTaggedVersion = $addon->LastTaggedVersion();
-            $ar['LastTaggedVersion__Released__Ago'] = DBField::create_field('Date', $lastTaggedVersion->Released)->Ago();
-            $ar['Released__Format__U'] = DBField::create_field('Date', $addon->Released)->Format('U');
-            $ar['LastTaggedVersion__Released__Format__U'] = DBField::create_field('Date', $lastTaggedVersion->Released)->format('U');
-            // $ar['DownloadsMonthly__Formatted'] = $addon->xxx;
-            // $ar['Downloads__Formatted'] = $addon->xxx;
-            //
-            $supports = $addon->getFrameworkSupport();
-            if ($supports === null) {
-                $ar['FrameworkSupport'] = null;
-            } else {
-                $ar['FrameworkSupport'] = [];
-                foreach ($supports as $support) {
-                    $ar['FrameworkSupport']['Support'] = $support->Support;
-                }
+
+            $ar['ID'] = $addon->ID;
+            $ar['Name'] = $addon->getPackageName();
+            $ar['Type'] = $addon->getSimpleType();
+            $ar['Team'] = $addon->Vendor()->Name;
+
+            $ar['Authors'] = $addon->Authors()->column('Name');
+            if (! count($ar['Authors'])) {
+                $ar['Authors'] = false;
             }
-            $ar['Versions__Count'] = $addon->Versions()->count();
+
+            $ar['Tags'] = $addon->Keywords()->column('Name');
+            if (! count($ar['Tags'])) {
+                $ar['Tags'] = false;
+            }
+            $ar['URL'] = DBField::create_field('Varchar', $addon->Repository)->URL();
+            $ar['API'] = $addon->DocLink();
+            $ar['Notes'] = DBField::create_field('Varchar', $addon->Description)->LimitCharacters($limit = 450, $add = '...');
+
+            $created = DBField::create_field('Date', $addon->Released);
+            $ar['Created'] = $created->Ago();
+            $ar['Created_U'] = $created->format('U');
+
+            $lastEdited = DBField::create_field('Date', $lastTaggedVersion->Released);
+            $ar['LastEdited'] = $lastEdited->Ago();
+            $ar['LastEdited_U'] = $lastEdited->format('U');
+
+            $ar['Installs'] = $addon->Downloads;
+
+            $ar['MInstalls'] = $addon->DownloadsMonthly;
+
+            $ar['Supports'] = $addon->getFrameworkSupport()->column('Support');
+            if (! count($ar['Supports'])) {
+                $ar['Supports'] = ['n/a'];
+            }
+
+            $ar['TagCount'] = $addon->Versions()->count();
             // $ar['LastTaggedVersion'] = $addon->xxx;
             $linkArray = [
                 'Requires',
@@ -178,19 +183,24 @@ class AddonsController extends SiteController
                     $ar[$varName] = false;
                 }
             }
-            // $ar['LastTaggedVersion.Suggests'] = $addon->xxx;
-            // $ar['LastTaggedVersion.Replaces'] = $addon->xxx;
-            $ar['Versions__Count'] = $addon->Versions()->count();
             $arMain['TFS'.$addon->ID] = $ar;
         }
+
         TableFilterSortAPI::add_settings(
             [
                 'scrollToTopAtPageOpening' => false,
                 'sizeOfFixedHeader' => 45,
                 'maximumNumberOfFilterOptions' => 300,
                 'rowRawData' => $arMain,
-                'excludeFromFilter' => [
-                    'ID'
+                'includeInFilter' => [
+                    'Tags',
+                    'Name',
+                    'Team',
+                    'Supports',
+                    'Authors'
+                ],
+                'dataDictionary' => [
+                    'Supports' => ['Label' => 'Framework Support']
                 ]
             ]
         );

@@ -148,7 +148,6 @@ class AddonUpdater
         $addon->DownloadsMonthly = $package->getDownloads()->getMonthly();
         $addon->Favers = $package->getFavers();
 
-        $frameworkSupportArray = array();
         foreach ($versions as $version) {
             $this->updateVersion($addon, $version);
         }

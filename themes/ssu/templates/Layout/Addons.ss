@@ -18,20 +18,27 @@
     <table class="tfs-table">
         <thead>
             <tr>
-                <th scope="col">
+                <th scope="col" class="title-col">
                     <a href="#"
                         class="sortable"
-                        data-sort-field="Title"
+                        data-sort-field="Name"
                         data-sort-direction="asc"
                         data-sort-type="string"
                     >Title</a>
                 </th>
-                <th scope="col">Description + Tags</th>
+
+                <th scope="col" class="icon-col">Inc</th>
+                <th scope="col" class="icon-col">GIT</th>
+                <th scope="col" class="icon-col">API</th>
+
+
+                <th scope="col" class="description-col">Description + Tags</th>
+
                 <th scope="col" class="number">
                     Edited:
                     <a href="#"
                         class="sortable"
-                        data-sort-field="RD"
+                        data-sort-field="Created_U"
                         data-sort-direction="desc"
                         data-sort-type="number"
                         data-sort-default="true"
@@ -39,7 +46,7 @@
                     >first</a> &gt;
                     <a href="#"
                         class="sortable"
-                        data-sort-field="LU"
+                        data-sort-field="LastEdited_U"
                         data-sort-direction="desc"
                         data-sort-type="number"
                         data-sort-default="true"
@@ -47,10 +54,10 @@
                     >last</a>
                 </th>
                 <th scope="col" class="number">
-                    Downloads:
+                    Installs:
                     <a href="#"
                         class="sortable"
-                        data-sort-field="MD"
+                        data-sort-field="MInstalls"
                         data-sort-direction="desc"
                         data-sort-type="number"
                         data-sort-default="true"
@@ -58,7 +65,7 @@
                     >30d</a> /
                     <a href="#"
                         class="sortable"
-                        data-sort-field="DL"
+                        data-sort-field="Installs"
                         data-sort-direction="desc"
                         data-sort-type="number"
                         data-sort-default="true"

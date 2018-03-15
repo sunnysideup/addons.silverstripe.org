@@ -107,10 +107,10 @@ class Addon extends DataObject
 
     public function getFrameworkSupport()
     {
+        $al = ArrayList::create();
         $array = explode(',', $this->FrameworkSupportList);
         if (is_array($array) && count($array)) {
             sort($array);
-            $al = ArrayList::create();
             $hasConstraints = false;
             if (count($array)) {
                 foreach ($array as $constraint) {
@@ -121,9 +121,7 @@ class Addon extends DataObject
                 }
             }
         }
-        if ($hasConstraints === false) {
-            return null;
-        }
+
         return $al;
     }
 
@@ -154,7 +152,20 @@ class Addon extends DataObject
 
     public function PackageName()
     {
+        return $this->getPackageName();
+    }
+    public function getPackageName()
+    {
         return substr($this->Name, strpos($this->Name, '/') + 1);
+    }
+
+    public function SimpleType()
+    {
+        return $this->getSimpleType();
+    }
+    public function getSimpleType()
+    {
+        return stripos($this->Type, 'module') !== false ? 'module' : 'theme';
     }
 
     public function Link()
