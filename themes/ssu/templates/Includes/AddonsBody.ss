@@ -20,8 +20,8 @@
     </th>
 
     <td><a href="#" class="adf">♥</a></td>
-    <td>{{? it.URL }}<a href="{{= it.URL}}" class="ext git">repo</a>{{?}}</td>
-    <td>{{? it.API }}<a href="{{= it.API}}" class="ext doc">api</a>{{?}}</td>
+    <td>{{? it.URL }}<a href="{{= it.URL}}" class="ext git">github</a>{{?}}</td>
+    <td>{{? it.API }}<a href="{{= it.API}}" class="ext doc">{}</a>{{?}}</td>
 
 
     <td class="left">

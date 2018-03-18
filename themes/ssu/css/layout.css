@@ -163,12 +163,13 @@ th.description-col {
   opacity: 0.4;
   float: left;
   text-indent: -999px;
+  background-size: 32px;
 }
 .tfs-holder .adf {
     background: no-repeat url('/themes/ssu/images/favourite.png') 0 2px;
 }
 .tfs-holder .git {
-    background: no-repeat url('/themes/ssu/images/github.png');
+    background: no-repeat url('/themes/ssu/images/github.svg');
 }
 .tfs-holder .doc {
     background: no-repeat url('/themes/ssu/images/docs.png');
