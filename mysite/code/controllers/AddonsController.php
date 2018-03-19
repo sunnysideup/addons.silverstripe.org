@@ -188,9 +188,9 @@ class AddonsController extends SiteController
 
         TableFilterSortAPI::add_settings(
             [
-                'scrollToTopAtPageOpening' => false,
+                'scrollToTopAtPageOpening' => true,
                 'sizeOfFixedHeader' => 45,
-                'maximumNumberOfFilterOptions' => 300,
+                'maximumNumberOfFilterOptions' => 10,
                 'rowRawData' => $arMain,
                 'includeInFilter' => [
                     'Tags',

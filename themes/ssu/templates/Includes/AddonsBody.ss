@@ -1,5 +1,7 @@
 <tr class="tfstr" id="tfsP{{= it.ID }}">
 
+    <td><a href="#" class="adf" title="add to recipe">♥</a></td>
+    
     <th scope="row">
         <span data-filter="Title" class="more">{{= it.Name}}</span>
         <div class="hidden">
@@ -19,7 +21,6 @@
         </div>
     </th>
 
-    <td><a href="#" class="adf">♥</a></td>
     <td>{{? it.URL }}<a href="{{= it.URL}}" class="ext git">github</a>{{?}}</td>
     <td>{{? it.API }}<a href="{{= it.API}}" class="ext doc">{}</a>{{?}}</td>
 
