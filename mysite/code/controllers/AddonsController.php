@@ -104,7 +104,7 @@ class AddonsController extends SiteController
 
         $limit = 99999;
         if (Director::isDev()) {
-            $limit = 7;
+            $limit = 177;
             $list = $list->sort('RAND()');
         }
         // ID
@@ -116,7 +116,7 @@ class AddonsController extends SiteController
             $lastTaggedVersion = $addon->LastTaggedVersion();
 
             $ar['ID'] = $addon->ID;
-            $ar['Name'] = $addon->getPackageName();
+            $ar['Name'] = $addon->getPackageNameShort();
             $ar['Type'] = $addon->getSimpleType();
             $ar['Team'] = $addon->Vendor()->Name;
 
