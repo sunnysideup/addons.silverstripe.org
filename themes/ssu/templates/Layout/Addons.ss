@@ -14,10 +14,7 @@
     <table class="tfs-table">
         <thead>
             <tr>
-                <th scope="col" class="icon-col" title="add to recipe">Add</th>
-
-                <th scope="col" class="icon-col">GIT</th>
-                <th scope="col" class="icon-col">API</th>
+                <th scope="col" class="icon-col" title="add to recipe">REQ</th>
 
                 <th scope="col" class="title-col">
                     <a href="#"
@@ -73,6 +70,9 @@
                 <th scope="col" class="works-with">
                     Works with
                 </th>
+                <th scope="col" class="icon-col">API</th>
+                <th scope="col" class="icon-col">GIT</th>
+
             </tr>
         </thead>
         <tbody>

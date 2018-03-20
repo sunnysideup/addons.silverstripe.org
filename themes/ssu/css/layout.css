@@ -156,7 +156,7 @@ th.description-col {
   width: 50px;
   opacity: 0.4;
   float: left;
-  text-indent: -999px;
+  text-indent: -9999px;
   background-size: 32px;
 }
 .tfs-holder .adf {
