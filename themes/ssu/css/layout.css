@@ -160,7 +160,8 @@ th.description-col {
   background-size: 32px;
 }
 .tfs-holder .adf {
-    background: no-repeat url('/themes/ssu/images/favourite.png') 0 2px;
+    background: no-repeat url('/themes/ssu/images/heart.svg');
+    background-size: contain;
 }
 .tfs-holder .git {
     background: no-repeat url('/themes/ssu/images/github.svg');

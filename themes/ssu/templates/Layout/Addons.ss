@@ -7,11 +7,7 @@
     </p>
  </header>
 <% if $Addons %>
-<main
-    class="tfs-holder loading"
-    data-filters-parent-page-id="Filter"
-    data-favourites-parent-page-id="Favourites"
->
+<main class="tfs-holder loading">
 
     <% include TableFilterSortHeader %>
 

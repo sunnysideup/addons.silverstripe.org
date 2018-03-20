@@ -191,6 +191,8 @@ class AddonsController extends SiteController
                 'scrollToTopAtPageOpening' => true,
                 'sizeOfFixedHeader' => 45,
                 'maximumNumberOfFilterOptions' => 10,
+                'filtersParentPageID' => "Filter",
+                'favouritesParentPageID' => "Favourites",
                 'rowRawData' => $arMain,
                 'includeInFilter' => [
                     'Tags',
