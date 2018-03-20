@@ -20,6 +20,9 @@
             <tr>
                 <th scope="col" class="icon-col" title="add to recipe">Add</th>
 
+                <th scope="col" class="icon-col">GIT</th>
+                <th scope="col" class="icon-col">API</th>
+
                 <th scope="col" class="title-col">
                     <a href="#"
                         class="sortable"
@@ -29,8 +32,6 @@
                     >Title</a>
                 </th>
 
-                <th scope="col" class="icon-col">GIT</th>
-                <th scope="col" class="icon-col">API</th>
 
 
                 <th scope="col" class="description-col">Description + Tags</th>
