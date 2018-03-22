@@ -1,4 +1,4 @@
-<tr class="tfstr" id="tfsP{{= it.ID }}">
+<tr class="tfstr" id="tfs{{= it.ID }}">
 
     <td><a href="#" class="adf" title="add to recipe">♥</a></td>
 
