@@ -115,7 +115,7 @@ class AddonsController extends SiteController
         foreach ($list as $addon) {
             $lastTaggedVersion = $addon->LastTaggedVersion();
 
-            $ar['ID'] = $addon->ID;
+            $ar['ID'] = 'tfs'.$addon->ID;
             $ar['Name'] = $addon->getPackageNameShort();
             $ar['Type'] = $addon->getSimpleType();
             $ar['Team'] = $addon->Vendor()->Name;
@@ -183,7 +183,7 @@ class AddonsController extends SiteController
                     $ar[$varName] = false;
                 }
             }
-            $arMain['TFS'.$addon->ID] = $ar;
+            $arMain[$ar['ID']] = $ar;
         }
 
         TableFilterSortAPI::add_settings(
