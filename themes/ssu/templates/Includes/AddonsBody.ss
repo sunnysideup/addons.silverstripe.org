@@ -2,6 +2,10 @@
 
     <td><a href="#" class="adf" title="add to recipe">♥</a></td>
 
+    <td>{{? it.API }}<a href="{{= it.API}}" class="ext doc">API</a>{{?}}</td>
+
+    <td>{{? it.URL }}<a href="{{= it.URL}}" class="ext git">github</a>{{?}}</td>
+
     <th scope="row">
         <span data-filter="Title" class="more">{{= it.Name}}</span>
         <div class="hidden">
@@ -43,8 +47,12 @@
 
 
     <td class="right">
-        <span data-filter="MD">{{= it.MInstalls }}</span> /
         <span data-filter="DL">{{= it.Installs }}</span>
+        <span data-filter="Trending" class="hide">{{= it.Trending }}</span>
+        <div class="hidden">
+            <p>Installs per Month: <span data-filter="Trending">{{= it.AvgDownloads }}</span></p>
+            <p>Installs in Last Month: {{= it.MInstalls }}</p>
+        </div>
     </td>
 
 
@@ -58,44 +66,44 @@
 
         <div class="hidden">
 
-            {{? it.Requires }}
+            {{? it.RequiresFull }}
             <h5>Requires</h5>
-            {{~ it.Requires :Items }}
+            {{~ it.RequiresFull :Item }}
             <% include AddonVersionDetailsLinks %>
             {{~}}
             {{?}}
 
-            {{? it.Suggests }}
+            {{? it.SuggestsFull }}
             <h5>Suggests</h5>
-            {{~ it.Suggests :Items }}
+            {{~ it.SuggestsFull :Item }}
             <% include AddonVersionDetailsLinks %>
             {{~}}
             {{?}}
 
-            {{? it.RequiresDev }}
+            {{? it.RequiresDevFull }}
             <h5>Requires Dev</h5>
-            {{~ it.Suggests :Items }}
+            {{~ it.SuggestsFull :Item }}
             <% include AddonVersionDetailsLinks %>
             {{~}}
             {{?}}
 
-            {{? it.Provides }}
+            {{? it.ProvidesFull }}
             <h5>Provides</h5>
-            {{~ it.Provides :Items }}
+            {{~ it.ProvidesFull :Item }}
             <% include AddonVersionDetailsLinksWithMention %>
             {{~}}
             {{?}}
 
-            {{? it.Conflicts }}
+            {{? it.ConflictsFull }}
             <h5>Conflicts</h5>
-            {{~ it.Conflicts :Items }}
+            {{~ it.ConflictsFull :Item }}
             <% include AddonVersionDetailsLinksWithMention %>
             {{~}}
             {{?}}
 
-            {{? it.Replaces }}
+            {{? it.ReplacesFull }}
             <h5>Replaces</h5>
-            {{~ it.Replaces :Items }}
+            {{~ it.ReplacesFull :Item }}
             <% include AddonVersionDetailsLinksWithMention %>
             {{~}}
             {{?}}
@@ -104,9 +112,5 @@
             {{= it.TagCount}}
         </div>
     </td>
-
-    <td>{{? it.API }}<a href="{{= it.API}}" class="ext doc">API</a>{{?}}</td>
-
-    <td>{{? it.URL }}<a href="{{= it.URL}}" class="ext git">github</a>{{?}}</td>
 
 </tr>

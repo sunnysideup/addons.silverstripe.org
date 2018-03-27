@@ -1,18 +1,16 @@
-{{? Items }}
+{{? Item }}
     <ul>
-        {{~ Items :Item }}
-            <li>
-                {{? Item.Link }}
-                    <a href="{{= Item.Link}}"><span data-filter="Requires">{{= Item.Name }}</span></a>:
-                    {{? Item.Description }}
-                        {{= Item.Description }}
-                    {{??}}
-                        {{= Item.Constraint }}
-                    {{?}}
+        <li>
+            {{? Item.Link }}
+                <a href="{{= Item.Link}}"><span data-filter="Requires">{{= Item.Name }}</span></a>:
+                {{? Item.Description }}
+                    {{= Item.Description }}
                 {{??}}
-                    <span data-filter="Requires">{{= Item.Name }}</span>: {{? Item.Description }}{{=Item.Description }}{{??}}{{= Item.Constraint}}{{?}}
+                    {{= Item.Constraint }}
                 {{?}}
-            </li>
-        {{~}}
+            {{??}}
+                <span data-filter="Requires">{{= Item.Name }}</span>: {{? Item.Description }}{{=Item.Description }}{{??}}{{= Item.Constraint}}{{?}}
+            {{?}}
+        </li>
     </ul>
 {{?}}

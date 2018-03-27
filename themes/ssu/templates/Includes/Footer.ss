@@ -3,9 +3,10 @@
 
     <h3>About ssmods.com</h3>
     <p>
-        <a href="//ssmods.com/">ssmods.com</a> consists a few micro-websites.
-        All of these sites make Silverstripe modules and themes easier to find.
+        <a href="//ssmods.com/">ssmods.com</a> incorporates a number of sites.
+        Together they make Silverstripe modules and themes easier to find.
         Sites currently available are:
+    </p>
 
     <p>
         <strong><a href="//ssmods.com/">ssmods.com</a></strong>
@@ -16,19 +17,22 @@
     <p>
         <strong><a href="//topics.ssmods.com/">topics.ssmods.com</a></strong>
         <br />
-        We have gone through all the modules and sorted them into categories;
-        resulting in a long list of Silverstripe modules by area of interest.
+        Silverstripe modules sorted into categories;
+        showing Silverstripe modules by area of interest.
+        This will help you, for example, to find all the dev-tool modules.
     </p>
     <p>
         <strong><a href="//docs.ssmods.com/">docs.ssmods.com</a></strong>
         <br />
-        Here you will find a myriad of code examples, API syntax, and additional documentation for Silverstripe modules.
+        API documentation for all Silverstripe Modules.
+        It is a great place to find code examples, specific methods and functionality within modules, and so on.
     </p>
     <p>
-        These sites are provided by <a href="//sunnysideup.co.nz/">Sunny Side Up</a>.
-        They use code from <a href="//addons.silverstripe.org/">the original Silverstripe addons site</a>.
-        And, of couse, we have built these sites using the <a href="//www.silverstripe.org/">Silverstripe CMS</a>.
-        If you like to support this project then please hire us for your next Silverstripe project, help out, or sponsor one of the sites.
+        The ssmods.com ecosystem is provided by <a href="//sunnysideup.co.nz/">Sunny Side Up</a>.
+        It uses code from <a href="//addons.silverstripe.org/">the original Silverstripe addons site</a>.
+        Of couse, we have built these sites using the <a href="//www.silverstripe.org/">Silverstripe CMS</a>.
+        If you like to support our work then please hire us for your next Silverstripe project, provide feedback,
+        or sponsor one of the sites.
     </p>
 
     <h3>Credits</h3>

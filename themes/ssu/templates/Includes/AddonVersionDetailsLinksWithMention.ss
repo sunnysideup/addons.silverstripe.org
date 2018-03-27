@@ -1,6 +1,6 @@
-{{? Items }}
+{{? Item }}
     <ul>
-        {{~ Items :Item }}
+        {{~ Item :Item }}
             <li>
                 {{? Item.Link }}
                     <a href="{{= Item.Link}}"><span data-filter="Mentions">{{= Item.Name }}</span></a>:

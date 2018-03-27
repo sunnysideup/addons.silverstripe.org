@@ -14,7 +14,9 @@
     <table class="tfs-table">
         <thead>
             <tr>
-                <th scope="col" class="icon-col" title="add to recipe">REQ</th>
+                <th scope="col" class="icon-col" title="add to recipe">FAV</th>
+                <th scope="col" class="icon-col">API</th>
+                <th scope="col" class="icon-col">GIT</th>
 
                 <th scope="col" class="title-col">
                     <a href="#"
@@ -44,34 +46,29 @@
                         data-sort-field="LastEdited_U"
                         data-sort-direction="desc"
                         data-sort-type="number"
-                        data-sort-default="true"
                         data-sort-only="true"
                     >last</a>
                 </th>
                 <th scope="col" class="number">
-                    Installs:
-                    <a href="#"
-                        class="sortable"
-                        data-sort-field="MInstalls"
-                        data-sort-direction="desc"
-                        data-sort-type="number"
-                        data-sort-default="true"
-                        data-sort-only="true"
-                    >30d</a> /
                     <a href="#"
                         class="sortable"
                         data-sort-field="Installs"
                         data-sort-direction="desc"
                         data-sort-type="number"
-                        data-sort-default="true"
                         data-sort-only="true"
-                    >ever</a>
+                    >Installs</a>
+                    /
+                    <a href="#"
+                        class="sortable"
+                        data-sort-field="Trending"
+                        data-sort-direction="desc"
+                        data-sort-type="number"
+                        data-sort-only="true"
+                    >Hot</a>
                 </th>
                 <th scope="col" class="works-with">
                     Works with
                 </th>
-                <th scope="col" class="icon-col">API</th>
-                <th scope="col" class="icon-col">GIT</th>
 
             </tr>
         </thead>
@@ -95,7 +92,7 @@
 jQuery(document).ready(
     function() {
 
-        jQuery('.tfs-current-favourites ul').prepend('<li class="download favouritestocomposer"><a href="#" class="button" data-rel="/favouritestocomposer">Download ❤ ❤ ❤ as composer.json</a></li>');
+        jQuery('.tfs-current-favourites ul').prepend('<li class="download favouritestocomposer"><a href="#" class="button" data-rel="/favouritestocomposer">❤❤❤ Download your selection as a <u>composer.json file</u> ❤❤❤</a></li>');
 
         jQuery('.favouritestocomposer').on(
             'click',

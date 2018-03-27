@@ -46,4 +46,31 @@ class AddonLink extends DataObject
             return 'n/a';
         }
     }
+    public function PackageName()
+    {
+        return $this->getPackageName();
+    }
+    public function getPackageName()
+    {
+        return substr($this->Name, strpos($this->Name, '/') + 1);
+    }
+    public function getPackageNameShort()
+    {
+        $name = preg_replace('/^'.preg_quote('silverstripe-', '/').'\s*/i', '', $this->getPackageName());
+        $name = str_replace(['-', '_'], [' ', ' '], $name);
+
+        return $name;
+    }
+
+    public function IsMeaningfull()
+    {
+        $array = [
+            'php'
+        ];
+        if (in_array($this->Name, $array)) {
+            return false;
+        }
+        
+        return true;
+    }
 }

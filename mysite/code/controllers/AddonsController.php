@@ -104,8 +104,7 @@ class AddonsController extends SiteController
 
         $limit = 99999;
         if (Director::isDev()) {
-            $limit = 177;
-            $list = $list->sort('RAND()');
+            $list = $list->where('MOD(ID,10)=0');
         }
         // ID
         // PackageName
@@ -125,7 +124,7 @@ class AddonsController extends SiteController
                 $ar['Authors'] = false;
             }
 
-            $ar['Tags'] = $addon->Keywords()->column('Name');
+            $ar['Tags'] = $addon->FilteredKeywords()->column('Name');
             if (! count($ar['Tags'])) {
                 $ar['Tags'] = false;
             }
@@ -142,8 +141,20 @@ class AddonsController extends SiteController
             $ar['LastEdited_U'] = $lastEdited->format('U');
 
             $ar['Installs'] = $addon->Downloads;
-
             $ar['MInstalls'] = $addon->DownloadsMonthly;
+            $ageInMonth = ((time() - $ar['Created_U']) / (86400 * 30.5));
+            $averageDownloadsPerMonth = 'n/a';
+            $trendingScore = '0';
+            if ($ageInMonth < 1.5 && $addon->Downloads > 30) {
+                //do nothing ...
+            } else {
+                $averageDownloadsPerMonth = ($addon->Downloads / $ageInMonth);
+                if ($averageDownloadsPerMonth > 3) {
+                    $trendingScore = round(($addon->DownloadsMonthly / $averageDownloadsPerMonth) * 1000);
+                }
+            }
+            $ar['AvgDownloads'] = round($averageDownloadsPerMonth);
+            $ar['Trending'] = $trendingScore;
 
             $ar['Supports'] = $addon->getFrameworkSupport()->column('Support');
             if (! count($ar['Supports'])) {
@@ -166,21 +177,25 @@ class AddonsController extends SiteController
                 $methodName = 'get'.$linkName;
                 $objects = $lastTaggedVersion->$methodName();
                 $ar[$varName] = [];
+                $ar[$varName.'Full'] = [];
                 if ($objects instanceof AddonLink) {
                     $objects = ArrayList::create([$objects]);
                 }
-                if ($objects && $objects->count()) {
+                if ($objects) {
                     foreach ($objects as $link) {
-                        $ar[$varName][] = [
-                            'Name' => $link->Name,
-                            'Link' => $link->Link(),
-                            'Description' => $link->Description,
-                            'Constraint' => $link->ConstraintSimple()
-                        ];
+                        if ($link->IsMeaningfull()) {
+                            $ar[$varName.'Full'][] = [
+                                'Name' => $link->getPackageNameShort(),
+                                'Link' => $link->Link(),
+                                'Constraint' => $link->ConstraintSimple()
+                            ];
+                            $ar[$varName][] = $link->getPackageNameShort();
+                        }
                     }
                 }
-                if (count($ar[$varName] === 0)) {
+                if (count($ar[$varName]) === 0) {
                     $ar[$varName] = false;
+                    $ar[$varName.'Full'] = false;
                 }
             }
             $arMain[$ar['ID']] = $ar;
@@ -195,11 +210,14 @@ class AddonsController extends SiteController
                 'favouritesParentPageID' => "Favourites",
                 'rowRawData' => $arMain,
                 'includeInFilter' => [
+                    'Type',
                     'Tags',
                     'Name',
                     'Team',
                     'Supports',
-                    'Authors'
+                    'Authors',
+                    'Requires',
+                    'Suggests'
                 ],
                 'dataDictionary' => [
                     'Supports' => ['Label' => 'Framework Support']
