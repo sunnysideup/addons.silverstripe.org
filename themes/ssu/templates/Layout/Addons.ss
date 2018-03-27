@@ -57,14 +57,16 @@
                         data-sort-type="number"
                         data-sort-only="true"
                     >Installs</a>
-                    /
+                    ¶
                     <a href="#"
                         class="sortable"
                         data-sort-field="Trending"
                         data-sort-direction="desc"
                         data-sort-type="number"
                         data-sort-only="true"
-                    >Hot</a>
+                        >Trending</a>
+
+
                 </th>
                 <th scope="col" class="works-with">
                     Works with
@@ -143,7 +145,7 @@ jQuery(document).ready(
                         ['License', 'https://poser.pugx.org/#VENDOR#/#PACKAGE#/license.svg', 'https://github.com/#VENDOR#/#PACKAGE-LONG#/'],
                         ['helpfulrobot', 'https://helpfulrobot.io/#VENDOR#/#PACKAGE#/badge', 'https://helpfulrobot.io/#VENDOR#/#PACKAGE#/badge'],
                     ];
-                    var packageName = tr.find('span[data-filter="Title"]').text().trim();
+                    var packageName = tr.find('span.exact-name').first().text().trim();
                     if(packageName.indexOf('silverstripe-') === -1) {
                         var packageNameLong = 'silverstripe-' + packageName;
                     } else {
@@ -152,7 +154,7 @@ jQuery(document).ready(
                     var vendorName = tr.find('span[data-filter="Team"]').text().trim();
                     var id = tr.attr('id').replace(/tfs/, '');
                     var html = '<ul class="hidden opened badges">';
-                       html += '<li class="text">composer require <a href="/favouritestocomposer?ids='+id+'"><strong>'+vendorName+'/'+packageName+'</strong></a></li>';
+                       html += '<li class="text composer-link">composer require <a href="/favouritestocomposer?ids='+id+'"><strong>'+vendorName+'/'+packageName+'</strong></a></li>';
                     for(var i = 0; i < linksAndImages.length; i++) {
                         if(linksAndImages[i].length === 3) {
                             var title = linksAndImages[i][0];

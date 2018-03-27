@@ -158,7 +158,7 @@ class Addon extends DataObject
     {
         return substr($this->Name, strpos($this->Name, '/') + 1);
     }
-    public function getPackageNameShort()
+    public function getPackageNameNice()
     {
         $name = preg_replace('/^'.preg_quote('silverstripe-', '/').'\s*/i', '', $this->getPackageName());
         $name = str_replace(['-', '_'], [' ', ' '], $name);

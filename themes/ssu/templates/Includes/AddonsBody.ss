@@ -9,6 +9,7 @@
     <th scope="row">
         <span data-filter="Title" class="more">{{= it.Name}}</span>
         <div class="hidden">
+            <span class="exact-name hide">{{= it.FullName}}</span>
             <ul>
                 <li>Type: <span data-filter="Type" class="dl">{{= it.Type}}</span></li>
                 <li>
@@ -47,11 +48,12 @@
 
 
     <td class="right">
-        <span data-filter="DL">{{= it.Installs }}</span>
-        <span data-filter="Trending" class="hide">{{= it.Trending }}</span>
+        {{= it.Installs }}
+        {{? it.Trending == 0 }}{{??}}<div class="trend-stars">{{= it.TrendingSimple }}</div>{{?}}
         <div class="hidden">
             <p>Installs per Month: <span data-filter="Trending">{{= it.AvgDownloads }}</span></p>
             <p>Installs in Last Month: {{= it.MInstalls }}</p>
+            {{? it.Trending == 0 }}{{??}}<p>Trending Score: <span data-filter="Trending">{{= it.Trending }}</span>{{?}}
         </div>
     </td>
 

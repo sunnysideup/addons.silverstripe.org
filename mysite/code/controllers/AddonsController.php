@@ -115,7 +115,8 @@ class AddonsController extends SiteController
             $lastTaggedVersion = $addon->LastTaggedVersion();
 
             $ar['ID'] = 'tfs'.$addon->ID;
-            $ar['Name'] = $addon->getPackageNameShort();
+            $ar['FullName'] = $addon->getPackageName();
+            $ar['Name'] = $addon->getPackageNameNice();
             $ar['Type'] = $addon->getSimpleType();
             $ar['Team'] = $addon->Vendor()->Name;
 
@@ -145,16 +146,19 @@ class AddonsController extends SiteController
             $ageInMonth = ((time() - $ar['Created_U']) / (86400 * 30.5));
             $averageDownloadsPerMonth = 'n/a';
             $trendingScore = '0';
+            $trendingSimple = 'n/a';
             if ($ageInMonth < 1.5 && $addon->Downloads > 30) {
                 //do nothing ...
             } else {
                 $averageDownloadsPerMonth = ($addon->Downloads / $ageInMonth);
                 if ($averageDownloadsPerMonth > 3) {
                     $trendingScore = round(($addon->DownloadsMonthly / $averageDownloadsPerMonth) * 1000);
+                    $trendingSimple = str_repeat("*", floor($addon->DownloadsMonthly / $averageDownloadsPerMonth));
                 }
             }
             $ar['AvgDownloads'] = round($averageDownloadsPerMonth);
             $ar['Trending'] = $trendingScore;
+            $ar['TrendingSimple'] = $trendingSimple;
 
             $ar['Supports'] = $addon->getFrameworkSupport()->column('Supports');
             if (! count($ar['Supports'])) {
@@ -189,11 +193,11 @@ class AddonsController extends SiteController
                     foreach ($objects as $link) {
                         if ($link->IsMeaningfull()) {
                             $ar[$varName.'Full'][] = [
-                                'Name' => $link->getPackageNameShort(),
+                                'Name' => $link->getPackageNameNice(),
                                 'Link' => $link->Link(),
                                 'Constraint' => $link->ConstraintSimple()
                             ];
-                            $ar[$varName][] = $link->getPackageNameShort();
+                            $ar[$varName][] = $link->getPackageNameNice();
                         }
                     }
                 }

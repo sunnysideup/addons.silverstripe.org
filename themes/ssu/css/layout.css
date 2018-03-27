@@ -74,7 +74,7 @@ footer a {border-bottom: 1px solid #444; text-decoration: none; color: #444!impo
 
 #Wrapper .tfs-holder table thead th {
     border-bottom: 2px solid #fff;
-    padding: 0.7vw;
+    padding: 0.7vw 0.2vw;
     background-color: #fdcc33;
     color: #777;
     text-transform: uppercase;
@@ -159,6 +159,7 @@ footer a {border-bottom: 1px solid #444; text-decoration: none; color: #444!impo
 
 th.icon-col {
     width: 32px;
+    padding: 0.7vw!important;
 }
 
 th.title-col {
@@ -241,6 +242,7 @@ th.description-col {
 }
 
 
+.tfs-holder tbody th .composer-link, .tfs-holder tbody th .composer-link strong {color: crimson;}
 .tfs-holder tbody th .badges {clear: left;}
 .tfs-holder tbody th .badges li{display: block;}
 .tfs-holder tbody th .badges li img {height: 20px;}
@@ -273,25 +275,17 @@ th.description-col {
 #Wrapper .tfs-holder .tfs-current-favourites a u:hover{
     color: gold;
 }
-.tfs-holder .tfs-open-filter-form {
-    width: 36px;
-    height: 36px;
-    display: block;
-    float: left;
-    padding-right: 20px;
-}
 
 .tfs-holder .tfs-open-filter-form a{
     opacity: 0.77;
     border-radius: 50%;
     background-image: url('data:image/svg+xml;charset=UTF-8, <svg fill="%23fdcc33" height="48" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"/><path d="M0-.75h24v24H0z" fill="none"/></svg>')!important;
     background-size: contain;
-    width: 36px!important;
-    height: 36px!important;
     background-color: #808383;
+    opacity: 1;
 }
 .tfs-holder .tfs-open-filter-form a:hover{
-    opacity: 1;
+
 }
 .filter-is-open.tfs-holder .tfs-open-filter-form a{
     -webkit-transform: rotate(180deg);
@@ -336,8 +330,12 @@ th.description-col {
     {
         display: none!important;
     }
-    th:first-child {
+    th.title-col,
+    tbody th {
         display: table-cell!important;
+    }
+    tbody th {
+        padding: 10px!important;
     }
     th[scope='row']:first-child {
         background-color: #555;
