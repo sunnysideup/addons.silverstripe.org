@@ -35,7 +35,7 @@ class AddonLink extends DataObject
         if ($constraint === '*') {
             return '*';
         }
-        $constraint = str_replace(array('>', '=', '~', '<', '*', '^', '@', 'dev', '-', 'v'), '', $constraint);
+        $constraint = str_replace(array('>', '=', '~', '<', '*', '^', '@', 'dev', '-', 'v', 'stable'), '', $constraint);
         $constraint = explode(".", $constraint);
         if (is_array($constraint) && count($constraint)) {
             $v = trim($constraint[0]);
@@ -70,7 +70,7 @@ class AddonLink extends DataObject
         if (in_array($this->Name, $array)) {
             return false;
         }
-        
+
         return true;
     }
 }

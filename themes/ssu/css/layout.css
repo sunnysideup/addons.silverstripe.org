@@ -292,6 +292,9 @@ th.description-col {
     -ms-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
 }
+#Wrapper .load, #Wrapper .save {
+    display: none!important;
+}
 
 @media screen and (max-width: 1150px) {
 
