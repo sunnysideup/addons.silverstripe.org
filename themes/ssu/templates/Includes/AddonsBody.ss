@@ -59,7 +59,7 @@
     <td class="right">
 
         {{? it.Supports }}
-        {{~ it.Supports :v }} <span data-filter="Supports" class="dl">{{= v }}.*</span>{{~}}
+        {{~ it.Supports :v }} <span data-filter="Supports" class="dl">{{= v }}</span>{{~}}
         {{??}}
         <span data-filter="Supports" class="dl tba">tba</span>
         {{?}}

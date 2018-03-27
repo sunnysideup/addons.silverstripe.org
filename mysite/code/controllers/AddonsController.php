@@ -156,9 +156,13 @@ class AddonsController extends SiteController
             $ar['AvgDownloads'] = round($averageDownloadsPerMonth);
             $ar['Trending'] = $trendingScore;
 
-            $ar['Supports'] = $addon->getFrameworkSupport()->column('Support');
+            $ar['Supports'] = $addon->getFrameworkSupport()->column('Supports');
             if (! count($ar['Supports'])) {
                 $ar['Supports'] = ['n/a'];
+            } else {
+                foreach ($ar['Supports'] as $key => $value) {
+                    $ar['Supports'][$key] = $value.'.*';
+                }
             }
 
             $ar['TagCount'] = $addon->Versions()->count();
