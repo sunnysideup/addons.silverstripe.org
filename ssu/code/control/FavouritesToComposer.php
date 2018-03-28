@@ -26,7 +26,7 @@ class FavouritesToComposer extends Controller {
 
         // $objects = Addon::get()->filter(array('ID' => $ids))->Sort(array('Name' => 'ASC'));
         $rows = DB::query('
-            SELECT "Addon"."ID", "Name" FROM Addon WHERE "Addon"."ID" IN ('.implode(',', $ids).');
+            SELECT "Addon"."ID", "Name" FROM "Addon" WHERE "Addon"."ID" IN ('.implode(',', $ids).');
         ');
         $myObj = FavouritesToComposerRecord::create();
         $myObj->Title = implode(',', $ids);
@@ -41,7 +41,6 @@ class FavouritesToComposer extends Controller {
                    'Name' => $name
                 )
             );
-            $myObj->Favourites()->add($row["ID"]);
             $al->push(
                 ArrayData::create(
                     array(
