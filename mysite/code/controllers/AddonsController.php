@@ -37,8 +37,10 @@ class AddonsController extends SiteController
         increase_time_limit_to(600);
 
         $html = $this->renderWith(array('Addons', 'Page'));
-        $html = preg_replace("/\s+/", ' ', trim($html));
-        $html = str_replace(array('<!-- -->', '//<![CDATA[', '//]]>'), '', $html);
+        if (Director::isLive()) {
+            $html = preg_replace("/\s+/", ' ', trim($html));
+            $html = str_replace(array('<!-- -->', '//<![CDATA[', '//]]>'), '', $html);
+        }
         return $html;
     }
 
