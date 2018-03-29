@@ -6,15 +6,15 @@
 
     "composer/composer":                                           "*",
 
-    "dflydev/markdown":                                            "1.0.*@stable",
+    "michelf/php-markdown":                                        "1.8.0",
 
     "ezyang/htmlpurifier":                                         "4.5.*@stable",
 
-    "guzzle/guzzle":                                               "3.2.0",
+    "guzzlehttp/guzzle":                                           "3.2.0",
 
     "silverstripe/framework":                                      "~3.6",
 
-    "silverstripe/multivaluefield":                                "*",
+    "symbiote/silverstripe-multivaluefield":                       "*",
 
     "symbiote-library/silverstripe-elastica":                      "dev-master",
 
