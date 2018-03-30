@@ -105,7 +105,7 @@ class AddonsController extends SiteController
             ->sort(['Released' => 'DESC']);
 
         $limit = 99999;
-        if (Director::isDev()) {
+        if (Director::isDev() && 1 == 2) {
             $list = $list->where('MOD(ID,10)=0');
         }
         // ID
