@@ -63,7 +63,8 @@ class AddonsBuildAPIByBash extends BuildTask
                     $link &&
                     (
                         $addon->Type === 'module' ||
-                        $addon->Type === 'vendormodule'
+                        $addon->Type === 'vendormodule'||
+                        $addon->Type === 'theme'
                     )
                 ) {
                     DB::alteration_message('--------------------------------');
@@ -99,6 +100,9 @@ class AddonsBuildAPIByBash extends BuildTask
                 }
                 if($error) {
                     $addon->Obsolete = true;
+                    $addon->write();
+                } else {
+                    $addon->Obsolete = false;
                     $addon->write();
                 }
             }

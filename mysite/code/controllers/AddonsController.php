@@ -105,7 +105,7 @@ class AddonsController extends SiteController
             ->sort(['Released' => 'DESC']);
 
         $limit = 99999;
-        if (Director::isDev()) {
+        if (Director::isDev() && 1 === 2) {
             $list = $list->where('MOD(ID,10)=0');
         }
         // ID
@@ -148,14 +148,17 @@ class AddonsController extends SiteController
             $ageInMonth = ((time() - $ar['Created_U']) / (86400 * 30.5));
             $averageDownloadsPerMonth = 'n/a';
             $trendingScore = '0';
-            $trendingSimple = 'n/a';
-            if ($ageInMonth < 1.5 && $addon->Downloads > 30) {
+            $trendingSimple = '';
+            if ($ageInMonth < 1.5 || $addon->Downloads < 30) {
                 //do nothing ...
             } else {
                 $averageDownloadsPerMonth = ($addon->Downloads / $ageInMonth);
                 if ($averageDownloadsPerMonth > 3) {
-                    $trendingScore = round(($addon->DownloadsMonthly / $averageDownloadsPerMonth) * 1000);
-                    $trendingSimple = str_repeat("*", floor($addon->DownloadsMonthly / $averageDownloadsPerMonth));
+                    $trendingScore = ceil($addon->DownloadsMonthly / $averageDownloadsPerMonth);
+                    if ($trendingScore > 12) {
+                        $trendingScore = 12;
+                    }
+                    $trendingSimple = str_repeat("☆", $trendingScore);
                 }
             }
             $ar['AvgDownloads'] = round($averageDownloadsPerMonth);

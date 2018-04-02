@@ -172,6 +172,13 @@ jQuery(document).ready(
                     }
                     html += '<li class="text"><a href="https://addons.silverstripe.org/add-ons/'+vendorName+'/'+packageName+'" target="_addons">\&raquo; addons.silverstripe.org</a></li>';
                     html += '</ul>';
+                    tr.find('td:hidden').each(
+                        function(i, el) {
+                            html += '<div class="inner-cell">';
+                            html += jQuery(el).html();
+                            html += '</div>';
+                        }
+                    );
                     tr.find('th').append(html);
                     tr.addClass('more-added');
                     return false;

@@ -49,11 +49,11 @@
 
     <td class="right">
         {{? it.Installs }}{{= it.Installs }}{{?}}
-        {{? it.Trending }}<div class="trend-stars">{{= it.TrendingSimple }}</div>{{?}}
+        {{? it.TrendingSimple }}<div class="trend-stars">{{= it.TrendingSimple }}</div>{{?}}
         <div class="hidden">
             {{? it.AvgDownloads }}<p>Installs per Month: <span data-filter="Trending">{{= it.AvgDownloads }}</span></p>{{?}}
-            {{? it.MInstalls }}<p>Installs in Last Month: {{= it.MInstalls }}</p>{{?}}
-            {{? it.Trending}}{{??}}<p>Trending Score: <span data-filter="Trending">{{= it.Trending }}</span>{{?}}
+            {{? it.MInstalls }}<p>Installs in last Month: {{= it.MInstalls }}</p>{{?}}
+            {{? it.TrendingSimple }}<p>Trending Score: <span data-filter="Trending">{{= it.Trending }}</span>{{?}}
         </div>
     </td>
 
