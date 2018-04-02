@@ -65,11 +65,9 @@
                         data-sort-type="number"
                         data-sort-only="true"
                         >Trending</a>
-
-
                 </th>
                 <th scope="col" class="works-with">
-                    Works with
+                    For
                 </th>
 
             </tr>
