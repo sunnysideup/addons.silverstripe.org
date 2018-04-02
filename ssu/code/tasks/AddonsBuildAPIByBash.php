@@ -101,9 +101,11 @@ class AddonsBuildAPIByBash extends BuildTask
                 if($error) {
                     $addon->Obsolete = true;
                     $addon->write();
+                    DB::alteration_message(' ... OBSOLETE');
                 } else {
                     $addon->Obsolete = false;
                     $addon->write();
+                    DB::alteration_message(' ... LIVE');
                 }
             }
         }
