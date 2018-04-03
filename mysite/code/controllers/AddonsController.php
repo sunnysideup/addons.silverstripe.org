@@ -234,7 +234,8 @@ class AddonsController extends SiteController
                 ],
                 'dataDictionary' => [
                     'Supports' => ['Label' => 'Framework Support']
-                ]
+                ],
+                'keywordToFilterFieldArray' => ['Name', 'Team', 'Type']
             ]
         );
         TableFilterSortAPI::include_requirements(
