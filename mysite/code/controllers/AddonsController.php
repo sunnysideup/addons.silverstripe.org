@@ -136,7 +136,7 @@ class AddonsController extends SiteController
             $ar['Notes'] = DBField::create_field('Varchar', $addon->Description)->LimitCharacters($limit = 450, $add = '...');
 
             $created = DBField::create_field('Date', $addon->Released);
-            $ar['Created'] = $created->Ago();
+            $ar['Created'] = trim($created->Ago(), ' ago');
             $ar['Created_U'] = $created->format('U');
 
             $lastEdited = DBField::create_field('Date', $lastTaggedVersion->Released);
