@@ -1554,12 +1554,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunnysideup/silverstripe-table_filter_sort.git",
-                "reference": "4229429c0868f971f67ea27b8f20bb4b299de923"
+                "reference": "9debb314d338c9b8c2e77b731a70140015709b46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunnysideup/silverstripe-table_filter_sort/zipball/4229429c0868f971f67ea27b8f20bb4b299de923",
-                "reference": "4229429c0868f971f67ea27b8f20bb4b299de923",
+                "url": "https://api.github.com/repos/sunnysideup/silverstripe-table_filter_sort/zipball/9debb314d338c9b8c2e77b731a70140015709b46",
+                "reference": "9debb314d338c9b8c2e77b731a70140015709b46",
                 "shasum": ""
             },
             "require": {
@@ -1591,7 +1591,7 @@
                 "sort",
                 "table"
             ],
-            "time": "2018-04-03T02:34:21+00:00"
+            "time": "2018-04-03T02:51:53+00:00"
         },
         {
             "name": "symbiote-library/silverstripe-elastica",
