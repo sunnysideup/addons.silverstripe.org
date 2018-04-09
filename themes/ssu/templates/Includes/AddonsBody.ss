@@ -8,20 +8,22 @@
 
     <th scope="row">
         <span data-filter="Title" class="more">{{= it.Name}}</span>
+        <p>
+            by <span data-filter="Team" class="dl">{{= it.Team}}</span>
+        </p>
         <div class="hidden">
             <span class="exact-name hide">{{= it.FullName}}</span>
             <ul>
                 <li>Type: <span data-filter="Type" class="dl">{{= it.Type}}</span></li>
+                {{? it.Authors }}
                 <li>
-                    Team: <span data-filter="Team" class="dl">{{= it.Team}}</span>
-                    {{? it.Authors }} -
                     <ul>
                         {{~ it.Authors :v }}
                         <li><span data-filter="Authors" class="dl">{{= v }}</span></li>
                         {{~}}
                     </ul>
-                    {{?}}
                 </li>
+                {{?}}
             </ul>
         </div>
     </th>

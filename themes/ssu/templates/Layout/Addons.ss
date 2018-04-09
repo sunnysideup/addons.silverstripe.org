@@ -25,6 +25,14 @@
                         data-sort-direction="asc"
                         data-sort-type="string"
                     >Title</a>
+                    ¶
+                    <a href="#"
+                        class="sortable"
+                        data-sort-field="Tea"
+                        data-sort-direction="asc"
+                        data-sort-type="string"
+                    >Vendor</a>
+
                 </th>
 
 
@@ -171,6 +179,7 @@ jQuery(document).ready(
                         }
                     }
                     html += '<li class="text"><a href="https://addons.silverstripe.org/add-ons/'+vendorName+'/'+packageName+'" target="_addons">\&raquo; addons.silverstripe.org</a></li>';
+                    html += '<li class="text"><a href="https://packagist.org/packages/'+vendorName+'/'+packageName+'" target="_addons">\&raquo; packagist.org</a></li>';
                     html += '</ul>';
                     tr.find('td:hidden').each(
                         function(i, el) {
