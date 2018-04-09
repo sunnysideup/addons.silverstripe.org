@@ -28,7 +28,7 @@
                     ¶
                     <a href="#"
                         class="sortable"
-                        data-sort-field="Tea"
+                        data-sort-field="Team"
                         data-sort-direction="asc"
                         data-sort-type="string"
                     >Vendor</a>
