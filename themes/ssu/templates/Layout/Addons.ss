@@ -25,6 +25,14 @@
                         data-sort-direction="asc"
                         data-sort-type="string"
                     >Title</a>
+                    ¶
+                    <a href="#"
+                        class="sortable"
+                        data-sort-field="Team"
+                        data-sort-direction="asc"
+                        data-sort-type="string"
+                    >Vendor</a>
+
                 </th>
 
 
