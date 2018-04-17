@@ -2,7 +2,7 @@
 
     <td><a href="#" class="adf" title="add to recipe">♥</a></td>
 
-    <td>{{? it.API }}<a href="{{= it.API}}" class="ext doc">API</a>{{?}}</td>
+    <td>{{? it.API != '' }}<a href="{{= it.API}}" class="ext doc">API</a>{{??}}soon ...{{?}}</td>
 
     <td>{{? it.URL }}<a href="{{= it.URL}}" class="ext git">github</a>{{?}}</td>
 
