@@ -72,7 +72,7 @@ class AddonsBuildAPI extends BuildTask
                 $gitPull = shell_exec('git pull');
                 DB::alteration_message('.... '.$gitPull);
 
-                $phpDox = shell_exec('phpdox -f '.$phpDocConfigFile);
+                $phpDox = shell_exec('/usr/local/bin/phpdox -f '.$phpDocConfigFile);
                 DB::alteration_message('.... '.$phpDox);
 
                 chdir($baseDir);

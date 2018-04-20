@@ -205,16 +205,17 @@ class AddonsController extends SiteController
                 $ar[$varName.'Full'] = [];
                 if ($objects instanceof AddonLink) {
                     $objects = ArrayList::create([$objects]);
-                }
-                if ($objects) {
-                    foreach ($objects as $link) {
-                        if ($link->IsMeaningfull()) {
-                            $ar[$varName.'Full'][] = [
-                                'Name' => $link->getPackageNameNice(),
-                                'Link' => $link->Link(),
-                                'Constraint' => $link->ConstraintSimple()
-                            ];
-                            $ar[$varName][] = $link->getPackageNameNice();
+                } else {
+                    if ($objects) {
+                        foreach ($objects as $link) {
+                            if ($link->IsMeaningfull()) {
+                                $ar[$varName.'Full'][] = [
+                                    'Name' => $link->getPackageNameNice(),
+                                    'Link' => $link->Link(),
+                                    'Constraint' => $link->ConstraintSimple()
+                                ];
+                                $ar[$varName][] = $link->getPackageNameNice();
+                            }
                         }
                     }
                 }

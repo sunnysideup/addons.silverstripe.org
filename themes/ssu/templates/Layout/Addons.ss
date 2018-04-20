@@ -179,7 +179,7 @@ jQuery(document).ready(
                         }
                     }
                     html += '<li class="text"><a href="https://addons.silverstripe.org/add-ons/'+vendorName+'/'+packageName+'" target="_addons">\&raquo; addons.silverstripe.org</a></li>';
-                    html += '<li class="text"><a href="https://packagist.org/packages/'+vendorName+'/'+packageName+'" target="_addons">\&raquo; packagist.org</a></li>';
+                    html += '<li class="text"><a href="https://packagist.org/packages/'+vendorName+'/'+packageName+'" target="_packagist">\&raquo; packagist.org</a></li>';
                     html += '</ul>';
                     tr.find('td:hidden').each(
                         function(i, el) {

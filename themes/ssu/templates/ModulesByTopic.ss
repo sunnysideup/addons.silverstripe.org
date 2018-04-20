@@ -1,4 +1,4 @@
-<% include Header %>
+<% include HeaderTopics %>
 <div id="LayoutHolder" class="typography">
     <h1>Silverstripe Modules by Topic<sup>beta</sup></h1>
     <p>

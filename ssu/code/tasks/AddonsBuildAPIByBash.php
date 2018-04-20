@@ -187,7 +187,7 @@ class AddonsBuildAPIByBash extends BuildTask
         echo "====================================================== cloning git repo";
         git clone ${gh[$index]} ./src
         echo "====================================================== running phpdox";
-        phpdox
+        /usr/local/bin/phpdox
         echo "====================================================== moving";
         rm ./docs/html/index.xhtml
         dira="../public_html"
