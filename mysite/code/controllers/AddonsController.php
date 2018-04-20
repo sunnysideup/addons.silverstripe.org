@@ -126,8 +126,12 @@ class AddonsController extends SiteController
                 $ar['Team'] = 'anon';
             }
 
-            $ar['Authors'] = $addon->Authors()->column('Name');
-            if (! count($ar['Authors'])) {
+            if($lastTaggedVersion) {
+                $ar['Authors'] = $addon->Authors()->column('Name');
+                if (! count($ar['Authors'])) {
+                    $ar['Authors'] = false;
+                }
+            } else {
                 $ar['Authors'] = false;
             }
 
