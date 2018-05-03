@@ -135,7 +135,7 @@ class AddonsController extends SiteController
             $ar['API'] = $addon->DocLink();
             $ar['Notes'] = DBField::create_field('Varchar', $addon->Description)->LimitCharacters($limit = 450, $add = '...');
 
-            $created = DBField::create_field('Date', $addon->Released);
+            $created = DBField::create_field('Date', $addon->Created);
             $ar['Created'] = trim($created->Ago(), ' ago');
             $ar['Created_U'] = $created->format('U');
 
