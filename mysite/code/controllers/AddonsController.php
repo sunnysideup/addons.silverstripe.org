@@ -135,13 +135,19 @@ class AddonsController extends SiteController
             $ar['API'] = $addon->DocLink();
             $ar['Notes'] = DBField::create_field('Varchar', $addon->Description)->LimitCharacters($limit = 450, $add = '...');
 
-            $created = DBField::create_field('Date', $addon->Created);
+            $created = DBField::create_field('Date', $addon->Released);
+            $createdTS = intval($created->format('U'));
             $ar['Created'] = trim($created->Ago(), ' ago');
-            $ar['Created_U'] = $created->format('U');
+            $ar['Created_U'] = $createdTS;
 
             $lastEdited = DBField::create_field('Date', $lastTaggedVersion->Released);
+            $lastEditedTS = intval($lastEdited->format('U'));
+            if($lastEditedTS < $createdTS) {
+                $lastEditedTS = $createdTS;
+                $lastEdited = DBField::create_field('Date', $addon->Released;
+            }
             $ar['LastEdited'] = $lastEdited->Ago();
-            $ar['LastEdited_U'] = $lastEdited->format('U');
+            $ar['LastEdited_U'] = $lastEditedTS;
 
             $ar['Installs'] = $addon->Downloads;
             $ar['MInstalls'] = $addon->DownloadsMonthly;
