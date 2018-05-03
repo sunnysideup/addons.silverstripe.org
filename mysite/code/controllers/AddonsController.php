@@ -144,7 +144,7 @@ class AddonsController extends SiteController
             $lastEditedTS = intval($lastEdited->format('U'));
             if($lastEditedTS < $createdTS) {
                 $lastEditedTS = $createdTS;
-                $lastEdited = DBField::create_field('Date', $addon->Released;
+                $lastEdited = DBField::create_field('Date', $addon->Released);
             }
             $ar['LastEdited'] = $lastEdited->Ago();
             $ar['LastEdited_U'] = $lastEditedTS;
