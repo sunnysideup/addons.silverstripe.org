@@ -57,7 +57,8 @@ class PackagistService
             $addonTypes = array(
                 'silverstripe-module',
                 'silverstripe-theme',
-                'silverstripe-vendormodule'
+                'silverstripe-vendormodule',
+                'silverstripe-recipe'
             );
             foreach ($addonTypes as $type) {
                 if ($limitAddons) {

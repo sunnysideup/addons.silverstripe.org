@@ -64,7 +64,8 @@ class AddonsBuildAPIByBash extends BuildTask
                     (
                         $addon->Type === 'module' ||
                         $addon->Type === 'vendormodule'||
-                        $addon->Type === 'theme'
+                        $addon->Type === 'theme' ||
+                        $addon->Type === 'recipe'
                     )
                 ) {
                     DB::alteration_message('--------------------------------');
