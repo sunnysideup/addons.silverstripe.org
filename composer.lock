@@ -160,16 +160,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "1.6.3",
+            "version": "1.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "88a69fda0f2187ad8714cedffd7a8872dceaa4c2"
+                "reference": "86ad51e8a3c64c9782446aae740a61fc6faa2522"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/88a69fda0f2187ad8714cedffd7a8872dceaa4c2",
-                "reference": "88a69fda0f2187ad8714cedffd7a8872dceaa4c2",
+                "url": "https://api.github.com/repos/composer/composer/zipball/86ad51e8a3c64c9782446aae740a61fc6faa2522",
+                "reference": "86ad51e8a3c64c9782446aae740a61fc6faa2522",
                 "shasum": ""
             },
             "require": {
@@ -233,7 +233,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2018-01-31T15:28:18+00:00"
+            "time": "2018-04-13T10:04:24+00:00"
         },
         {
             "name": "composer/installers",
@@ -1554,12 +1554,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunnysideup/silverstripe-table_filter_sort.git",
-                "reference": "16d4fd74cbb277cb76b3ae3c51437362bf272d28"
+                "reference": "178578be648214f376740bf7f30f1def4c9fcc65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunnysideup/silverstripe-table_filter_sort/zipball/16d4fd74cbb277cb76b3ae3c51437362bf272d28",
-                "reference": "16d4fd74cbb277cb76b3ae3c51437362bf272d28",
+                "url": "https://api.github.com/repos/sunnysideup/silverstripe-table_filter_sort/zipball/178578be648214f376740bf7f30f1def4c9fcc65",
+                "reference": "178578be648214f376740bf7f30f1def4c9fcc65",
                 "shasum": ""
             },
             "require": {
@@ -1591,7 +1591,7 @@
                 "sort",
                 "table"
             ],
-            "time": "2018-04-09T10:40:06+00:00"
+            "time": "2018-04-19T18:22:38+00:00"
         },
         {
             "name": "symbiote-library/silverstripe-elastica",
