@@ -37,7 +37,7 @@ class TopicChangeIPAddress extends DataObject
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();
-        if($this->IsDodgy) {
+        if ($this->IsDodgy) {
             $this->IsSafe = false;
         }
     }
@@ -51,7 +51,7 @@ class TopicChangeIPAddress extends DataObject
         $obj = TopicChangeIPAddress::get()
             ->filter($filter)
             ->first();
-        if(! $obj) {
+        if (! $obj) {
             $obj = TopicChangeIPAddress::create($obj);
             $obj->write();
         }
@@ -59,19 +59,20 @@ class TopicChangeIPAddress extends DataObject
         return $obj;
     }
 
-    private static function get_client_ip_1() {
+    private static function get_client_ip_1()
+    {
         $ipaddress = '';
         if ($x = getenv('HTTP_CLIENT_IP')) {
             $ipaddress = $x;
-        } else if($x = getenv('HTTP_X_FORWARDED_FOR')) {
+        } elseif ($x = getenv('HTTP_X_FORWARDED_FOR')) {
             $ipaddress = $x;
-        } else if($x = getenv('HTTP_X_FORWARDED')) {
+        } elseif ($x = getenv('HTTP_X_FORWARDED')) {
             $ipaddress = $x;
-        } else if($x = getenv('HTTP_FORWARDED_FOR')) {
+        } elseif ($x = getenv('HTTP_FORWARDED_FOR')) {
             $ipaddress = $x;
-        } else if($x = getenv('HTTP_FORWARDED')) {
-           $ipaddress = $x;
-       } else if($x = getenv('REMOTE_ADDR')) {
+        } elseif ($x = getenv('HTTP_FORWARDED')) {
+            $ipaddress = $x;
+        } elseif ($x = getenv('REMOTE_ADDR')) {
             $ipaddress = $x;
         } else {
             $ipaddress = 'UNKNOWN';
@@ -79,48 +80,47 @@ class TopicChangeIPAddress extends DataObject
         return $ipaddress;
     }
 
-    private static function get_client_ip_2() {
-        if($x = getenv('REMOTE_ADDR')) {
+    private static function get_client_ip_2()
+    {
+        if ($x = getenv('REMOTE_ADDR')) {
             $ipaddress = $x;
-        }
-        else {
+        } else {
             $ipaddress = 'UNKNOWN';
         }
         return $ipaddress;
     }
 
-    function getTitle()
+    public function getTitle()
     {
-        if($this->Name) {
+        if ($this->Name) {
             return $this->Name;
         }
-        if($this->IP2 !== $this->IP1) {
+        if ($this->IP2 !== $this->IP1) {
             return $this->IP1 . '  -  '.$this->IP2;
         }
         return $this->IP2;
     }
 
-    function canCreate($member = null)
+    public function canCreate($member = null)
     {
         return false;
     }
 
-    function canView($member = null)
+    public function canView($member = null)
     {
         return $this->canEdit($member);
     }
 
-    function canEdit($member = null)
+    public function canEdit($member = null)
     {
-        if(Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
+        if (Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
             return true;
         }
         return parent::canEdit($member);
     }
 
-    function canDelete($member = null)
+    public function canDelete($member = null)
     {
         return $this->TopicChanges()->count() > 0 ? false : $this->canEdit($member);
     }
-
 }

@@ -1,9 +1,8 @@
 <?php
 
 
-class ExtensionTagGroup extends DataObject implements PermissionProvider {
-
-
+class ExtensionTagGroup extends DataObject implements PermissionProvider
+{
     private static $db = array(
         "Title" => "Varchar(100)",
         "Explanation" => "Varchar(255)",
@@ -44,10 +43,15 @@ class ExtensionTagGroup extends DataObject implements PermissionProvider {
     );
 
     //defaults
-    public function Link() {return $this->getLink();}
-    public function getLink() {
+    public function Link()
+    {
+        return $this->getLink();
     }
-    public function getCMSFields() {
+    public function getLink()
+    {
+    }
+    public function getCMSFields()
+    {
         $fields = parent::getCMSFields();
         $fields->removeFieldsFromTab(
             'Root.Main',
@@ -57,7 +61,7 @@ class ExtensionTagGroup extends DataObject implements PermissionProvider {
                 'SortOrder'
             )
         );
-        if($this->AddonsAsText) {
+        if ($this->AddonsAsText) {
             $fields->addFieldToTab(
                 'Root.Summary',
                 GridField::create(
@@ -76,7 +80,7 @@ class ExtensionTagGroup extends DataObject implements PermissionProvider {
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();
-        if($this->exists()) {
+        if ($this->exists()) {
             $modules = $this->MyModules();
             $this->AddonsAsText = implode(',', $modules->column('Name'));
             $this->AddonsAsIDs = implode(',', $modules->column('ID'));
@@ -91,7 +95,7 @@ class ExtensionTagGroup extends DataObject implements PermissionProvider {
     public function MyModulesQuick()
     {
         $array = explode(',', $this->AddonsAsIDs);
-        foreach($array as $id) {
+        foreach ($array as $id) {
             self::$_covered[$id] = $id;
         }
 
@@ -115,31 +119,31 @@ class ExtensionTagGroup extends DataObject implements PermissionProvider {
             WHERE ExtensionTagGroup.ID = '.$this->ID.';
         ');
         $keywordIDs = array();
-        foreach($rows as $row) {
+        foreach ($rows as $row) {
             $keywordIDs[$row['KWID']] = $row['KWID'];
         }
-        if(count($keywordIDs)) {
+        if (count($keywordIDs)) {
             $rows = DB::query('
                 SELECT AddonID
                 FROM Addon_Keywords
                 WHERE Addon_Keywords.AddonKeywordID IN ('.implode(',', $keywordIDs).')
             ');
-            foreach($rows as $row) {
+            foreach ($rows as $row) {
                 $id = $row['AddonID'];
-                if(! in_array($id, $excludedOnes))  {
+                if (! in_array($id, $excludedOnes)) {
                     $addons[$id] = $id;
                 }
             }
         }
-        foreach($addedOnes as $addedOne) {
-            if(! in_array($id, $excludedOnes))  {
+        foreach ($addedOnes as $addedOne) {
+            if (! in_array($id, $excludedOnes)) {
                 $addons[$addedOne] = $addedOne;
             }
         }
-        if(! count($addons)) {
+        if (! count($addons)) {
             $addons[0] = 0;
         }
-        foreach($addons as $addon) {
+        foreach ($addons as $addon) {
             self::$_covered[$addon] = $addon;
         }
         return Addon::get()->filter(array('ID' => $addons))->sort(array('Created' => 'DESC'));
@@ -148,14 +152,14 @@ class ExtensionTagGroup extends DataObject implements PermissionProvider {
     /**
      * @return ArrayList
      */
-    function RestAddons()
+    public function RestAddons()
     {
         $allIDs = Addon::get()->column('ID');
         $toShow = array_diff($allIDs, self::$_covered);
         return Addon::get()->filter(array('ID' => $toShow))->sort(array('Created' => 'DESC'));
     }
 
-    function SortedKeywords()
+    public function SortedKeywords()
     {
         $objects = $this->AddonKeywords();
         $objects = $objects->Sort(array('Name' => 'ASC'));
@@ -163,30 +167,31 @@ class ExtensionTagGroup extends DataObject implements PermissionProvider {
         return $objects;
     }
 
-    function canCreate($member = null)
+    public function canCreate($member = null)
     {
         return $this->canEdit($member);
     }
 
-    function canView($member = null)
+    public function canView($member = null)
     {
         return $this->canEdit($member);
     }
 
-    function canEdit($member = null)
+    public function canEdit($member = null)
     {
-        if(Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
+        if (Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
             return true;
         }
         return parent::canEdit($member);
     }
 
-    function canDelete($member = null)
+    public function canDelete($member = null)
     {
         return $this->MyModules()->count() > 0 ? false : $this->canEdit($member);
     }
 
-    public function providePermissions() {
+    public function providePermissions()
+    {
         $perms = array(
             "CMS_ACCESS_EDIT_KEYWORDS" => array(
                 'name' => 'Edit Keywords',
@@ -195,5 +200,4 @@ class ExtensionTagGroup extends DataObject implements PermissionProvider {
         );
         return $perms;
     }
-
 }

@@ -12,18 +12,17 @@ class ChangeTopic extends Controller
         'index' => true
     );
 
-    function index($request)
+    public function index($request)
     {
         $id = intval($request->getVar('id'));
         $from = intval($request->getVar('from'));
         $to = intval($request->getVar('to'));
-        if($id && $to && ($from || $from === 0)) {
+        if ($id && $to && ($from || $from === 0)) {
             $obj = TopicChange::create();
             $obj->RegisterChange($id, $from, $to);
-            if($obj->exists()) {
+            if ($obj->exists()) {
                 return 'success';
-            }
-            else {
+            } else {
                 $message = 'could not write to database';
             }
         } else {

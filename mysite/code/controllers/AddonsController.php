@@ -120,13 +120,13 @@ class AddonsController extends SiteController
             $ar['FullName'] = $addon->getPackageName();
             $ar['Name'] = $addon->getPackageNameNice();
             $ar['Type'] = $addon->getSimpleType();
-            if($addon->Vendor()) {
+            if ($addon->Vendor()) {
                 $ar['Team'] = $addon->Vendor()->Name;
             } else {
                 $ar['Team'] = 'anon';
             }
 
-            if($lastTaggedVersion) {
+            if ($lastTaggedVersion) {
                 $ar['Authors'] = $addon->Authors()->column('Name');
                 if (! count($ar['Authors'])) {
                     $ar['Authors'] = false;
@@ -147,7 +147,7 @@ class AddonsController extends SiteController
             $ar['Created'] = trim($created->Ago(), ' ago');
             $ar['Created_U'] = $created->format('U');
 
-            if($lastTaggedVersion) {
+            if ($lastTaggedVersion) {
                 $lastEdited = DBField::create_field('Date', $lastTaggedVersion->Released);
             } else {
                 $lastEdited = DBField::create_field('Date', $addon->Created);

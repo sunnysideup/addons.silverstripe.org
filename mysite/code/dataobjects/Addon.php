@@ -172,6 +172,14 @@ class Addon extends DataObject
     }
     public function getSimpleType()
     {
+        switch ($this->Type) {
+            case 'theme':
+                return 'theme'
+            case 'recipe':
+                return 'recipe'
+            default:
+                return 'module'
+        }
         return stripos($this->Type, 'module') !== false ? 'module' : 'theme';
     }
 

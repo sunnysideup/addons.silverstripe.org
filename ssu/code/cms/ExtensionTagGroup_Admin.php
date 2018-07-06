@@ -1,7 +1,7 @@
 <?php
 
-class ExtensionTagGroup_Admin extends ModelAdmin {
-
+class ExtensionTagGroup_Admin extends ModelAdmin
+{
     public static $managed_models = array(
         'MetaExtensionTagGroup',
         'ExtensionTagGroup',
@@ -17,15 +17,15 @@ class ExtensionTagGroup_Admin extends ModelAdmin {
 
     public $showImportForm = false;
 
-    function getEditForm($id = null, $fields = null){
+    public function getEditForm($id = null, $fields = null)
+    {
         $form = parent::getEditForm();
         //This check is simply to ensure you are on the managed model you want adjust accordingly
-        if($this->modelClass === 'MetaExtensionTagGroup' || $this->modelClass === 'ExtensionTagGroup') {
-            if($gridField = $form->Fields()->dataFieldByName($this->sanitiseClassName($this->modelClass))) {
+        if ($this->modelClass === 'MetaExtensionTagGroup' || $this->modelClass === 'ExtensionTagGroup') {
+            if ($gridField = $form->Fields()->dataFieldByName($this->sanitiseClassName($this->modelClass))) {
                 $gridField->getConfig()->addComponent(new GridFieldSortableRows('SortOrder'));
             }
         }
         return $form;
     }
-
 }

@@ -1,9 +1,8 @@
 <?php
 
 
-class MetaExtensionTagGroup extends DataObject {
-
-
+class MetaExtensionTagGroup extends DataObject
+{
     private static $db = array(
         "Title" => "Varchar(100)",
         "Explanation" => "Varchar(255)",
@@ -36,10 +35,15 @@ class MetaExtensionTagGroup extends DataObject {
     );
 
     //defaults
-    public function Link() {return $this->getLink();}
-    public function getLink() {
+    public function Link()
+    {
+        return $this->getLink();
     }
-    public function getCMSFields() {
+    public function getLink()
+    {
+    }
+    public function getCMSFields()
+    {
         $fields = parent::getCMSFields();
         $fields->removeFieldsFromTab(
             'Root.Main',
@@ -47,7 +51,7 @@ class MetaExtensionTagGroup extends DataObject {
                 'SortOrder'
             )
         );
-        if($this->exists()) {
+        if ($this->exists()) {
             $gridField = $fields->dataFieldByName('Topics');
             $myGridConfig = $gridField->getConfig();
             $myGridConfig->addComponent(new GridFieldSortableRows('SortOrder'));
@@ -55,27 +59,26 @@ class MetaExtensionTagGroup extends DataObject {
         return $fields;
     }
 
-    function canCreate($member = null)
+    public function canCreate($member = null)
     {
         return $this->canEdit($member);
     }
 
-    function canView($member = null)
+    public function canView($member = null)
     {
         return $this->canEdit($member);
     }
 
-    function canEdit($member = null)
+    public function canEdit($member = null)
     {
-        if(Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
+        if (Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
             return true;
         }
         return parent::canEdit($member);
     }
 
-    function canDelete($member = null)
+    public function canDelete($member = null)
     {
         return $this->Topics()->count() > 0 ? false : $this->canEdit($member);
     }
-
 }

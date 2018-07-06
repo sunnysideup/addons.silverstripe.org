@@ -3,7 +3,6 @@
 
 class ModulesByTopic extends Controller
 {
-
     public static $url_handlers = array(
         '$Topic!' => 'topic',
         '$MetaTopic!' => 'metatopic'
@@ -15,7 +14,7 @@ class ModulesByTopic extends Controller
         'topic'
     );
 
-    function init()
+    public function init()
     {
         Requirements::themedCSS('ModulesByTopic.min', 'mysite');
         Requirements::javascript('https://code.jquery.com/jquery-3.2.1.min.js');
@@ -27,61 +26,60 @@ class ModulesByTopic extends Controller
         parent::init();
     }
 
-    function index()
+    public function index()
     {
         $objects = ExtensionTagGroup::get();
-        foreach($objects as $object) {
+        foreach ($objects as $object) {
             $object->write();
         }
         return $this->renderWith('ModulesByTopic');
     }
 
-    function topic($request)
+    public function topic($request)
     {
         return $this->renderWith('ModulesByTopic');
     }
 
-    function metatopic($request)
+    public function metatopic($request)
     {
         return $this->renderWith('ModulesByTopic');
     }
 
-    function MetaTopics()
+    public function MetaTopics()
     {
         return MetaExtensionTagGroup::get();
     }
 
-    function Title()
+    public function Title()
     {
         return 'Silverstripe Modules by area of interest';
     }
 
-    function Topics()
+    public function Topics()
     {
         return ExtensionTagGroup::get();
     }
 
 
-    function RestAddons()
+    public function RestAddons()
     {
         $obj = Injector::inst()->get('ExtensionTagGroup');
         return $obj->RestAddons();
     }
 
 
-    function LocalNow($format = '')
+    public function LocalNow($format = '')
     {
         return date(DATE_RFC2822);
     }
 
 
-    function ChangeTopicFormAction()
+    public function ChangeTopicFormAction()
     {
-        if(Director::isDev()) {
+        if (Director::isDev()) {
             return '/change-topic.php';
         } else {
             return 'http://topics.ssmods.com/change-topic.php';
         }
     }
-
 }

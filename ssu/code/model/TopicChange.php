@@ -32,29 +32,29 @@ class TopicChange extends DataObject
         'Created' => 'DESC'
     );
 
-    function canCreate($member = null)
+    public function canCreate($member = null)
     {
         return false;
     }
 
-    function canEdit($member = null)
+    public function canEdit($member = null)
     {
         return false;
     }
 
 
-    function canView($member = null)
+    public function canView($member = null)
     {
-        if(Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
+        if (Permission::checkMember($member, "CMS_ACCESS_EDIT_KEYWORDS")) {
             return true;
         }
         return parent::canEdit($member);
     }
 
 
-    function canDelete($member = null)
+    public function canDelete($member = null)
     {
-        if($this->Completed) {
+        if ($this->Completed) {
             return false;
         }
 
@@ -62,7 +62,8 @@ class TopicChange extends DataObject
     }
 
 
-    function getCMSFields() {
+    public function getCMSFields()
+    {
         $fields = parent::getCMSFields();
         $fields->removeByName('AddonID');
         $fields->addFieldsToTab(
@@ -92,9 +93,9 @@ class TopicChange extends DataObject
     public function onBeforeWrite()
     {
         parent::onBeforeWrite();
-        if(! $this->AddonName) {
+        if (! $this->AddonName) {
             $addon = Addon::get()->byID($this->AddonID);
-            if($addon) {
+            if ($addon) {
                 $this->AddonName = $addon->Name;
             }
         }
@@ -107,18 +108,18 @@ class TopicChange extends DataObject
     {
         parent::onAfterWrite();
 
-        if($this->Completed) {
+        if ($this->Completed) {
             //do nothing...
         } else {
-            if($this->getIsSafeIP()->raw() ) {
+            if ($this->getIsSafeIP()->raw()) {
                 $addon = Addon::get()->byID($this->AddonID);
-                if($addon) {
+                if ($addon) {
                     $oldCategory = ExtensionTagGroup::get()->byID($this->OldGroupID);
                     $newCategory = ExtensionTagGroup::get()->byID($this->NewGroupID);
-                    if($oldCategory) {
+                    if ($oldCategory) {
                         $oldCategory->ExcludedOnes()->remove($addon);
                     }
-                    if($newCategory) {
+                    if ($newCategory) {
                         $newCategory->AdditionalOnes()->add($addon);
                     }
                     $this->Completed = true;
@@ -128,18 +129,18 @@ class TopicChange extends DataObject
         }
     }
 
-    function RegisterChange($id, $oldOne, $newOne)
+    public function RegisterChange($id, $oldOne, $newOne)
     {
         $id = intval($id);
-        if($id) {
+        if ($id) {
             $addon = Addon::get()->byID($id);
-            if($addon) {
+            if ($addon) {
                 $oldCategory = ExtensionTagGroup::get()->byID(intval($oldOne));
                 $newCategory = ExtensionTagGroup::get()->byID(intval($newOne));
-                if($oldCategory) {
+                if ($oldCategory) {
                     $this->OldGroupID = $oldCategory->ID;
                 }
-                if($newCategory) {
+                if ($newCategory) {
                     $this->NewGroupID = $newCategory->ID;
                 } else {
                     return false;
@@ -155,22 +156,20 @@ class TopicChange extends DataObject
         return false;
     }
 
-    function IsSafeIP()
+    public function IsSafeIP()
     {
         return $this->getIsSafeIP();
     }
 
-    function getIsSafeIP()
+    public function getIsSafeIP()
     {
         $obj = $this->TopicChangeIPAddress();
-        if($obj && $obj->exists()) {
+        if ($obj && $obj->exists()) {
             $outcome = $obj->SafeIP;
         } else {
             $outcome = false;
         }
 
         return DBField::create_field('Boolean', $outcome);
-
     }
-
 }

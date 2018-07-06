@@ -1,9 +1,8 @@
 <?php
 
 
-class FavouritesToComposerRecord extends DataObject {
-
-
+class FavouritesToComposerRecord extends DataObject
+{
     public static $db = array(
         "Title" => "Varchar(100)"
     );
@@ -33,7 +32,8 @@ class FavouritesToComposerRecord extends DataObject {
     //defaults
     public static $default_sort = "\"Created\" DESC";
 
-    public function getCMSFields() {
+    public function getCMSFields()
+    {
         $fields = parent::getCMSFields();
         return $fields;
     }

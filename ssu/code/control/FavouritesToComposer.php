@@ -1,24 +1,24 @@
 <?php
 
 
-class FavouritesToComposer extends Controller {
-
+class FavouritesToComposer extends Controller
+{
     private static $allowed_actions = array('index');
 
-    function init()
+    public function init()
     {
         parent::init();
         $this->getResponse()->addHeader('Content-Type', 'application/json');
     }
 
-    function index($request)
+    public function index($request)
     {
         $json = $this->renderWith('FavouritesToComposer');
         return SS_HTTPRequest::send_file($json, 'composer.json', 'application/json');
     }
 
 
-    function Addons()
+    public function Addons()
     {
         $ids = $this->request->getVar('ids');
         $ids = explode(',', $ids);
@@ -33,7 +33,7 @@ class FavouritesToComposer extends Controller {
         $myObj->write();
 
         $al = ArrayList::create();
-        foreach($rows as $row) {
+        foreach ($rows as $row) {
             $name = $row['Name'];
             $myObj->Favourites()->add(
                 $row["ID"],
@@ -54,9 +54,8 @@ class FavouritesToComposer extends Controller {
         return $al;
     }
 
-    function GDMString ()
+    public function GDMString()
     {
         return 'GDM\\\\SSAutoGitIgnore\\\\UpdateScript::Go0';
     }
-
 }

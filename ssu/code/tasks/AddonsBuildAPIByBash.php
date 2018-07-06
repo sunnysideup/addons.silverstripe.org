@@ -39,25 +39,25 @@ class AddonsBuildAPIByBash extends BuildTask
         for ($i = 0; $i < $this->numberOfSteps; $i++) {
             $start = $i * $this->reposPerStep;
             $addons = Addon::get()->limit($this->reposPerStep, $start);
-            if($addons->count() == 0) {
+            if ($addons->count() == 0) {
                 $i = 999999;
             }
             foreach ($addons as $addon) {
                 $link = '';
-                if($this->isHTTPLink($addon->Repository)) {
+                if ($this->isHTTPLink($addon->Repository)) {
                     $link = $addon->Repository;
                 } else {
                     $version = $addon->MasterVersion();
                     if (!$version) {
                         $version = $addon->Versions()->first();
                     }
-                    if($version) {
+                    if ($version) {
                         $link = $version->SourceUrl;
                     }
                 }
                 $error = false;
                 $vendorAndName = explode('/', $addon->Name);
-                if(
+                if (
                     isset($vendorAndName[0]) &&
                     isset($vendorAndName[1]) &&
                     $link &&
@@ -73,13 +73,13 @@ class AddonsBuildAPIByBash extends BuildTask
                     DB::alteration_message($vendorAndName[0]);
                     DB::alteration_message(' ... '.$vendorAndName[0]);
                     DB::alteration_message(' ... '.$link);
-                    if(strpos($link, 'simon.geek.')) {
+                    if (strpos($link, 'simon.geek.')) {
                         $errors .= "\n".'# BYPASSING SIMON MODULE: '.$vendorAndName[0].', '.$vendorAndName[1].', '.$link;
                         $error = true;
-                    } elseif(in_array($addon->Name, $this->badApples)) {
+                    } elseif (in_array($addon->Name, $this->badApples)) {
                         $errors .= "\n".'# BYPASSING BAD APPLE MODULE: '.$vendorAndName[0].', '.$vendorAndName[1].', '.$link;
                         $error = true;
-                    } elseif( ! $this->urlExists($link)) {
+                    } elseif (! $this->urlExists($link)) {
                         $errors .= "\n".'# URL DOES NOT EXIST: '.$vendorAndName[0].', '.$vendorAndName[1].', '.$link;
                         $error = true;
                     } else {
@@ -87,19 +87,18 @@ class AddonsBuildAPIByBash extends BuildTask
                         $ghs .= "\ngh[$count]=\"".$link."\"";
                         $vds .= "\nvd[$count]=\"".$vendorAndName[0]."\"";
                         $mns .= "\nmn[$count]=\"".$vendorAndName[1]."\"";
-                        if(! $addon->DocLink()) {
+                        if (! $addon->DocLink()) {
                             $count_quick++;
                             $ghs_quick .= "\ngh[$count_quick]=\"".$link."\"";
                             $vds_quick .= "\nvd[$count_quick]=\"".$vendorAndName[0]."\"";
                             $mns_quick .= "\nmn[$count_quick]=\"".$vendorAndName[1]."\"";
                         }
                     }
-                }
-                else {
+                } else {
                     $errors .= "\n".'# ERROR GETTING: '.$addon->Name;
                     $error = true;
                 }
-                if($error) {
+                if ($error) {
                     $addon->Obsolete = true;
                     $addon->write();
                     DB::alteration_message(' ... OBSOLETE');
@@ -111,16 +110,16 @@ class AddonsBuildAPIByBash extends BuildTask
             }
         }
         $bash = $this->getBashScript($ghs, $vds, $mns, $errors);
-        if(is_writable($this->destinationFile) || ! file_exists($this->destinationFile)) {
+        if (is_writable($this->destinationFile) || ! file_exists($this->destinationFile)) {
             file_put_contents($this->destinationFile, $bash);
         } else {
             echo "<hr /><pre>";
             echo $bash;
             echo "</pre><hr />";
         }
-        if($count_quick) {
+        if ($count_quick) {
             $bash_quick = $this->getBashScript($ghs_quick, $vds_quick, $mns_quick, $errors_quick);
-            if(is_writable($this->destinationFile_quick) || ! file_exists($this->destinationFile_quick)) {
+            if (is_writable($this->destinationFile_quick) || ! file_exists($this->destinationFile_quick)) {
                 file_put_contents($this->destinationFile_quick, $bash_quick);
             } else {
                 echo "<hr /><pre>";
@@ -137,7 +136,7 @@ class AddonsBuildAPIByBash extends BuildTask
      */
     protected function isHTTPLink($link)
     {
-        if(
+        if (
             strpos($link, 'ttp://') === 0 ||
             strpos($link, 'https://') === 0
         ) {
@@ -213,14 +212,15 @@ class AddonsBuildAPIByBash extends BuildTask
      * @param string $url URL to check
      * @return bool TRUE when valid | FALSE anyway
      */
-    protected function urlExists ( $url ) {
+    protected function urlExists($url)
+    {
         // Remove all illegal characters from a url
         $url = filter_var($url, FILTER_SANITIZE_URL);
 
         // Validate URI
-        if (filter_var($url, FILTER_VALIDATE_URL) === FALSE
+        if (filter_var($url, FILTER_VALIDATE_URL) === false
             // check only for http/https schemes.
-            || !in_array(strtolower(parse_url($url, PHP_URL_SCHEME)), ['http','https'], true )
+            || !in_array(strtolower(parse_url($url, PHP_URL_SCHEME)), ['http','https'], true)
         ) {
             return false;
         }
@@ -230,5 +230,4 @@ class AddonsBuildAPIByBash extends BuildTask
 
         return !(!$file_headers || $file_headers[0] === 'HTTP/1.1 404 Not Found');
     }
-
 }
