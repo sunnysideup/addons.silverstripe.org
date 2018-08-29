@@ -353,3 +353,11 @@ th.description-col {
         background-color: #555;
     }
 }
+
+.quick-keyword {display: none!important;}
+input, select {color: #333!important;}
+
+
+.tfs-filter-form-inner .tfs-filter-column {
+    overflow: visible!important;
+}

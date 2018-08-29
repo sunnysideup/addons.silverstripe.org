@@ -174,13 +174,12 @@ class Addon extends DataObject
     {
         switch ($this->Type) {
             case 'theme':
-                return 'theme'
+                return 'theme';
             case 'recipe':
-                return 'recipe'
+                return 'recipe';
             default:
-                return 'module'
+                return 'module';
         }
-        return stripos($this->Type, 'module') !== false ? 'module' : 'theme';
     }
 
     public function Link()
