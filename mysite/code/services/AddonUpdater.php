@@ -282,7 +282,7 @@ class AddonUpdater
 
     private function updateCompatibility(Addon $addon, AddonVersion $version, Packagist\Api\Result\Package\Version $versionFromPackagist)
     {
-        $require = null;
+        $requires = [];
 
         if ($versionFromPackagist->getRequire()) {
             foreach ($versionFromPackagist->getRequire() as $name => $link) {
@@ -290,34 +290,42 @@ class AddonUpdater
                     continue;
                 }
 
-                if ($name == 'silverstripe/framework') {
-                    $require = $link;
-                    break;
+                if ($name == 'silverstripe/recipe-core') {
+                    $requires[$link] = $link;
                 }
 
-                if ($name == 'silverstripe/cms') {
-                    $require = $link;
+                elseif ($name == 'silverstripe/recipe-cms') {
+                    $requires[$link] = $link;
+                }
+
+                elseif ($name == 'silverstripe/cms') {
+                    $requires[$link] = $link;
+                }
+
+                elseif ($name == 'silverstripe/framework') {
+                    $requires[$link] = $link;
                 }
             }
         }
 
-        if (!$require) {
+        if (count($requires) === 0) {
             return;
         }
 
         $addon->CompatibleVersions()->removeAll();
         $version->CompatibleVersions()->removeAll();
-
-        foreach ($this->silverstripes as $id => $link) {
-            try {
-                $constraint = $this->versionParser->parseConstraints($require);
-                if ($link->matches($constraint)) {
-                    $addon->CompatibleVersions()->add($id);
-                    $version->CompatibleVersions()->add($id);
+        foreach($requires as $require) {
+            foreach ($this->silverstripes as $id => $link) {
+                try {
+                    $constraint = $this->versionParser->parseConstraints($require);
+                    if ($link->matches($constraint)) {
+                        $addon->CompatibleVersions()->add($id);
+                        $version->CompatibleVersions()->add($id);
+                    }
+                } catch (Exception $e) {
+                    // An exception here shouldn't prevent further updates.
+                    Debug::log($addon->Name . "\t" . $addon->ID . "\t" . $e->getMessage());
                 }
-            } catch (Exception $e) {
-                // An exception here shouldn't prevent further updates.
-                Debug::log($addon->Name . "\t" . $addon->ID . "\t" . $e->getMessage());
             }
         }
     }
