@@ -48,10 +48,7 @@
       ],
       "post-update-cmd": [
           "GDM\\SSAutoGitIgnore\\UpdateScript::Go",
-          "sed -i '/CLEANING_MODE_ALL/d' ./framework/model/Aggregate.php",
-          "rm cms -rf",
-          "rm siteconfig -rf",
-          "rm reports -rf"
+          "sed -i '/CLEANING_MODE_ALL/d' ./framework/model/Aggregate.php"
       ]
   }
 

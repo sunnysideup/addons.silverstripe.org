@@ -105,9 +105,9 @@ class AddonsController extends SiteController
             ->sort(['Released' => 'DESC']);
 
         $limit = 99999;
-        if (Director::isDev()) {
-            $list = $list->where('MOD(ID,30)=0');
-        }
+        // if (Director::isDev()) {
+        //     $list = $list->where('MOD(ID,30)=0');
+        // }
         // ID
         // PackageName
 
@@ -200,7 +200,9 @@ class AddonsController extends SiteController
             foreach ($linkArray as $linkName) {
                 $varName = $linkName;
                 $methodName = 'get'.$linkName;
-                $objects = $lastTaggedVersion->$methodName();
+                if($lastTaggedVersion) {
+                    $objects = $lastTaggedVersion->$methodName();
+                }
                 $ar[$varName] = [];
                 $ar[$varName.'Full'] = [];
                 if ($objects instanceof AddonLink) {

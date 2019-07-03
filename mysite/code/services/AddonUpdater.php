@@ -83,7 +83,7 @@ class AddonUpdater
                 $cache->save(serialize($packages), 'packagist');
             }
         }
-        $this->elastica->startBulkIndex();
+        // $this->elastica->startBulkIndex();
 
         foreach ($packages as $package) {
             $name = $package->getName();
@@ -107,7 +107,7 @@ class AddonUpdater
             $this->updateAddon($addon, $package, $versions);
         }
 
-        $this->elastica->endBulkIndex();
+        // $this->elastica->endBulkIndex();
     }
 
 
@@ -120,7 +120,7 @@ class AddonUpdater
      */
     protected function usePackagistCache()
     {
-        return Director::isDev();
+        // return Director::isDev();
     }
 
     private $frameworkSupportArray = array();

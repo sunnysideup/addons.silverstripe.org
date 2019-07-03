@@ -83,7 +83,18 @@ class AddonVersion extends DataObject
     public function getFrameworkRequires()
     {
         return $this->Links()
-            ->filter(array('Type' => 'require', 'Name' => array('silverstripe/framework', 'silverstripe/cms')))
+            ->filter(
+                [
+                    'Type' => 'require',
+                    'Name' => [
+                        'silverstripe/recipe-core',
+                        'silverstripe/recipe-cms',
+                        'silverstripe/framework',
+                        'silverstripe/cms',
+
+                    ]
+                ]
+            )
             ->first();
     }
 

@@ -20,6 +20,7 @@ class UpdateAddonsTask extends BuildTask
         $request->getVar('addons');
         $clear = (bool)$request->getVar('clear');
         $onlyFor = $request->getVar('addons') ? explode(',', $request->getVar('addons')) : null;
+        // $onlyFor = ['sunnysideup/search_simple_smart'];
         $this->updater->update(
             $clear,
             $onlyFor
