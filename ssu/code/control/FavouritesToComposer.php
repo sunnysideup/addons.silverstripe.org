@@ -54,8 +54,4 @@ class FavouritesToComposer extends Controller
         return $al;
     }
 
-    public function GDMString()
-    {
-        return 'GDM\\\\SSAutoGitIgnore\\\\UpdateScript::Go0';
-    }
 }
