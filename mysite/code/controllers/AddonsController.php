@@ -233,9 +233,11 @@ class AddonsController extends SiteController
             [
                 'scrollToTopAtPageOpening' => true,
                 'sizeOfFixedHeader' => 45,
-                'maximumNumberOfFilterOptions' => 10,
+                'maximumNumberOfFilterOptions' => 20,
                 'filtersParentPageID' => "Filter",
                 'favouritesParentPageID' => "Favourites",
+                'visibleRowCount' => 200,
+                'startWithOpenFilter' => 200,
                 'rowRawData' => $arMain,
                 'includeInFilter' => [
                     'Type',
@@ -250,7 +252,11 @@ class AddonsController extends SiteController
                 'dataDictionary' => [
                     'Supports' => ['Label' => 'Framework Support']
                 ],
-                'keywordToFilterFieldArray' => ['Type', 'Name', 'Team']
+                'keywordToFilterFieldArray' => [
+                    'Type',
+                    'Name',
+                    'Team'
+                ]
             ]
         );
         TableFilterSortAPI::include_requirements(

@@ -91,7 +91,6 @@ class AddonVersion extends DataObject
                         'silverstripe/recipe-cms',
                         'silverstripe/framework',
                         'silverstripe/cms',
-
                     ]
                 ]
             )
