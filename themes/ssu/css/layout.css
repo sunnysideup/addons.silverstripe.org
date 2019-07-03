@@ -274,6 +274,7 @@ th.description-col {
 #Wrapper .tfs-holder .tfs-current-favourites {
     background-color: crimson;
     border: none;
+    margin-bottom: 1.2rem;
 }
 #Wrapper .tfs-holder .tfs-current-favourites a {
     color: #fff;
