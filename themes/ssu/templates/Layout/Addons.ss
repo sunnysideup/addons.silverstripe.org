@@ -1,6 +1,6 @@
 
 <header>
-    <h1 id="header">Find Silverstripe Themes and Modules <sup>BETA</sup></h1>
+    <h1 id="header">Find Silverstripe Themes and Modules</h1>
     <p>
         Provided by <a href="http://www.sunnysideup.co.nz/">Sunny Side Up</a>.
         Silverstripe specialists since 2007.
