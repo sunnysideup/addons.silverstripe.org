@@ -8,6 +8,9 @@ use Composer\Semver\Constraint\Constraint;
  */
 class SilverStripeVersion extends DataObject
 {
+
+    private static $current_framework_level = 4;
+
     public static $db = array(
         'Name' => 'Varchar(10)',
         'Major' => 'Int',

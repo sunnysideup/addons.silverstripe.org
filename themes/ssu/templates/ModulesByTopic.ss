@@ -9,7 +9,9 @@
 <div id="toc-topics">
     <ul>
     <% loop $MetaTopics %>
-        <li><a href="#Metatopic$ID" class="int">$Title</a>: <% loop Topics %><% if $Last %>and <% else %><% end_if %><a href="#Topic$ID" class="light int">$Title</a><% if $Last %>.<% else %>, <% end_if %><% end_loop %></li>
+        <li><a href="#Metatopic$ID" class="int">$Title</a>:
+            <% loop Topics %><% if $Last %>and <% else %><% end_if %><a href="#Topic$ID" class="light int">$Title</a><% if $Last %>.<% else %>, <% end_if %><% end_loop %>
+        </li>
     <% end_loop %>
         <li><a href="#rest-addons">To be categorised</a></li>
     </ul>
@@ -26,16 +28,19 @@
     <div id="Metatopic$ID" class="meta-topic">
         <h2>$Title</h2>
         <% if $Explanation %><p class="desc metatopic">$Explanation</p><% end_if %>
-
+        <ul>
+            <% loop Topics %><% if $Last %>and <% else %><% end_if %><a href="#Topic$ID" class="light int">$Title</a><% if $Last %>.<% else %>, <% end_if %><% end_loop %>
+        </ul>
     <% if $Topics %>
         <% loop $Topics %>
         <div class="topic closed" data-id="$ID">
             <h3 id="Topic$ID"><a href="#Topic$ID" class="int">$Title</a></h3>
             <% if $SortedKeywords %><% loop $SortedKeywords %><% if $Ignore %><% else %><span class="pill">$Title</span><% end_if %><% end_loop %><% end_if %>
             <p class="desc metatopic">$Explanation</p>
-            <% if MyModulesQuick %>
+            <% if $MyModulesQuick %>
             <ul>
-                <% loop MyModulesQuick %>
+                <% loop $MyModulesQuick %>
+                    <% if $IsCurrent %>
                 <li class="hide">
                     <a href="/" class="change" data-id="$ID">✎</a>
                     <% if $LinkNew %>
@@ -44,6 +49,7 @@
                     <a>$Name</a>: $Description
                     <% end_if %>
                 </li>
+                    <% end_if %>
                 <% end_loop %>
             </ul>
             <% else %>
@@ -61,14 +67,14 @@
 
 
 
-<% if RestAddons %>
+<% if $RestAddons %>
     <div class="meta-topic" id="rest-addons">
         <h2>Not yet classified</h2>
         <div class="topic closed" data-id="$ID">
             <h3 id="Topic0"><a href="#Topic0" class="int">Modules without categorisation</a></h3>
             <p>Below is a list of modules that have not been placed under any topic.</p>
             <ul>
-        <% loop RestAddons %>
+        <% loop $RestAddons %>
                 <li class="hide">
                     <a href="/" class="change" data-id="$ID">✎</a>
                 <% if $Repository %>

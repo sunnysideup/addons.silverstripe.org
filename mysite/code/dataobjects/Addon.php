@@ -89,6 +89,19 @@ class Addon extends DataObject
         return 0;
     }
 
+    public function IsCurrent()
+    {
+        $currentFrameworkLevel = Config::inst()->get('SilverStripeVersion', 'current_framework_level');
+        $array = explode(',', $this->FrameworkSupportList);
+        foreach($array as $val) {
+            $val = intval($val);
+            if($val >= $currentFrameworkLevel) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Gets the addon's versions sorted from newest to oldest.
      *
