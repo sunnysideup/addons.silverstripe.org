@@ -33,7 +33,7 @@
     "symfony/console":                                             "^2.8",
     "symfony/yaml":                                                "^2.8",
 
-    "sunnysideup/table_filter_sort":                               "dev-master",
+    "sunnysideup/table_filter_sort":                               "3.x-dev",
 
     "gdmedia/ss-auto-git-ignore":                                  "*"
   },
