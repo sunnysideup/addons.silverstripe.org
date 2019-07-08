@@ -237,7 +237,7 @@ class AddonsController extends SiteController
                 'filtersParentPageID' => "Filter",
                 'favouritesParentPageID' => "Favourites",
                 'visibleRowCount' => 200,
-                'startWithOpenFilter' => 200,
+                'startWithOpenFilter' => true,
                 'rowRawData' => $arMain,
                 'includeInFilter' => [
                     'Type',
