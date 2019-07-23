@@ -305,6 +305,10 @@ class AddonUpdater
                 elseif ($name == 'silverstripe/framework') {
                     $requires[$link] = $link;
                 }
+                // ^1.0 dependencies as SilverStripe 4.x
+                elseif ($name == 'silverstripe/admin') {
+                    $requires['4.0.0'] = '4.0.0';
+                }
             }
         }
 
