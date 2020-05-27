@@ -175,29 +175,40 @@ class AddonsBuildAPIByBash extends BuildTask
         '.$mns.'
 
         '.$vds.'
-
+		
+		nowsecs=$(date +%s)
+		
         for index in ${!gh[*]}
-        do
-        echo "====================================================== starting loop";
-        rm ./src -rf
-        rm ./build -rf
-        rm ./docs -rf
-        echo "====================================================== cloning git repo";
-        printf "%4d: %s\n" $index ${mn[$index]}
-        echo "====================================================== cloning git repo";
-        git clone ${gh[$index]} ./src
-        echo "====================================================== running phpdox";
-        /usr/local/bin/phpdox
-        echo "====================================================== moving";
-        rm ./docs/html/index.xhtml
-        dira="../public_html"
-        dirb="${vd[$index]}"
-        dirc="${mn[$index]}"
-        dir=$dira/$dirb/$dirc
-        echo $dir
-        rm $dir -rf
-        mkdir $dir -p
-        mv ./docs/html/* $dir
+		do
+			echo "====================================================== starting loop";
+	        printf "%4d: %s\n" $index ${mn[$index]}
+			echo "====================================================== ";
+	        rm ./src -rf
+			rm ./build -rf
+			rm ./docs -rf
+			echo "====================================================== checking date";
+			dira="../public_html"
+			dirb="${vd[$index]}"
+			dirc="${mn[$index]}"
+			dir=$dira/$dirb/$dirc
+			modsecs=$(date --utc --reference=$dir +%s)
+			delta=$(($nowsecs-$modsecs))
+			echo "Dir $dir was modified $delta secs ago"
+			min=86400*14
+			if [ $delta -gt $min ]; then
+				echo "====================================================== cloning git repo";
+				git clone ${gh[$index]} ./src
+				echo "====================================================== running phpdox";
+				/usr/local/bin/phpdox
+				echo "====================================================== moving";
+				rm ./docs/html/index.xhtml
+			else
+				echo "====================================================== no need to redo - too recent";
+			fi
+			echo $dir
+			rm $dir -rf
+			mkdir $dir -p
+			mv ./docs/html/* $dir
         done
 
         rm ./src -rf
