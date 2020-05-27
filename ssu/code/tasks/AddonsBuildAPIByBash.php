@@ -140,7 +140,7 @@ class AddonsBuildAPIByBash extends BuildTask
             strpos($link, 'ttp://') === 0 ||
             strpos($link, 'https://') === 0
         ) {
-            return true;
+            return true;set GIT_TERMINAL_PROMPT=0
         }
         return false;
     }
@@ -194,21 +194,21 @@ class AddonsBuildAPIByBash extends BuildTask
 			modsecs=$(date --utc --reference=$dir +%s)
 			delta=$(($nowsecs-$modsecs))
 			echo "Dir $dir was modified $delta secs ago"
-			min=86400*14
+			# fourteen days!
+			min=1209600
 			if [ $delta -gt $min ]; then
+			   rm $dir -rf
 				echo "====================================================== cloning git repo";
-				git clone ${gh[$index]} ./src
+				set GIT_TERMINAL_PROMPT=0 git clone ${gh[$index]} ./src || continue; 
 				echo "====================================================== running phpdox";
 				/usr/local/bin/phpdox
 				echo "====================================================== moving";
 				rm ./docs/html/index.xhtml
+				mkdir $dir -p
+				mv ./docs/html/* $dir
 			else
 				echo "====================================================== no need to redo - too recent";
 			fi
-			echo $dir
-			rm $dir -rf
-			mkdir $dir -p
-			mv ./docs/html/* $dir
         done
 
         rm ./src -rf
