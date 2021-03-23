@@ -140,7 +140,7 @@ class AddonsBuildAPIByBash extends BuildTask
             strpos($link, 'ttp://') === 0 ||
             strpos($link, 'https://') === 0
         ) {
-            return true;set GIT_TERMINAL_PROMPT=0
+            return true;
         }
         return false;
     }
