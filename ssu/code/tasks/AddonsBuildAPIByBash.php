@@ -199,7 +199,7 @@ class AddonsBuildAPIByBash extends BuildTask
 			if [ $delta -gt $min ]; then
 			   rm $dir -rf
 				echo "====================================================== cloning git repo";
-				set GIT_TERMINAL_PROMPT=0 git clone ${gh[$index]} ./src || continue; 
+				set GIT_TERMINAL_PROMPT=0; git clone ${gh[$index]} ./src || continue; 
 				echo "====================================================== running phpdox";
 				/usr/local/bin/phpdox
 				echo "====================================================== moving";
