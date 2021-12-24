@@ -17,7 +17,25 @@ class AddonsBuildAPIByBash extends BuildTask
         'wilr/silverstripe-googlemapselectionfield',
         'unclecheese/zero',
         'navidonskis/silverstripe-blocks-accessories',
-        'studiobonito/silverstripe-spamprotection-honeypot'
+        'studiobonito/silverstripe-spamprotection-honeypot',
+		'metakeywords',
+		'viewcounter',
+		'silverstripe-simple-captcha-field',
+		'silverstripe-importer',
+		'wizochoc',
+		'silverstripe-sortable-gallery-field',
+		'gridfieldrelationhandler',
+		'silverstripe-translatablegooglesitemaps',
+		'silverstripe-progressivewebap',
+		'owlcarousel',
+		'silverstripe-bootstrap-carousel',
+		'swipestripe-gallery',
+		'deploynaut-environmentconfig',
+		'cleanlogin',
+		'silverstripe-admin-google-map',
+		'silverstripe-structureddata',
+		'bootstripe',
+		'composerupdates',
     );
 
     protected $destinationFile = '/var/www/docs.ssmods.com/process/run.sh';
@@ -239,6 +257,6 @@ class AddonsBuildAPIByBash extends BuildTask
         // Check that URL exists
         $file_headers = @get_headers($url);
 
-        return !(!$file_headers || $file_headers[0] === 'HTTP/1.1 404 Not Found');
+        return !(!$file_headers || strpos( $file_headers[0], '404') !== false);
     }
 }
