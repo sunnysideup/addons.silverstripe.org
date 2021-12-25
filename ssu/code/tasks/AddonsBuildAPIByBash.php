@@ -217,7 +217,9 @@ class AddonsBuildAPIByBash extends BuildTask
 			if [ $delta -gt $min ]; then
 			   rm $dir -rf
 				echo "====================================================== cloning git repo";
-				set GIT_TERMINAL_PROMPT=0; git clone ${gh[$index]} ./src || continue; 
+				# see: https://stackoverflow.com/questions/64319349/force-git-to-fail-when-password-required-instead-of-prompting-for-password
+				GIT_TERMINAL_PROMPT=0 git clone ${gh[$index]} ./src || continue; 
+				# GIT_ASKPASS=true git clone ${gh[$index]} ./src || continue;
 				echo "====================================================== running phpdox";
 				/usr/local/bin/phpdox
 				echo "====================================================== moving";
