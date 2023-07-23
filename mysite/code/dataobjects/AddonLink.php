@@ -29,9 +29,22 @@ class AddonLink extends DataObject
         return "https://packagist.org/packages/$this->Name";
     }
 
-    public function ConstraintSimple()
+    public function ConstraintSimpleArray()
     {
-        $constraint = $this->Constraint;
+        $array = explode('||', $this->Constraint);
+        $array = array_map('trim', $array);
+        foreach($array as $key => $version) {
+            $array[$key] = $this->ConstraintSimple($version);
+        }
+    }
+
+    public function ConstraintSimple($version = null)
+    {
+        if($version) {
+            $constraint = $version;
+        } else {
+            $constraint = $this->Constraint;
+        }
         if ($constraint === '*') {
             return '*';
         }

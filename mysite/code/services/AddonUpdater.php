@@ -13,7 +13,6 @@ use Composer\Package\Version\VersionParser;
  */
 class AddonUpdater
 {
-
     /**
      * @var PackagistService
      */
@@ -215,11 +214,13 @@ class AddonUpdater
         $this->updateAuthors($version, $versionFromPackagist);
         $framework = $version->getFrameworkRequires();
         if ($framework) {
-            $constraint = trim($framework->ConstraintSimple());
-            if (intval($constraint)) {
-                $this->frameworkSupportArray[$constraint] = $constraint;
-            } else {
-                $this->frameworkSupportArray['unknown'] = 'unknown';
+            $constraints = $framework->ConstraintSimpleArray();
+            foreach($constraints as $constraint) {
+                if (intval($constraint)) {
+                    $this->frameworkSupportArray[$constraint] = $constraint;
+                } else {
+                    $this->frameworkSupportArray['unknown'] = 'unknown';
+                }
             }
         }
         DB::alteration_message("... ... VERSION: ".$version->PrettyVersion);
@@ -292,17 +293,11 @@ class AddonUpdater
 
                 if ($name == 'silverstripe/recipe-core') {
                     $requires[$link] = $link;
-                }
-
-                elseif ($name == 'silverstripe/recipe-cms') {
+                } elseif ($name == 'silverstripe/recipe-cms') {
                     $requires[$link] = $link;
-                }
-
-                elseif ($name == 'silverstripe/cms') {
+                } elseif ($name == 'silverstripe/cms') {
                     $requires[$link] = $link;
-                }
-
-                elseif ($name == 'silverstripe/framework') {
+                } elseif ($name == 'silverstripe/framework') {
                     $requires[$link] = $link;
                 }
                 // ^1.0 dependencies as SilverStripe 4.x
