@@ -36,6 +36,9 @@ class AddonLink extends DataObject
         foreach($array as $key => $version) {
             $array[$key] = $this->ConstraintSimple($version);
         }
+        $array = array_map('trim', $array);
+        $array = array_map('intval', $array);
+        return $array;
     }
 
     public function ConstraintSimple($version = null)
