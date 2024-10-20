@@ -87,6 +87,31 @@ class AddonVersion extends DataObject
         return $this->Links()->filter('Type', 'require');
     }
 
+    public function getFrameworkRequires()
+    {
+        return $this->Links()
+            ->filter(
+                [
+                    'Type' => 'require',
+                    'Name' => [
+                        'silverstripe/recipe-core',
+                        'silverstripe/recipe-cms',
+                        'silverstripe/framework',
+                        'silverstripe/cms',
+                    ]
+                ]
+            )
+            ->first();
+    }
+
+
+    public function getNonFrameworkRequires()
+    {
+        return $this->Links()
+            ->filter(array('Type' => 'require'))
+            ->exclude(array('Name' => 'silverstripe/framework'));
+    }
+
     public function getRequiresDev()
     {
         return $this->Links()->filter('Type', 'require-dev');
