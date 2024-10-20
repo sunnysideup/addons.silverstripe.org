@@ -45,7 +45,14 @@ class AddonsController extends SiteController
 
     public function index()
     {
-        return $this->renderWith(array('Addons', 'Page'));
+        increase_time_limit_to(600);
+
+        $html = $this->renderWith(array('Addons', 'Page'));
+        if (Director::isLive()) {
+            $html = preg_replace("/\s+/", ' ', trim($html));
+            $html = str_replace(array('<!-- -->', '//<![CDATA[', '//]]>'), '', $html);
+        }
+        return $html;
     }
 
     public function setElasticaService(ElasticaService $elastica)
@@ -80,7 +87,7 @@ class AddonsController extends SiteController
 
     public function Title()
     {
-        return 'Add-ons';
+        return 'Find Silverstripe Modules and Themes';
     }
 
     public function Link($slug = null)
@@ -104,145 +111,173 @@ class AddonsController extends SiteController
 
     public function Addons()
     {
-        $list = Addon::get();
+        $list = Addon::get()
+            ->exclude(['Obsolete' => 1])
+            ->sort(['Released' => 'DESC']);
 
-        $search = $this->request->getVar('search');
-        $type = $this->request->getVar('type');
-        $compat = $this->request->getVar('compatibility');
-        $tags = $this->request->getVar('tags');
-        $sort = $this->request->getVar('sort');
+        $limit = 99999;
+        // if (Director::isDev()) {
+        //     $list = $list->where('MOD(ID,30)=0');
+        // }
+        // ID
+        // PackageName
 
-        $useElasticOrderAsDefault = false;
+        $list = $list->limit($limit);
+        $arMain = [];
+        foreach ($list as $addon) {
+            $lastTaggedVersion = $addon->LastTaggedVersion();
 
-        if (!in_array($sort, array('name', 'downloads', 'newest', 'relative'))) {
-            $sort = null;
-        }
-
-        // Proxy out a search to elastic if any parameters are set.
-        if ($search || $type || $compat || $tags) {
-            $bool = new Query\BoolQuery();
-
-            $query = new Query();
-            $query->setQuery($bool);
-            $query->setSize(count($list));
-
-            if ($search) {
-                $match = new Query\MultiMatch();
-                $match->setQuery($search);
-                $match->setFields([
-                    'name^12',
-                    'description^3',
-                    'readme',
-                ]);
-                $match->setType('phrase_prefix');
-
-                $bool->addMust($match);
-                $useElasticOrderAsDefault = true;
+            $ar['ID'] = 'tfs'.$addon->ID;
+            $ar['FullName'] = $addon->getPackageName();
+            $ar['Name'] = $addon->getPackageNameNice();
+            $ar['Type'] = $addon->getSimpleType();
+            if ($addon->Vendor()) {
+                $ar['Team'] = $addon->Vendor()->Name;
+            } else {
+                $ar['Team'] = 'anon';
             }
 
-            if ($type) {
-                $bool->addMust(new Query\Term(array('type' => $type)));
-            }
-
-            if ($compat) {
-                $bool->addMust(new Query\Terms('compatibility', (array)$compat));
-            }
-
-            if ($tags) {
-                $bool->addMust(new Query\Terms('tags', (array)$tags));
-            }
-
-            $list = new ResultList($this->elastica->getIndex(), $query);
-
-            if ($sort) {
-                $ids = $list->column('ID');
-
-                if ($ids) {
-                    $list = Addon::get()->byIDs($ids);
-                } else {
-                    $list = new ArrayList();
+            if ($lastTaggedVersion) {
+                $ar['Authors'] = $addon->Authors()->column('Name');
+                if (! count($ar['Authors'])) {
+                    $ar['Authors'] = false;
                 }
             } else {
-                $list = $list->toArrayList();
+                $ar['Authors'] = false;
             }
-        } else {
-            if (!$sort) {
-                $sort = 'relative';
-            }
-        }
 
-        switch ($sort) {
-            case 'name':
-                $list = $list->sort('Name');
-                break;
-            case 'newest':
-                $list = $list->sort('Released', 'DESC');
-                break;
-            case 'downloads':
-                $list = $list->sort('Downloads', 'DESC');
-                break;
-            case 'relative':
-                if (!$list instanceof ArrayList) {
-                    /** @var ArrayList|Addon[] $unsorted */
-                    $unsorted = ArrayList::create($list->toArray());
+            $ar['Tags'] = $addon->FilteredKeywords()->column('Name');
+            if (! count($ar['Tags'])) {
+                $ar['Tags'] = false;
+            }
+            $ar['URL'] = DBField::create_field('Varchar', $addon->Repository)->URL();
+            $ar['API'] = $addon->DocLink();
+            $ar['Notes'] = DBField::create_field('Varchar', $addon->Description)->LimitCharacters($limit = 450, $add = '...');
+
+            $created = DBField::create_field('Date', $addon->Released);
+            $ar['Created'] = trim($created->Ago(), ' ago');
+            $ar['Created_U'] = $created->format('U');
+
+            if ($lastTaggedVersion) {
+                $lastEdited = DBField::create_field('Date', $lastTaggedVersion->Released);
+            } else {
+                $lastEdited = DBField::create_field('Date', $addon->Created);
+            }
+            $ar['LastEdited'] = $lastEdited->Ago();
+            $ar['LastEdited_U'] = $lastEdited->format('U');
+
+            $ar['Installs'] = $addon->Downloads;
+            $ar['MInstalls'] = $addon->DownloadsMonthly;
+            $ageInMonth = ((time() - $ar['Created_U']) / (86400 * 30.5));
+            $averageDownloadsPerMonth = 'n/a';
+            $trendingScore = '0';
+            $trendingSimple = '';
+            if ($ageInMonth < 1.5 || $addon->Downloads < 30) {
+                //do nothing ...
+            } else {
+                $averageDownloadsPerMonth = ($addon->Downloads / $ageInMonth);
+                if ($averageDownloadsPerMonth > 3) {
+                    $trendingScore = ceil($addon->DownloadsMonthly / $averageDownloadsPerMonth);
+                    if ($trendingScore > 12) {
+                        $trendingScore = 12;
+                    }
+                    $trendingSimple = str_repeat("☆", $trendingScore);
+                }
+            }
+            $ar['AvgDownloads'] = round($averageDownloadsPerMonth);
+            $ar['Trending'] = $trendingScore;
+            $ar['TrendingSimple'] = $trendingSimple;
+
+            $ar['Supports'] = $addon->getFrameworkSupport()->column('Supports');
+            if (! count($ar['Supports'])) {
+                $ar['Supports'] = ['n/a'];
+            } else {
+                foreach ($ar['Supports'] as $key => $value) {
+                    $ar['Supports'][$key] = $value.'.*';
+                }
+            }
+
+            $ar['TagCount'] = $addon->Versions()->count();
+            // $ar['LastTaggedVersion'] = $addon->xxx;
+            $linkArray = [
+                'Requires',
+                'FrameworkRequires',
+                'RequiresDev',
+                'Suggests',
+                'Provides',
+                'Conflicts',
+                'Replaces'
+            ];
+            foreach ($linkArray as $linkName) {
+                $varName = $linkName;
+                $methodName = 'get'.$linkName;
+                if($lastTaggedVersion) {
+                    $objects = $lastTaggedVersion->$methodName();
+                }
+                $ar[$varName] = [];
+                $ar[$varName.'Full'] = [];
+                if ($objects instanceof AddonLink) {
+                    $objects = ArrayList::create([$objects]);
                 } else {
-                    $unsorted = $list;
+                    if ($objects) {
+                        foreach ($objects as $link) {
+                            if ($link->IsMeaningfull()) {
+                                $ar[$varName.'Full'][] = [
+                                    'Name' => $link->getPackageNameNice(),
+                                    'Link' => $link->Link(),
+                                    'Constraint' => $link->ConstraintSimple()
+                                ];
+                                $ar[$varName][] = $link->getPackageNameNice();
+                            }
+                        }
+                    }
                 }
-                foreach ($unsorted as $item) {
-                    $item->Score = $item->relativePopularityFormatted() . ' per day';
+                if (count($ar[$varName]) === 0) {
+                    $ar[$varName] = false;
+                    $ar[$varName.'Full'] = false;
                 }
-                $list = $unsorted->sort('relativePopularity DESC');
-                break;
-            default:
-                if (!$useElasticOrderAsDefault) {
-                    $list = $list->sort('Downloads', 'DESC');
-                }
+            }
+            $arMain[$ar['ID']] = $ar;
         }
 
-        $list = new PaginatedList($list, $this->request);
-        $list->setPageLength(16);
-
-        return $list;
-    }
-
-    public function AddonsSearchForm()
-    {
-        $form = new Form(
-            $this,
-            'AddonsSearchForm',
-            new FieldList(array(
-                TextField::create('search', 'Search for')
-                    ->setValue($this->request->getVar('search'))
-                    ->addExtraClass('input-block-level'),
-                DropdownField::create('sort', 'Sort by')
-                    ->setSource(array(
-                        'name'      => 'Name',
-                        'downloads' => 'Most downloaded',
-                        'relative'  => 'Average downloads per day',
-                        'newest'    => 'Newest'
-                    ))
-                    ->setEmptyString('Best match')
-                    ->setValue($this->request->getVar('sort'))
-                    ->addExtraClass('input-block-level'),
-                DropdownField::create('type', 'Add-on type')
-                    ->setSource(array(
-                        'module' => 'Modules',
-                        'theme'  => 'Themes'
-                    ))
-                    ->setEmptyString('Modules and themes')
-                    ->setValue($this->request->getVar('type'))
-                    ->addExtraClass('input-block-level'),
-                CheckboxSetField::create('compatibility', 'Compatible SilverStripe versions')
-                    ->setSource(SilverStripeVersion::get()->map('Name', 'Name'))
-                    ->setValue($this->request->getVar('compatibility'))
-                    ->setTemplate('AddonsSearchCheckboxSetField')
-            )),
-            new FieldList()
+        TableFilterSortAPI::add_settings(
+            [
+                'scrollToTopAtPageOpening' => true,
+                'sizeOfFixedHeader' => 45,
+                'maximumNumberOfFilterOptions' => 20,
+                'filtersParentPageID' => "Filter",
+                'favouritesParentPageID' => "Favourites",
+                'visibleRowCount' => 200,
+                'startWithOpenFilter' => true,
+                'rowRawData' => $arMain,
+                'includeInFilter' => [
+                    'Type',
+                    'Tags',
+                    'Name',
+                    'Team',
+                    'Supports',
+                    'Authors',
+                    'Requires',
+                    'Suggests'
+                ],
+                'dataDictionary' => [
+                    'Supports' => ['Label' => 'Framework Support']
+                ],
+                'keywordToFilterFieldArray' => [
+                    'Type',
+                    'Name',
+                    'Team'
+                ]
+            ]
         );
-
-        return $form
-            ->setFormMethod('GET')
-            ->setFormAction($this->Link());
+        TableFilterSortAPI::include_requirements(
+            $tableSelector = '.tfs-holder',
+            $blockArray = array(),
+            $jqueryLocation = '',
+            $includeInPage = true,
+            $jsSettings = null
+        );
+        return $list;
     }
 
     public function rss($request, $limit = 10)
@@ -254,11 +289,16 @@ class AddonsController extends SiteController
         $rss = new RSSFeed(
             $addons,
             $this->Link(),
-            "Newest addons on addons.silverstripe.org",
+            "Newest addons on ssmods.com",
             null,
             'RSSTitle'
         );
 
         return $rss->outputToBrowser();
+    }
+
+    public function LocalNow($format = '')
+    {
+        return date(DATE_RFC2822);
     }
 }
