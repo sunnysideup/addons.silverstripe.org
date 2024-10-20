@@ -1,9 +1,6 @@
 <div class="row">
     <div class="span12">
-        Welcome to the <a href="http://silverstripe.org">SilverStripe</a> add-on repository, based on the <a
-            href="http://getcomposer.org">Composer</a> packaging system for PHP. Use this site to find modules and
-        themes to add to your SilverStripe website. For best results, we recommend <a
-            href="http://docs.silverstripe.org/en/getting_started/composer">managing your project with Composer</a>.
+    Welcome to the <a href="http://silverstripe.org">SilverStripe</a> add-on repository, based on the <a href="http://getcomposer.org">Composer</a> packaging system for PHP.  Use this site to find modules and themes to add to your SilverStripe website.  For best results, we recommend <a href="http://docs.silverstripe.org/en/getting_started/composer">managing your project with Composer</a>.
     </div>
 </div>
 
@@ -22,23 +19,25 @@
 
 <div class="row">
     <div class="addons-box span6">
-        <h3><a href="/add-ons?sort=relative" class="popular-addons-list">Popular Add-ons
-        </a>
-            <select id="popularsort" class="sort-popularity dropdown" name="popularity">
-                <option value="Relative" selected="selected">Average downloads per day</option>
-                <option value="Absolute">Total downloads</option>
-            </select>
-        </h3>
-        <ol id="popularAddons">
-            <% include PopularAddons %>
+        <h3><a href="/add-ons?sort=downloads">Popular Add-ons</a></h3>
+        <ol>
+            <% loop $PopularAddons(5) %>
+                <li>
+                    <a href="$Link">
+                        <span class="meta"><% include AddonDownloadStats %></span>
+                        <span class="name">$Name</span>
+                        <% include ModuleRatingVisual SmallCircle=true %>
+                        <span class="description">$Description</span>
+                    </a>
+                </li>
+            <% end_loop %>
         </ol>
     </div>
 
     <div class="addons-box span6">
         <h3>
             <a href="/add-ons?sort=newest">Newest Add-ons</a>
-            <a class="pull-right" href="/add-ons/rss"><img src="themes/addons/images/feed-icon-14x14.png"
-                                                           alt="RSS Feed"/></a>
+            <a class="pull-right" href="/add-ons/rss"><img src="themes/addons/images/feed-icon-14x14.png" alt="RSS Feed" /></a>
         </h3>
         <ol>
             <% loop $NewestAddons(5) %>
@@ -89,17 +88,17 @@
 </div>
 
 <% cached List(Addon).Max(Created) %>
-    <div class="row">
-        <div class="addons-box span12">
-            <h3>Statistics</h3>
-            <ul>
-                <li>
-                    <% loop ChartData %>
-                        <div class="chart-data" data-x="$XValue" data-y="$YValue"></div>
-                    <% end_loop %>
-                    <div id="chart-canvas"></div>
-                </li>
-            </ul>
-        </div>
+<div class="row">
+    <div class="addons-box span12">
+        <h3>Statistics</h3>
+        <ul>
+            <li>
+                <% loop ChartData %>
+                    <div class="chart-data" data-x="$XValue" data-y="$YValue"></div>
+                <% end_loop %>
+                <div  id="chart-canvas"></div>
+            </li>
+        </ul>
     </div>
+</div>
 <% end_cached %>

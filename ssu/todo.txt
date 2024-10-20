@@ -1,0 +1,17 @@
+- scroll back to filter if you open filter ...
+- reduce space in filter
+- create more links via ajax
+- save a copy of all composer.json downloads
+- favourites bar as fixed at the bottom
+- no need for
+<script>
+var TableFilterSortTableList = ['.tfs-holder'];
+</script>
+
+- trim fields before sorting
+- window setTimeout for loading
+- install
+- rm dl-on after filter update
+
+
+search for table and add tfs-table

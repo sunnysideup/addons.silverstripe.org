@@ -28,3 +28,6 @@ host.txt
 /resources/
 /silverstripe-elastica/
 .env
+/assets
+/temp_git_build
+/api
