@@ -20,3 +20,6 @@ sudo systemctl enable typesense-server
 
 # 7. Check if Typesense is running
 curl http://localhost:8108/health
+
+#
+echo " add api-key here: /etc/typesense/typesense-server.ini"
