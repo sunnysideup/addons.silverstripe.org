@@ -1,0 +1,53 @@
+---
+name: 'addonsinjector'
+---
+Injector:
+  AddonBuilder:
+    constructor:
+      - %$PackagistService
+  AddonUpdater:
+    constructor:
+      - %$PackagistService
+      - %$ElasticaService
+      - %$ResqueService
+      - %$Composer\Package\Version\VersionParser
+  RequestProcessor:
+    properties:
+      filters:
+        - %$SiteErrorPageFilter
+  SilverStripeVersionUpdater:
+    constructor:
+      - %$PackagistService
+  UpdateAddonsTask:
+    constructor:
+      - %$AddonUpdater
+  UpdateSilverStripeVersionsTask:
+    constructor:
+      - %$SilverStripeVersionUpdater
+  BuildAddonsTask:
+    constructor:
+      - %$AddonBuilder
+---
+Only:
+  environment: 'live'
+After:
+  - '#elastica'
+---
+Injector:
+  ElasticaService:
+    class: Symbiote\Elastica\ElasticaService
+    constructor:
+      client: %$ElasticClient
+      index: addons
+---
+Except:
+  environment: 'live'
+After:
+  - '#elastica'
+---
+Injector:
+  ElasticaService:
+    class: Symbiote\Elastica\ElasticaService
+    constructor:
+      client: %$ElasticClient
+      index: addons-dev

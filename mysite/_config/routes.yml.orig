@@ -1,0 +1,7 @@
+---
+After: framework
+---
+Director:
+  rules:
+    "": AddonsController
+    "silverstripe-module//$Vendor/$Module": "AddonController"
