@@ -43,4 +43,16 @@ class SilverStripeVersion extends DataObject
         }
         return Semver::satisfies((string) $this, $constraint);
     }
+    /**
+     * @return Composer\Package\LinkConstraint\LinkConstraintInterface
+     */
+    public function getConstraint()
+    {
+        $next = $this->Major . '.' . ($this->Minor + 1);
+
+        return new MultiConstraint(array(
+            new Constraint('>=', "$this->Major.$this->Minor.*"),
+            new Constraint('<', "$next.*")
+        ));
+    }
 }
