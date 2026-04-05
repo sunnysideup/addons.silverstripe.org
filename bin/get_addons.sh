@@ -127,7 +127,7 @@ fi
 
 # 5. Finalize Query and Execute
 # Notice it now ONLY selects 'Name'
-QUERY="SELECT Name FROM Addon WHERE ${WHERE_SQL};"
+QUERY="SELECT Name, Repository FROM Addon WHERE ${WHERE_SQL};"
 OUTPUT_FILE="addon_report.txt"
 
 echo "Executing Query..."
